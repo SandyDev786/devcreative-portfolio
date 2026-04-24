@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sandy — Creative Digital Designer</title>
+<style>
+:root{
+  --bg:#000;--bg1:#0a0a0a;--bg2:#111;--bg3:#1c1c1c;--bg4:#242424;
+  --line:rgba(255,255,255,.07);--line2:rgba(255,255,255,.12);--line3:rgba(255,255,255,.2);
+  --text:#f5f5f7;--muted:rgba(245,245,247,.52);--dim:rgba(245,245,247,.22);
+  --blue:#2997ff;--ease:cubic-bezier(.4,0,.2,1);--spring:cubic-bezier(.34,1.56,.64,1);
+  --r:20px;--r-sm:14px;
+}
+.light{
+  --bg:#fff;--bg1:#f5f5f7;--bg2:#e8e8ea;--bg3:#d8d8da;--bg4:#c8c8ca;
+  --line:rgba(0,0,0,.06);--line2:rgba(0,0,0,.11);--line3:rgba(0,0,0,.2);
+  --text:#1d1d1f;--muted:rgba(29,29,31,.52);--dim:rgba(29,29,31,.22);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,'SF Pro Display','Helvetica Neue',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;cursor:none}
+
+/* CURSOR */
+#dot{position:fixed;z-index:9999;pointer-events:none;width:7px;height:7px;background:var(--text);border-radius:50%;transform:translate(-50%,-50%);transition:width .22s var(--ease),height .22s var(--ease);mix-blend-mode:difference}
+#dot.lg{width:44px;height:44px;background:rgba(255,255,255,.08);border:.5px solid rgba(255,255,255,.25)}
+
+/* NAV */
+nav{position:fixed;inset:0 0 auto;z-index:300;height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 32px;background:rgba(0,0,0,.78);backdrop-filter:saturate(180%) blur(24px);border-bottom:.5px solid var(--line);transition:background .3s}
+.light nav{background:rgba(255,255,255,.78)}
+.n-logo{font-size:17px;font-weight:700;letter-spacing:-.4px;cursor:none}
+.n-logo a{color:var(--text);text-decoration:none}
+.n-mid{position:absolute;left:50%;transform:translateX(-50%);display:flex;gap:28px}
+.n-mid a{font-size:13px;font-weight:400;color:var(--muted);text-decoration:none;transition:color .2s}
+.n-mid a:hover{color:var(--text)}
+.n-right{display:flex;align-items:center;gap:10px}
+.n-theme{width:32px;height:32px;border-radius:50%;background:none;border:none;color:var(--muted);font-size:14px;cursor:none;display:flex;align-items:center;justify-content:center;transition:color .2s,background .2s}
+.n-theme:hover{color:var(--text);background:var(--bg2)}
+.n-cta{background:var(--blue);color:#fff;border:none;padding:8px 18px;border-radius:100px;font-size:13px;font-weight:500;cursor:none;font-family:inherit;transition:filter .2s,transform .15s var(--spring)}
+.n-cta:hover{filter:brightness(1.14);transform:scale(1.03)}
+
+/* ═══════════════════════════════════════
+   PAGE: HOME
+═══════════════════════════════════════ */
+#page-home{display:block}
+#page-project{display:none}
+
+/* HERO */
+#hero{min-height:100vh;display:grid;grid-template-columns:1fr 400px;align-items:center;gap:64px;padding:52px 32px 0;max-width:1140px;margin:0 auto;position:relative}
+.hero-glow{position:absolute;top:-100px;left:-80px;width:600px;height:500px;background:radial-gradient(ellipse,rgba(41,151,255,.06) 0%,transparent 65%);pointer-events:none}
+.h-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(41,151,255,.1);border:.5px solid rgba(41,151,255,.22);padding:6px 14px;border-radius:100px;font-size:12px;font-weight:500;color:var(--blue);margin-bottom:24px;opacity:0;animation:up .6s .1s var(--ease) forwards}
+.h-badge::before{content:'';width:5px;height:5px;background:var(--blue);border-radius:50%;animation:blink 2.5s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.h-name{font-size:clamp(56px,6vw,86px);font-weight:700;line-height:1.02;letter-spacing:-.04em;margin-bottom:10px;opacity:0;animation:up .75s .2s var(--ease) forwards}
+.h-title{font-size:clamp(56px,6vw,86px);font-weight:700;line-height:1.02;letter-spacing:-.04em;color:transparent;-webkit-text-stroke:1px var(--dim);margin-bottom:32px;opacity:0;animation:up .75s .3s var(--ease) forwards}
+.h-bio{font-size:17px;font-weight:300;line-height:1.7;color:var(--muted);max-width:460px;margin-bottom:32px;opacity:0;animation:up .7s .42s var(--ease) forwards}
+.h-bio strong{color:var(--text);font-weight:500}
+.h-cta{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:52px;opacity:0;animation:up .6s .52s var(--ease) forwards}
+.btn-blue{background:var(--blue);color:#fff;border:none;padding:14px 26px;border-radius:100px;font-size:15px;font-weight:500;cursor:none;font-family:inherit;transition:filter .2s,transform .15s var(--spring)}
+.btn-blue:hover{filter:brightness(1.12);transform:scale(1.02)}
+.btn-ghost{background:var(--bg2);color:var(--text);border:.5px solid var(--line2);padding:14px 26px;border-radius:100px;font-size:15px;font-weight:500;cursor:none;font-family:inherit;transition:background .2s,transform .15s var(--spring)}
+.btn-ghost:hover{background:var(--bg3);transform:scale(1.02)}
+.h-stats{display:flex;gap:0;border-top:.5px solid var(--line);padding-top:28px;opacity:0;animation:up .6s .65s var(--ease) forwards}
+.hs{flex:1}
+.hs+.hs{border-left:.5px solid var(--line);padding-left:24px}
+.hsn{font-size:36px;font-weight:600;letter-spacing:-.04em;display:block;line-height:1}
+.hsl{font-size:11px;color:var(--dim);margin-top:4px;display:block;text-transform:uppercase;letter-spacing:.04em}
+
+/* HERO PHOTO */
+.hero-right{opacity:0;animation:up .8s .3s var(--ease) forwards;padding-bottom:52px}
+.photo-wrap{position:relative;border-radius:28px;overflow:hidden;border:.5px solid var(--line2)}
+.photo-wrap img{width:100%;display:block;aspect-ratio:3/4;object-fit:cover}
+.photo-tag{position:absolute;bottom:18px;left:18px;background:rgba(0,0,0,.72);backdrop-filter:blur(16px);border:.5px solid rgba(255,255,255,.12);padding:10px 16px;border-radius:12px}
+.pt-name{font-size:14px;font-weight:600;color:#f5f5f7}
+.pt-role{font-size:11px;color:rgba(245,245,247,.55);margin-top:2px}
+.photo-loc{position:absolute;top:18px;right:18px;background:rgba(0,0,0,.65);backdrop-filter:blur(10px);border:.5px solid rgba(41,151,255,.28);color:var(--blue);font-size:11px;font-weight:500;padding:5px 12px;border-radius:100px}
+
+/* SCROLL HINT */
+.scroll-hint{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--dim);font-size:11px;font-weight:500;letter-spacing:.04em;opacity:0;animation:up .5s 1.1s var(--ease) forwards}
+.s-line{width:1px;height:44px;background:linear-gradient(to bottom,var(--line3),transparent);animation:pulse 2.2s 1.5s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.3}50%{opacity:1}}
+
+/* MARQUEE */
+.mq{border-top:.5px solid var(--line);border-bottom:.5px solid var(--line);padding:14px 0;overflow:hidden;background:var(--bg1)}
+.mq-t{display:flex;gap:52px;animation:mq 22s linear infinite;white-space:nowrap}
+.mq-t span{font-size:12px;font-weight:500;color:var(--dim);letter-spacing:.06em;text-transform:uppercase}
+.mq-t i{color:rgba(41,151,255,.4);font-style:normal;font-size:8px}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* SECTION */
+.sec{padding:96px 32px;max-width:1140px;margin:0 auto}
+.sec-lbl{font-size:11px;font-weight:600;color:var(--blue);letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px}
+.sec-h{font-size:clamp(36px,4vw,54px);font-weight:700;letter-spacing:-.04em;line-height:1.04;margin-bottom:48px}
+.sec-h .d{color:var(--dim)}
+
+/* ABOUT */
+.about-wrap{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--bg2);border-radius:var(--r);overflow:hidden}
+.about-l{background:var(--bg1);padding:52px 44px;display:flex;flex-direction:column;gap:20px}
+.about-name{font-size:52px;font-weight:700;letter-spacing:-.04em;line-height:1}
+.about-role{display:inline-flex;align-items:center;gap:8px;background:rgba(41,151,255,.1);border:.5px solid rgba(41,151,255,.22);padding:7px 16px;border-radius:100px;font-size:13px;font-weight:500;color:var(--blue);align-self:flex-start}
+.about-bio{font-size:16px;line-height:1.75;color:var(--muted);font-weight:300}
+.about-bio strong{color:var(--text);font-weight:500}
+.about-tools{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.tool{background:var(--bg2);border:.5px solid var(--line2);color:var(--muted);font-size:12px;font-weight:400;padding:6px 14px;border-radius:100px;transition:all .2s}
+.tool:hover{background:var(--bg3);color:var(--text);border-color:var(--line3)}
+.about-r{background:var(--bg1);padding:52px 44px;display:flex;flex-direction:column;gap:24px}
+.portrait{flex:1;min-height:280px;border-radius:var(--r-sm);overflow:hidden;border:.5px solid var(--line)}
+.portrait img{width:100%;height:100%;object-fit:cover;display:block}
+.about-stats{display:flex;gap:0;border-top:.5px solid var(--line);padding-top:24px}
+.as{flex:1;text-align:center}
+.as+.as{border-left:.5px solid var(--line)}
+.asn{font-size:32px;font-weight:600;letter-spacing:-.04em;display:block;line-height:1}
+.asl{font-size:10px;color:var(--dim);margin-top:4px;display:block;text-transform:uppercase;letter-spacing:.04em}
+
+/* WORK */
+.wfilter{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px}
+.wfb{background:none;border:.5px solid var(--line2);color:var(--muted);padding:8px 18px;border-radius:100px;font-size:12px;font-weight:500;cursor:none;font-family:inherit;transition:all .2s,transform .15s var(--spring)}
+.wfb:hover{color:var(--text);border-color:var(--line3)}
+.wfb.on{background:var(--text);color:var(--bg);border-color:var(--text)}
+
+/* BENTO GRID */
+.bento{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:260px;gap:3px;background:var(--bg2);border-radius:var(--r);overflow:hidden}
+.bc{background:var(--bg1);position:relative;overflow:hidden;cursor:none}
+.bc.w2{grid-column:span 2}
+.bc-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
+.bc:hover .bc-img{transform:scale(1.06)}
+.bc-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.9) 0%,rgba(0,0,0,.3) 40%,transparent 65%);opacity:0;transition:opacity .35s var(--ease);display:flex;flex-direction:column;justify-content:flex-end;padding:22px}
+.bc:hover .bc-ov{opacity:1}
+.bc-cat{font-size:10px;font-weight:600;color:var(--blue);letter-spacing:.06em;text-transform:uppercase;margin-bottom:5px}
+.bc-title{font-size:18px;font-weight:600;color:#fff;letter-spacing:-.02em;margin-bottom:3px}
+.bc-meta{font-size:11px;color:rgba(255,255,255,.45)}
+.bc-pill{position:absolute;top:14px;right:14px;background:rgba(0,0,0,.65);backdrop-filter:blur(10px);border:.5px solid rgba(255,255,255,.12);color:rgba(255,255,255,.7);font-size:10px;font-weight:500;padding:4px 11px;border-radius:100px}
+.bc-arrow{position:absolute;top:14px;left:14px;width:32px;height:32px;background:rgba(0,0,0,.65);backdrop-filter:blur(10px);border:.5px solid rgba(255,255,255,.12);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;opacity:0;transition:opacity .3s,transform .3s var(--spring)}
+.bc:hover .bc-arrow{opacity:1;transform:scale(1.1)}
+
+/* REELS */
+.reel-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;background:var(--bg2);border-radius:var(--r);overflow:hidden}
+.rc{background:var(--bg1);position:relative;overflow:hidden;cursor:none}
+.rc-img{width:100%;aspect-ratio:9/16;object-fit:cover;display:block;transition:transform .5s var(--ease)}
+.rc:hover .rc-img{transform:scale(1.05)}
+.rc-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.9) 0%,transparent 50%);display:flex;flex-direction:column;justify-content:flex-end;padding:14px}
+.rc-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.3);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;transition:all .25s var(--spring)}
+.rc:hover .rc-play{background:rgba(255,255,255,.2);transform:translate(-50%,-50%) scale(1.12)}
+.rc-title{font-size:13px;font-weight:500;color:#fff;letter-spacing:-.01em;margin-bottom:2px}
+.rc-sub{font-size:10px;color:rgba(255,255,255,.45)}
+.rc-fmt{position:absolute;top:10px;left:10px;background:rgba(0,0,0,.6);backdrop-filter:blur(8px);font-size:9px;font-weight:600;color:rgba(255,255,255,.6);padding:3px 8px;border-radius:100px}
+.rc-dur{position:absolute;top:10px;right:10px;background:rgba(0,0,0,.6);backdrop-filter:blur(8px);font-size:9px;font-weight:600;color:rgba(255,255,255,.6);padding:3px 7px;border-radius:5px}
+
+/* SERVICES */
+.svc-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;background:var(--bg2);border-radius:var(--r);overflow:hidden}
+.sc{background:var(--bg1);padding:32px 28px;cursor:none;position:relative;overflow:hidden;transition:background .2s}
+.sc:hover{background:var(--bg2)}
+.sc::after{content:'';position:absolute;bottom:0;left:0;right:0;height:.5px;background:linear-gradient(to right,var(--blue),transparent);transform:scaleX(0);transform-origin:left;transition:transform .4s var(--ease)}
+.sc:hover::after{transform:scaleX(1)}
+.sc-ico{font-size:28px;margin-bottom:18px;display:block}
+.sc-title{font-size:20px;font-weight:600;letter-spacing:-.03em;margin-bottom:8px}
+.sc-body{font-size:14px;line-height:1.65;color:var(--muted);font-weight:300}
+.sc-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:18px}
+.sc-tag{background:var(--bg2);border:.5px solid var(--line);color:var(--dim);font-size:11px;padding:4px 12px;border-radius:100px}
+
+/* CONTACT */
+.contact-wrap{background:var(--bg1);border:.5px solid var(--line);border-radius:var(--r);padding:88px 48px;text-align:center;position:relative;overflow:hidden}
+.c-glow{position:absolute;bottom:-60px;left:50%;transform:translateX(-50%);width:520px;height:320px;pointer-events:none;background:radial-gradient(ellipse,rgba(41,151,255,.06) 0%,transparent 65%)}
+.c-h{font-size:clamp(44px,5.5vw,76px);font-weight:700;letter-spacing:-.04em;line-height:1.03;margin-bottom:18px}
+.c-h .d{color:var(--dim)}
+.c-sub{font-size:17px;color:var(--muted);font-weight:300;line-height:1.65;max-width:460px;margin:0 auto 44px}
+.c-links{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.cl{display:flex;align-items:center;gap:8px;text-decoration:none;padding:14px 26px;border-radius:100px;font-size:15px;font-weight:500;cursor:none;font-family:inherit;transition:all .2s var(--spring)}
+.cl.p{background:var(--blue);color:#fff}
+.cl.p:hover{filter:brightness(1.12);transform:scale(1.02)}
+.cl.g{background:var(--bg2);border:.5px solid var(--line2);color:var(--text)}
+.cl.g:hover{background:var(--bg3);transform:scale(1.02)}
+
+/* FOOTER */
+footer{border-top:.5px solid var(--line);padding:28px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.f-logo{font-size:15px;font-weight:600;letter-spacing:-.02em}
+footer p{font-size:12px;color:var(--dim)}
+.f-links{display:flex;gap:20px}
+.f-link{font-size:12px;color:var(--dim);text-decoration:none;transition:color .2s}
+.f-link:hover{color:var(--text)}
+
+/* REVEAL */
+.r{opacity:0;transform:translateY(22px);transition:opacity .65s var(--ease),transform .65s var(--ease)}
+.r.in{opacity:1;transform:none}
+.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}
+@keyframes up{to{opacity:1;transform:translateY(0)}}
+
+/* ═══════════════════════════════════════
+   PAGE: PROJECT DETAIL (Behance-style)
+═══════════════════════════════════════ */
+#page-project{background:var(--bg)}
+
+/* PROJECT NAV */
+.proj-nav{position:sticky;top:52px;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:16px 32px;background:rgba(0,0,0,.8);backdrop-filter:blur(20px);border-bottom:.5px solid var(--line)}
+.light .proj-nav{background:rgba(255,255,255,.8)}
+.proj-nav-back{display:flex;align-items:center;gap:8px;cursor:none;font-size:13px;font-weight:500;color:var(--muted);transition:color .2s;border:none;background:none;font-family:inherit}
+.proj-nav-back:hover{color:var(--text)}
+.proj-nav-title{font-size:14px;font-weight:500;color:var(--muted)}
+.proj-nav-actions{display:flex;gap:8px}
+.proj-nav-btn{background:var(--bg2);border:.5px solid var(--line2);color:var(--muted);padding:7px 16px;border-radius:100px;font-size:12px;font-weight:500;cursor:none;font-family:inherit;transition:all .2s}
+.proj-nav-btn:hover{color:var(--text);border-color:var(--line3)}
+.proj-nav-btn.primary{background:var(--blue);color:#fff;border-color:var(--blue)}
+.proj-nav-btn.primary:hover{filter:brightness(1.12)}
+
+/* PROJECT HERO */
+.proj-hero{position:relative;width:100%;max-height:600px;overflow:hidden}
+.proj-hero-img{width:100%;max-height:600px;object-fit:cover;display:block}
+.proj-hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.7) 0%,rgba(0,0,0,.1) 60%,transparent 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:48px}
+.proj-cat-pill{display:inline-flex;align-items:center;gap:6px;background:rgba(41,151,255,.2);border:.5px solid rgba(41,151,255,.35);color:var(--blue);font-size:12px;font-weight:600;padding:6px 14px;border-radius:100px;letter-spacing:.04em;text-transform:uppercase;margin-bottom:16px;align-self:flex-start}
+.proj-hero-title{font-size:clamp(40px,5vw,70px);font-weight:700;letter-spacing:-.04em;color:#fff;line-height:1.02;margin-bottom:10px}
+.proj-hero-subtitle{font-size:18px;color:rgba(255,255,255,.65);font-weight:300}
+
+/* PROJECT BODY */
+.proj-body{max-width:1080px;margin:0 auto;padding:0 32px}
+
+/* PROJECT INFO ROW */
+.proj-info-row{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:.5px solid var(--line);border-radius:var(--r);overflow:hidden;margin:48px 0}
+.pi{padding:24px 28px;border-right:.5px solid var(--line)}
+.pi:last-child{border-right:none}
+.pi-label{font-size:11px;color:var(--dim);font-weight:500;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
+.pi-value{font-size:16px;font-weight:600;color:var(--text);letter-spacing:-.02em}
+
+/* PROJECT DESCRIPTION */
+.proj-desc{font-size:19px;line-height:1.75;color:var(--muted);font-weight:300;max-width:760px;margin-bottom:64px}
+.proj-desc strong{color:var(--text);font-weight:500}
+
+/* PROJECT IMAGE BLOCKS */
+.proj-img-full{width:100%;border-radius:var(--r);overflow:hidden;margin-bottom:12px}
+.proj-img-full img{width:100%;display:block;aspect-ratio:16/9;object-fit:cover}
+.proj-img-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.proj-img-grid-2 img{width:100%;border-radius:var(--r-sm);display:block;aspect-ratio:4/3;object-fit:cover}
+.proj-img-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px}
+.proj-img-grid-3 img{width:100%;border-radius:var(--r-sm);display:block;aspect-ratio:1;object-fit:cover}
+.proj-img-tall{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.proj-img-tall img:first-child{border-radius:var(--r-sm);display:block;width:100%;aspect-ratio:4/5;object-fit:cover}
+.proj-img-tall .tall-stack{display:flex;flex-direction:column;gap:12px}
+.proj-img-tall .tall-stack img{border-radius:var(--r-sm);display:block;width:100%;aspect-ratio:4/3;object-fit:cover;flex:1}
+
+/* SECTION DIVIDER */
+.proj-divider{border:none;border-top:.5px solid var(--line);margin:52px 0}
+.proj-section-title{font-size:28px;font-weight:700;letter-spacing:-.03em;margin-bottom:16px}
+.proj-section-body{font-size:16px;line-height:1.75;color:var(--muted);font-weight:300;max-width:680px;margin-bottom:36px}
+
+/* DELIVERABLES */
+.deliverables{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:52px}
+.deliv-card{background:var(--bg1);border:.5px solid var(--line);border-radius:var(--r-sm);padding:22px;transition:border-color .2s,background .2s}
+.deliv-card:hover{background:var(--bg2);border-color:var(--line2)}
+.deliv-ico{font-size:22px;margin-bottom:12px;display:block}
+.deliv-title{font-size:15px;font-weight:600;letter-spacing:-.02em;margin-bottom:4px}
+.deliv-desc{font-size:13px;color:var(--muted);line-height:1.5;font-weight:300}
+
+/* TAGS */
+.proj-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:52px}
+.proj-tag{background:var(--bg2);border:.5px solid var(--line2);color:var(--muted);font-size:12px;font-weight:500;padding:7px 16px;border-radius:100px}
+
+/* NEXT PROJECT */
+.next-project{background:var(--bg1);border-top:.5px solid var(--line);margin-top:0;padding:64px 32px;cursor:none;transition:background .2s}
+.next-project:hover{background:var(--bg2)}
+.next-lbl{font-size:11px;font-weight:600;color:var(--blue);letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px}
+.next-title{font-size:clamp(32px,4vw,52px);font-weight:700;letter-spacing:-.04em;margin-bottom:8px;display:flex;align-items:center;gap:16px}
+.next-arrow{width:48px;height:48px;border-radius:50%;background:var(--bg3);border:.5px solid var(--line2);display:flex;align-items:center;justify-content:center;font-size:20px;transition:all .3s var(--spring)}
+.next-project:hover .next-arrow{background:var(--blue);border-color:var(--blue);color:#fff;transform:translateX(8px)}
+.next-meta{font-size:15px;color:var(--muted)}
+.next-thumb{width:100%;max-width:400px;border-radius:var(--r-sm);overflow:hidden;border:.5px solid var(--line);margin-top:32px}
+.next-thumb img{width:100%;display:block;aspect-ratio:16/9;object-fit:cover}
+
+/* RESPONSIVE */
+@media(max-width:960px){
+  #hero{grid-template-columns:1fr;gap:40px}
+  .hero-right{display:none}
+  .n-mid{display:none}
+  .about-wrap,.bento{grid-template-columns:1fr 1fr}
+  .bc.w2{grid-column:span 2}
+  .reel-grid{grid-template-columns:repeat(2,1fr)}
+  .svc-grid{grid-template-columns:1fr}
+  .proj-info-row{grid-template-columns:1fr 1fr}
+  .pi:nth-child(2){border-right:none}
+  .pi:nth-child(3){border-top:.5px solid var(--line)}
+  .deliverables{grid-template-columns:1fr 1fr}
+  nav,footer{padding:0 20px}
+  nav{padding:0 20px}
+  footer{padding:20px}
+  .sec{padding:72px 20px}
+  .proj-body{padding:0 20px}
+  .proj-hero-overlay{padding:28px 20px}
+}
+@media(max-width:600px){
+  .bento{grid-template-columns:1fr;grid-auto-rows:200px}
+  .bc.w2{grid-column:span 1}
+  .reel-grid{grid-template-columns:repeat(2,1fr)}
+  .about-wrap{grid-template-columns:1fr}
+  .proj-img-grid-2,.proj-img-grid-3,.proj-img-tall{grid-template-columns:1fr}
+  .deliverables{grid-template-columns:1fr}
+  .proj-info-row{grid-template-columns:1fr 1fr}
+  .contact-wrap{padding:52px 22px}
+}
+</style>
+</head>
+<body>
+
+<div id="dot"></div>
+
+<!-- ═══ SHARED NAV ═══ -->
+<nav id="nav">
+  <div class="n-logo"><a href="#" onclick="showHome();return false">Sandy</a></div>
+  <div class="n-mid">
+    <a href="#" onclick="showHome();return false">About</a>
+    <a href="#" onclick="showHome();scrollTo('work');return false">Work</a>
+    <a href="#" onclick="showHome();scrollTo('reels');return false">Reels</a>
+    <a href="#" onclick="showHome();scrollTo('services');return false">Services</a>
+  </div>
+  <div class="n-right">
+    <button class="n-theme" id="tb">☀</button>
+    <button class="n-cta" onclick="showHome();scrollTo('contact')">Work with me</button>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════
+     PAGE: HOME
+═══════════════════════════════════ -->
+<div id="page-home">
+
+<!-- HERO -->
+<div style="position:relative;overflow:hidden;background:var(--bg)">
+  <div class="hero-glow"></div>
+  <section id="hero">
+    <div>
+      <div class="h-badge">✦ Open to new projects</div>
+      <h1 class="h-name">Sandy.</h1>
+      <h2 class="h-title">Creative Digital<br>Designer.</h2>
+      <p class="h-bio">I design <strong>social media content, reels, real estate visuals,</strong> and <strong>web experiences</strong> that make brands impossible to scroll past. Based in Dubai, working globally.</p>
+      <div class="h-cta">
+        <button class="btn-blue" onclick="scrollTo('work')">View my work</button>
+        <button class="btn-ghost" onclick="scrollTo('contact')">Get in touch</button>
+      </div>
+      <div class="h-stats">
+        <div class="hs"><span class="hsn">200+</span><span class="hsl">Projects</span></div>
+        <div class="hs" style="padding-left:24px"><span class="hsn">80+</span><span class="hsl">Brands</span></div>
+        <div class="hs" style="padding-left:24px"><span class="hsn">6yr</span><span class="hsl">Experience</span></div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="photo-wrap">
+        <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=600&q=80" alt="Sandy">
+        <div class="photo-tag"><div class="pt-name">Sandy</div><div class="pt-role">Creative Digital Designer</div></div>
+        <div class="photo-loc">Dubai, UAE</div>
+      </div>
+    </div>
+  </section>
+  <div class="h-stats" style="max-width:580px;margin:0 auto 64px;border-top:.5px solid var(--line);opacity:0;animation:up .6s .72s ease forwards">
+  </div>
+  <div class="scroll-hint" style="position:relative;bottom:auto;left:auto;transform:none;display:flex;justify-content:center;padding-bottom:48px">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--dim);font-size:11px;font-weight:500;letter-spacing:.04em">
+      <div class="s-line"></div><span>SCROLL</span>
+    </div>
+  </div>
+</div>
+
+<!-- MARQUEE -->
+<div class="mq">
+  <div class="mq-t">
+    <span>Social Media</span><i>◆</i><span>Reels</span><i>◆</i><span>Real Estate Visuals</span><i>◆</i><span>Landing Pages</span><i>◆</i><span>Brand Identity</span><i>◆</i><span>Motion Graphics</span><i>◆</i><span>Content Strategy</span><i>◆</i><span>Web Design</span><i>◆</i>
+    <span>Social Media</span><i>◆</i><span>Reels</span><i>◆</i><span>Real Estate Visuals</span><i>◆</i><span>Landing Pages</span><i>◆</i><span>Brand Identity</span><i>◆</i><span>Motion Graphics</span><i>◆</i><span>Content Strategy</span><i>◆</i><span>Web Design</span><i>◆</i>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about" class="sec">
+  <div class="sec-lbl r">About me</div>
+  <h2 class="sec-h r d1">Who I am<span class="d">.</span></h2>
+  <div class="about-wrap r d2">
+    <div class="about-l">
+      <div class="about-name">Sandy</div>
+      <div class="about-role">Creative Digital Designer</div>
+      <p class="about-bio">I'm a <strong>Creative Digital Designer</strong> based in Dubai with a passion for building visual experiences that stop the scroll and drive real results.<br><br>From <strong>social media content</strong> and <strong>short-form reels</strong> to <strong>real estate campaigns</strong> and <strong>landing pages</strong> — I combine design thinking with deep platform knowledge to produce work that performs.<br><br>Every project I take on is treated like it's my own brand.</p>
+      <div class="about-tools">
+        <span class="tool">Photoshop</span><span class="tool">After Effects</span><span class="tool">Premiere Pro</span><span class="tool">Illustrator</span><span class="tool">Figma</span><span class="tool">Webflow</span><span class="tool">Canva Pro</span><span class="tool">CapCut Pro</span>
+      </div>
+    </div>
+    <div class="about-r">
+      <div class="portrait">
+        <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&q=80" alt="Sandy portrait">
+      </div>
+      <div class="about-stats">
+        <div class="as"><span class="asn">200+</span><span class="asl">Projects</span></div>
+        <div class="as"><span class="asn">80+</span><span class="asl">Clients</span></div>
+        <div class="as"><span class="asn">6yr</span><span class="asl">Experience</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORK -->
+<section id="work" class="sec" style="padding-top:0">
+  <div class="sec-lbl r">Selected work</div>
+  <h2 class="sec-h r d1">My projects<span class="d">.</span></h2>
+  <div class="wfilter r d2">
+    <button class="wfb on" onclick="fw(this,'all')">All</button>
+    <button class="wfb" onclick="fw(this,'social')">Social Media</button>
+    <button class="wfb" onclick="fw(this,'reels')">Reels</button>
+    <button class="wfb" onclick="fw(this,'re')">Real Estate</button>
+    <button class="wfb" onclick="fw(this,'web')">Web</button>
+    <button class="wfb" onclick="fw(this,'brand')">Branding</button>
+  </div>
+  <div class="bento r d3" id="grid">
+    <div class="bc w2" data-c="social" onclick="openProject(0)" style="cursor:none">
+      <img class="bc-img" src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=900&q=80" alt="Instagram Campaign">
+      <div class="bc-pill">Social Media</div>
+      <div class="bc-arrow">→</div>
+      <div class="bc-ov"><div class="bc-cat">Social Media</div><div class="bc-title">Instagram Growth Campaign</div><div class="bc-meta">Content Strategy · 2024 · Click to view</div></div>
+    </div>
+    <div class="bc" data-c="re" onclick="openProject(1)">
+      <img class="bc-img" src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&q=80" alt="Real Estate">
+      <div class="bc-pill">Real Estate</div>
+      <div class="bc-arrow">→</div>
+      <div class="bc-ov"><div class="bc-cat">Real Estate</div><div class="bc-title">Luxury Tower — Dubai</div><div class="bc-meta">Digital Campaign · 2024</div></div>
+    </div>
+    <div class="bc" data-c="brand" onclick="openProject(2)">
+      <img class="bc-img" src="https://images.unsplash.com/photo-1634084462412-b54873c0a56d?w=600&q=80" alt="Branding">
+      <div class="bc-pill">Branding</div>
+      <div class="bc-arrow">→</div>
+      <div class="bc-ov"><div class="bc-cat">Branding</div><div class="bc-title">F&B Brand Full Kit</div><div class="bc-meta">Logo · Guidelines · 2024</div></div>
+    </div>
+    <div class="bc" data-c="reels" onclick="openProject(3)">
+      <img class="bc-img" src="https://images.unsplash.com/photo-1492619375914-88005aa9e8fb?w=600&q=80" alt="Reel">
+      <div class="bc-pill">Reel</div>
+      <div class="bc-arrow">→</div>
+      <div class="bc-ov"><div class="bc-cat">Reels</div><div class="bc-title">Product Launch Reel</div><div class="bc-meta">Motion Design · 2024</div></div>
+    </div>
+    <div class="bc" data-c="web" onclick="openProject(4)">
+      <img class="bc-img" src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=600&q=80" alt="Web">
+      <div class="bc-pill">Web</div>
+      <div class="bc-arrow">→</div>
+      <div class="bc-ov"><div class="bc-cat">Web Design</div><div class="bc-title">Real Estate Landing Page</div><div class="bc-meta">UI · Dev · 2024</div></div>
+    </div>
+    <div class="bc" data-c="social" onclick="openProject(5)">
+      <img class="bc-img" src="https://images.unsplash.com/photo-1563986768609-322da13575f3?w=600&q=80" alt="Social">
+      <div class="bc-pill">Social</div>
+      <div class="bc-arrow">→</div>
+      <div class="bc-ov"><div class="bc-cat">Social Media</div><div class="bc-title">30-Day Story Series</div><div class="bc-meta">Design · Copy · 2023</div></div>
+    </div>
+    <div class="bc" data-c="re" onclick="openProject(1)">
+      <img class="bc-img" src="https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=600&q=80" alt="Villa">
+      <div class="bc-pill">Real Estate</div>
+      <div class="bc-arrow">→</div>
+      <div class="bc-ov"><div class="bc-cat">Real Estate</div><div class="bc-title">Villa — Abu Dhabi</div><div class="bc-meta">Campaign · 2023</div></div>
+    </div>
+    <div class="bc" data-c="web" onclick="openProject(4)">
+      <img class="bc-img" src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80" alt="CRM">
+      <div class="bc-pill">Web</div>
+      <div class="bc-arrow">→</div>
+      <div class="bc-ov"><div class="bc-cat">Web Design</div><div class="bc-title">CRM Dashboard UI</div><div class="bc-meta">Product Design · 2023</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- REELS -->
+<section id="reels" style="background:var(--bg1);border-top:.5px solid var(--line);border-bottom:.5px solid var(--line);padding:96px 0">
+  <div class="sec" style="padding-top:0;padding-bottom:0">
+    <div class="sec-lbl r">Motion work</div>
+    <h2 class="sec-h r d1">Reels & Video<span class="d">.</span></h2>
+    <div class="reel-grid r d2">
+      <div class="rc" onclick="openProject(3)">
+        <img class="rc-img" src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=400&q=80" alt="Reel 1">
+        <div class="rc-play">▷</div>
+        <div class="rc-fmt">9×16</div>
+        <div class="rc-dur">0:30</div>
+        <div class="rc-ov"><div class="rc-title">Real Estate Launch</div><div class="rc-sub">Dubai · 2024</div></div>
+      </div>
+      <div class="rc" onclick="openProject(3)">
+        <img class="rc-img" src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&q=80" alt="Reel 2">
+        <div class="rc-play">▷</div>
+        <div class="rc-fmt">9×16</div>
+        <div class="rc-dur">0:45</div>
+        <div class="rc-ov"><div class="rc-title">F&B Campaign</div><div class="rc-sub">Restaurant · 2024</div></div>
+      </div>
+      <div class="rc" onclick="openProject(3)">
+        <img class="rc-img" src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&q=80" alt="Reel 3">
+        <div class="rc-play">▷</div>
+        <div class="rc-fmt">16×9</div>
+        <div class="rc-dur">1:20</div>
+        <div class="rc-ov"><div class="rc-title">Product Explainer</div><div class="rc-sub">Tech · 2024</div></div>
+      </div>
+      <div class="rc" onclick="openProject(3)">
+        <img class="rc-img" src="https://images.unsplash.com/photo-1536240478700-b869ad10e2c0?w=400&q=80" alt="Reel 4">
+        <div class="rc-play">▷</div>
+        <div class="rc-fmt">16×9</div>
+        <div class="rc-dur">2:05</div>
+        <div class="rc-ov"><div class="rc-title">Showreel 2024</div><div class="rc-sub">Portfolio · 2024</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" class="sec">
+  <div class="sec-lbl r">What I do</div>
+  <h2 class="sec-h r d1">My services<span class="d">.</span></h2>
+  <div class="svc-grid r d2">
+    <div class="sc"><span class="sc-ico">📱</span><div class="sc-title">Social Media Content</div><p class="sc-body">Feed posts, stories, carousels, highlight covers, and content calendars — built to grow your audience and drive real engagement every day.</p><div class="sc-tags"><span class="sc-tag">Instagram</span><span class="sc-tag">TikTok</span><span class="sc-tag">LinkedIn</span><span class="sc-tag">Snapchat</span></div></div>
+    <div class="sc"><span class="sc-ico">🎬</span><div class="sc-title">Reels & Video</div><p class="sc-body">Short-form reels, product videos, brand films, and motion graphics crafted for every platform — from 9×16 reels to 16×9 YouTube ads.</p><div class="sc-tags"><span class="sc-tag">Reels</span><span class="sc-tag">Motion</span><span class="sc-tag">Ad Creatives</span><span class="sc-tag">Animation</span></div></div>
+    <div class="sc"><span class="sc-ico">🏠</span><div class="sc-title">Real Estate Materials</div><p class="sc-body">Brochures, floor plans, project branding, social ads, and full digital campaigns for developers, agents, and property launches across the UAE.</p><div class="sc-tags"><span class="sc-tag">Brochures</span><span class="sc-tag">Floor Plans</span><span class="sc-tag">Project Brand</span><span class="sc-tag">Ads</span></div></div>
+    <div class="sc"><span class="sc-ico">🌐</span><div class="sc-title">Websites & Landing Pages</div><p class="sc-body">High-converting landing pages and CRM-connected web experiences built to turn visitors into leads — fast, clean, and mobile-first.</p><div class="sc-tags"><span class="sc-tag">Landing Pages</span><span class="sc-tag">CRM UI</span><span class="sc-tag">Webflow</span><span class="sc-tag">Mobile First</span></div></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="sec" style="padding-top:0">
+  <div class="contact-wrap r">
+    <div class="c-glow"></div>
+    <div class="sec-lbl" style="margin-bottom:16px">Let's work together</div>
+    <h2 class="c-h">Have a project<br><span class="d">in mind?</span></h2>
+    <p class="c-sub">Whether it's a single reel, a full social media strategy, or a complete brand — I'd love to hear what you're building. Let's make it great.</p>
+    <div class="c-links">
+      <a href="mailto:hello@sandy.ae" class="cl p">✉ Email me</a>
+      <a href="https://wa.me/971500000000" target="_blank" class="cl g">💬 WhatsApp</a>
+      <a href="https://behance.net" target="_blank" class="cl g">Behance</a>
+      <a href="https://instagram.com" target="_blank" class="cl g">Instagram</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="f-logo">Sandy</div>
+  <p>© 2025 · Sandy — Creative Digital Designer · Dubai, UAE</p>
+  <div class="f-links">
+    <a href="#" class="f-link">Behance</a>
+    <a href="#" class="f-link">Instagram</a>
+    <a href="#" class="f-link">LinkedIn</a>
+    <a href="#" class="f-link">WhatsApp</a>
+  </div>
+</footer>
+</div><!-- end page-home -->
+
+
+<!-- ═══════════════════════════════════
+     PAGE: PROJECT DETAIL
+═══════════════════════════════════ -->
+<div id="page-project">
+
+  <!-- Project sticky nav -->
+  <div class="proj-nav">
+    <button class="proj-nav-back" onclick="showHome()">← Back to work</button>
+    <div class="proj-nav-title" id="proj-nav-title">Project</div>
+    <div class="proj-nav-actions">
+      <button class="proj-nav-btn" onclick="prevProject()">← Prev</button>
+      <button class="proj-nav-btn" onclick="nextProject()">Next →</button>
+      <button class="proj-nav-btn primary" onclick="showHome();scrollTo('contact')">Work with me</button>
+    </div>
+  </div>
+
+  <!-- Project hero image -->
+  <div class="proj-hero">
+    <img class="proj-hero-img" id="proj-hero-img" src="" alt="">
+    <div class="proj-hero-overlay">
+      <div class="proj-cat-pill" id="proj-cat-pill"></div>
+      <h1 class="proj-hero-title" id="proj-hero-title"></h1>
+      <p class="proj-hero-subtitle" id="proj-hero-subtitle"></p>
+    </div>
+  </div>
+
+  <!-- Project body -->
+  <div class="proj-body">
+
+    <!-- Info row -->
+    <div class="proj-info-row">
+      <div class="pi"><div class="pi-label">Client</div><div class="pi-value" id="pi-client"></div></div>
+      <div class="pi"><div class="pi-label">Category</div><div class="pi-value" id="pi-cat"></div></div>
+      <div class="pi"><div class="pi-label">Year</div><div class="pi-value" id="pi-year"></div></div>
+      <div class="pi"><div class="pi-label">Deliverables</div><div class="pi-value" id="pi-deliv"></div></div>
+    </div>
+
+    <!-- Description -->
+    <p class="proj-desc" id="proj-desc"></p>
+
+    <!-- Images block 1 -->
+    <div class="proj-img-full">
+      <img id="img-full-1" src="" alt="">
+    </div>
+
+    <div class="proj-img-grid-2">
+      <img id="img-g2-1" src="" alt="">
+      <img id="img-g2-2" src="" alt="">
+    </div>
+
+    <hr class="proj-divider">
+
+    <!-- Section 2 -->
+    <h3 class="proj-section-title" id="proj-s2-title"></h3>
+    <p class="proj-section-body" id="proj-s2-body"></p>
+
+    <div class="proj-img-grid-3">
+      <img id="img-g3-1" src="" alt="">
+      <img id="img-g3-2" src="" alt="">
+      <img id="img-g3-3" src="" alt="">
+    </div>
+
+    <hr class="proj-divider">
+
+    <!-- Section 3 -->
+    <h3 class="proj-section-title" id="proj-s3-title"></h3>
+    <p class="proj-section-body" id="proj-s3-body"></p>
+
+    <div class="proj-img-tall">
+      <img id="img-tall-1" src="" alt="">
+      <div class="tall-stack">
+        <img id="img-tall-2" src="" alt="">
+        <img id="img-tall-3" src="" alt="">
+      </div>
+    </div>
+
+    <hr class="proj-divider">
+
+    <!-- Deliverables -->
+    <h3 class="proj-section-title">What was delivered</h3>
+    <div class="deliverables" id="proj-deliverables"></div>
+
+    <!-- Tags -->
+    <div class="proj-tags" id="proj-tags"></div>
+
+  </div><!-- end proj-body -->
+
+  <!-- Next project -->
+  <div class="next-project" id="next-proj-btn" onclick="nextProject()">
+    <div style="max-width:1080px;margin:0 auto;padding:0 32px">
+      <div class="next-lbl">Next Project</div>
+      <div class="next-title"><span id="next-title">—</span><div class="next-arrow">→</div></div>
+      <div class="next-meta" id="next-meta"></div>
+      <div class="next-thumb"><img id="next-thumb-img" src="" alt=""></div>
+    </div>
+  </div>
+
+</div><!-- end page-project -->
+
+
+<script>
+/* ─ DATA ─ */
+const PROJECTS = [
+  {
+    id:0, cat:'Social Media', title:'Instagram Growth Campaign',
+    subtitle:'Full content strategy & visual system for a UAE lifestyle brand',
+    client:'Luxe Living UAE', year:'2024', deliverable:'48 Posts · Stories · Highlights',
+    desc:`This project involved building a complete <strong>Instagram visual identity system</strong> for a UAE-based lifestyle brand. From content pillars to post templates, story designs, and highlight covers — every touchpoint was considered to create a cohesive, premium look that grew the account from 12K to 80K followers in 6 months.`,
+    s2title:'Visual Content System', s2body:`We developed a modular design system using Figma that allowed the social team to produce on-brand content daily without losing consistency. The system included 24 post templates, 12 story formats, and a full colour and typography guide.`,
+    s3title:'Results', s3body:`The campaign drove an 8× increase in reach, a 340% increase in saves, and converted the profile into a consistent lead-generation channel for the brand's e-commerce store.`,
+    deliverables:[
+      {ico:'🎨',t:'48 Post Designs',d:'Feed posts, carousels, and quote cards'},
+      {ico:'📱',t:'Story Templates',d:'12 animated story formats'},
+      {ico:'✦',t:'Highlight Covers',d:'Branded icon set for all categories'},
+      {ico:'📋',t:'Content Calendar',d:'3-month strategy and scheduling plan'},
+      {ico:'🔤',t:'Brand Guidelines',d:'Social-first typography and colour rules'},
+      {ico:'📊',t:'Performance Report',d:'Monthly analytics and optimisation'},
+    ],
+    tags:['Instagram','Content Strategy','Visual Design','Social Media','Reels','Branding'],
+    heroImg:'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=1600&q=85',
+    imgFull:'https://images.unsplash.com/photo-1512486130939-2c4f79935e4f?w=1200&q=80',
+    imgG2:['https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=700&q=80','https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=700&q=80'],
+    imgG3:['https://images.unsplash.com/photo-1611162616475-46b635cb6868?w=500&q=80','https://images.unsplash.com/photo-1611162618071-b39a2ec055fb?w=500&q=80','https://images.unsplash.com/photo-1618044619888-009e412ff12a?w=500&q=80'],
+    imgTall:['https://images.unsplash.com/photo-1432888622747-4eb9a8f5a07d?w=600&q=80','https://images.unsplash.com/photo-1543269865-cbf427effbad?w=700&q=80','https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=700&q=80'],
+    next:1
+  },
+  {
+    id:1, cat:'Real Estate', title:'Luxury Tower — Dubai',
+    subtitle:'Complete digital campaign and print collateral for a luxury off-plan tower',
+    client:'Emaar Properties', year:'2024', deliverable:'Brochure · Ads · Social',
+    desc:`A full-scope <strong>real estate marketing package</strong> for a luxury off-plan tower launch in Dubai Marina. The project included a 32-page sales brochure, digital ad creatives for Instagram and Google, a social media launch campaign, and animated property walkthrough content.`,
+    s2title:'Print & Digital Collateral', s2body:`The brochure was designed to sit in the premium segment — matte stock, foil cover, large-format photography, and clear floor plan diagrams. The digital assets adapted the same premium language for social and display advertising.`,
+    s3title:'Social Campaign', s3body:`A 30-day Instagram launch campaign was designed to build anticipation before registration opened. Teaser posts, countdown stories, and a launch-day reel drove 4,200+ leads in the first week.`,
+    deliverables:[
+      {ico:'📄',t:'32-Page Brochure',d:'Print-ready with floor plans & lifestyle shots'},
+      {ico:'🖼',t:'Ad Creatives',d:'Instagram, Facebook, Google Display sets'},
+      {ico:'📱',t:'Social Campaign',d:'30-day launch content plan'},
+      {ico:'🎬',t:'Launch Reel',d:'60-second property walkthrough video'},
+      {ico:'🗺',t:'Floor Plan Design',d:'Architectural drawings styled for marketing'},
+      {ico:'🌐',t:'Landing Page',d:'Lead capture page with CRM integration'},
+    ],
+    tags:['Real Estate','Dubai','Brochure Design','Social Ads','Motion','Landing Page'],
+    heroImg:'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1600&q=85',
+    imgFull:'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200&q=80',
+    imgG2:['https://images.unsplash.com/photo-1516156008625-3a9d6067fab5?w=700&q=80','https://images.unsplash.com/photo-1613977257592-4871e5fcd7c4?w=700&q=80'],
+    imgG3:['https://images.unsplash.com/photo-1574362848149-11496d93a7c7?w=500&q=80','https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=500&q=80','https://images.unsplash.com/photo-1484154218962-a197022b5858?w=500&q=80'],
+    imgTall:['https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&q=80','https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=700&q=80','https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=700&q=80'],
+    next:2
+  },
+  {
+    id:2, cat:'Branding', title:'F&B Brand Full Kit',
+    subtitle:'Complete brand identity for a high-end Dubai restaurant group',
+    client:'Al Nawras Group', year:'2024', deliverable:'Logo · Brand System · Print',
+    desc:`A complete <strong>brand identity system</strong> for a premium F&B group launching three restaurants across Dubai. The project covered logo design, full brand guidelines, menu design, staff uniforms, packaging, social media templates, and a brand launch campaign.`,
+    s2title:'Identity System', s2body:`The brand identity was built around a refined Arabic-inspired geometric motif, combining modern typography with cultural reference. The system works across every format — from menus and packaging to billboards and digital ads.`,
+    s3title:'Application Across Touchpoints', s3body:`Every customer touchpoint was designed as part of the brand experience — from the first Instagram ad to the physical menu in-restaurant. Consistency was the goal, premium was the result.`,
+    deliverables:[
+      {ico:'✦',t:'Logo Design',d:'Primary mark + variations + icon'},
+      {ico:'📖',t:'Brand Guidelines',d:'60-page comprehensive brand bible'},
+      {ico:'🍽',t:'Menu Design',d:'Print menus for 3 restaurant concepts'},
+      {ico:'📦',t:'Packaging',d:'Takeaway bags, cups, boxes'},
+      {ico:'📱',t:'Social Templates',d:'Complete Instagram and TikTok kit'},
+      {ico:'🖨',t:'Print Collateral',d:'Business cards, signage, uniforms'},
+    ],
+    tags:['Branding','F&B','Logo Design','Brand Guidelines','Print','Social Media'],
+    heroImg:'https://images.unsplash.com/photo-1634084462412-b54873c0a56d?w=1600&q=85',
+    imgFull:'https://images.unsplash.com/photo-1559925393-8be0ec4767c8?w=1200&q=80',
+    imgG2:['https://images.unsplash.com/photo-1591456983933-0c4e8a0e4e4e?w=700&q=80','https://images.unsplash.com/photo-1600269452121-4f2416e55c28?w=700&q=80'],
+    imgG3:['https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=500&q=80','https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?w=500&q=80','https://images.unsplash.com/photo-1495214783159-3503fd1b572d?w=500&q=80'],
+    imgTall:['https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?w=600&q=80','https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=700&q=80','https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=700&q=80'],
+    next:3
+  },
+  {
+    id:3, cat:'Reels & Video', title:'Product Launch Reel',
+    subtitle:'Multi-platform video campaign for a luxury skincare brand launch',
+    client:'GLOW Skincare', year:'2024', deliverable:'Reels · Motion · Ads',
+    desc:`A <strong>short-form video campaign</strong> for a luxury skincare brand launching across the UAE and KSA. The project included a hero brand film, 9×16 Instagram reels, TikTok-native content, YouTube pre-roll ads, and animated product feature clips.`,
+    s2title:'Motion Design System', s2body:`All video content was built from a unified motion language — consistent timing, transitions, and typography animation that made every piece instantly recognisable as the same brand, whether watched on TikTok or in a YouTube ad.`,
+    s3title:'Platform Adaptation', s3body:`Each video was natively adapted for its platform — not just resized. TikTok versions used trending sounds and formats. Instagram reels led with product ASMR. YouTube ads front-loaded the brand message for skip-resistance.`,
+    deliverables:[
+      {ico:'🎬',t:'Hero Brand Film',d:'60-second brand story film'},
+      {ico:'📱',t:'Instagram Reels',d:'8× 9:16 reels, 15–30 seconds'},
+      {ico:'🎵',t:'TikTok Content',d:'6× TikTok-native videos'},
+      {ico:'▶',t:'YouTube Ads',d:'Pre-roll and bumper ad versions'},
+      {ico:'✨',t:'Product Animations',d:'Animated feature call-outs'},
+      {ico:'📊',t:'Ad Creatives',d:'Static + animated performance ads'},
+    ],
+    tags:['Reels','Video','Motion Design','TikTok','Instagram','Advertising'],
+    heroImg:'https://images.unsplash.com/photo-1492619375914-88005aa9e8fb?w=1600&q=85',
+    imgFull:'https://images.unsplash.com/photo-1536240478700-b869ad10e2c0?w=1200&q=80',
+    imgG2:['https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=700&q=80','https://images.unsplash.com/photo-1601933470096-0e34634ffcde?w=700&q=80'],
+    imgG3:['https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=500&q=80','https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=500&q=80','https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=500&q=80'],
+    imgTall:['https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=600&q=80','https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=700&q=80','https://images.unsplash.com/photo-1576426863848-c21f53c60b19?w=700&q=80'],
+    next:4
+  },
+  {
+    id:4, cat:'Web Design', title:'Real Estate Landing Page',
+    subtitle:'High-converting lead-generation page for a Dubai property launch',
+    client:'Nakheel Developers', year:'2024', deliverable:'UI Design · Webflow · CRM',
+    desc:`A <strong>high-converting landing page</strong> built for a luxury off-plan property registration campaign. The page achieved a 34% conversion rate — converting visitor interest into registered leads via an integrated HubSpot CRM pipeline. Designed in Figma, built in Webflow.`,
+    s2title:'UX & Conversion Design', s2body:`Every element was designed with conversion in mind — social proof above the fold, a sticky CTA bar, WhatsApp integration, and a multi-step form that reduced friction and increased completion rates by 62% versus the client's previous page.`,
+    s3title:'CRM Integration', s3body:`The lead form connects directly to HubSpot, triggering automated WhatsApp confirmation messages, email sequences, and sales team notifications — creating a seamless handoff from digital interest to human follow-up.`,
+    deliverables:[
+      {ico:'🎨',t:'UI Design',d:'Full Figma prototype and design system'},
+      {ico:'🌐',t:'Webflow Build',d:'Production-ready responsive site'},
+      {ico:'📊',t:'CRM Integration',d:'HubSpot pipeline + automations'},
+      {ico:'💬',t:'WhatsApp CTA',d:'Click-to-WhatsApp with pre-filled message'},
+      {ico:'📱',t:'Mobile First',d:'Optimised for UAE mobile traffic'},
+      {ico:'⚡',t:'Performance',d:'Sub-2s load time, 95+ Lighthouse score'},
+    ],
+    tags:['Web Design','Landing Page','Webflow','HubSpot','CRM','Real Estate','Conversion'],
+    heroImg:'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=1600&q=85',
+    imgFull:'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&q=80',
+    imgG2:['https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=700&q=80','https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=700&q=80'],
+    imgG3:['https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=500&q=80','https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=500&q=80','https://images.unsplash.com/photo-1516321497487-e288fb19713f?w=500&q=80'],
+    imgTall:['https://images.unsplash.com/photo-1555421689-491a97ff2040?w=600&q=80','https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=700&q=80','https://images.unsplash.com/photo-1522542550221-31fd19575a2d?w=700&q=80'],
+    next:5
+  },
+  {
+    id:5, cat:'Social Media', title:'30-Day Story Series',
+    subtitle:'Daily Instagram story campaign for a UAE fashion brand',
+    client:'Bloom Fashion', year:'2023', deliverable:'30 Stories · Highlights · Copy',
+    desc:`A <strong>30-day daily Instagram story campaign</strong> for a UAE fashion brand leading up to their summer collection launch. Each story was individually designed with motion elements, copywriting, and interactive stickers to drive profile visits, DMs, and product saves.`,
+    s2title:'Story Design System', s2body:`Rather than isolated designs, we built a connected narrative — each day's story advanced a visual storyline that rewarded followers who came back daily. The consistent visual language and recurring characters made it binge-worthy content.`,
+    s3title:'Results', s3body:`The campaign generated 2.3M story impressions, a 440% increase in DMs, and converted 18% of viewers to website visits on launch day. The highlight covers now serve as a permanent branded feature on the profile.`,
+    deliverables:[
+      {ico:'📱',t:'30 Story Designs',d:'Daily unique story designs with motion'},
+      {ico:'✍',t:'Copywriting',d:'All captions, CTAs, and link text'},
+      {ico:'✦',t:'Highlight Covers',d:'Branded icons for 8 highlight categories'},
+      {ico:'🎬',t:'Motion Elements',d:'Animated overlays and transitions'},
+      {ico:'📊',t:'Analytics Report',d:'Daily tracking and performance summary'},
+      {ico:'📋',t:'Content Calendar',d:'Scheduled posting plan with reminders'},
+    ],
+    tags:['Instagram','Stories','Social Media','Motion','Copywriting','Fashion'],
+    heroImg:'https://images.unsplash.com/photo-1563986768609-322da13575f3?w=1600&q=85',
+    imgFull:'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=1200&q=80',
+    imgG2:['https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=700&q=80','https://images.unsplash.com/photo-1485230895905-ec40ba36b9bc?w=700&q=80'],
+    imgG3:['https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=500&q=80','https://images.unsplash.com/photo-1509631179647-0177331693ae?w=500&q=80','https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=500&q=80'],
+    imgTall:['https://images.unsplash.com/photo-1483985988355-763728e1935b?w=600&q=80','https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&q=80','https://images.unsplash.com/photo-1532453288672-3a17f2e980ae?w=700&q=80'],
+    next:0
+  }
+];
+
+let currentProject = 0;
+
+function openProject(idx){
+  currentProject = idx;
+  const p = PROJECTS[idx];
+  const next = PROJECTS[p.next];
+
+  // populate
+  document.getElementById('proj-nav-title').textContent = p.title;
+  document.getElementById('proj-hero-img').src = p.heroImg;
+  document.getElementById('proj-cat-pill').textContent = p.cat;
+  document.getElementById('proj-hero-title').textContent = p.title;
+  document.getElementById('proj-hero-subtitle').textContent = p.subtitle;
+  document.getElementById('pi-client').textContent = p.client;
+  document.getElementById('pi-cat').textContent = p.cat;
+  document.getElementById('pi-year').textContent = p.year;
+  document.getElementById('pi-deliv').textContent = p.deliverable;
+  document.getElementById('proj-desc').innerHTML = p.desc;
+  document.getElementById('img-full-1').src = p.imgFull;
+  document.getElementById('img-g2-1').src = p.imgG2[0];
+  document.getElementById('img-g2-2').src = p.imgG2[1];
+  document.getElementById('img-g3-1').src = p.imgG3[0];
+  document.getElementById('img-g3-2').src = p.imgG3[1];
+  document.getElementById('img-g3-3').src = p.imgG3[2];
+  document.getElementById('proj-s2-title').textContent = p.s2title;
+  document.getElementById('proj-s2-body').textContent = p.s2body;
+  document.getElementById('proj-s3-title').textContent = p.s3title;
+  document.getElementById('proj-s3-body').textContent = p.s3body;
+  document.getElementById('img-tall-1').src = p.imgTall[0];
+  document.getElementById('img-tall-2').src = p.imgTall[1];
+  document.getElementById('img-tall-3').src = p.imgTall[2];
+
+  // deliverables
+  document.getElementById('proj-deliverables').innerHTML = p.deliverables.map(d=>
+    `<div class="deliv-card"><span class="deliv-ico">${d.ico}</span><div class="deliv-title">${d.t}</div><div class="deliv-desc">${d.d}</div></div>`
+  ).join('');
+
+  // tags
+  document.getElementById('proj-tags').innerHTML = p.tags.map(t=>
+    `<span class="proj-tag">${t}</span>`
+  ).join('');
+
+  // next project
+  document.getElementById('next-title').textContent = next.title;
+  document.getElementById('next-meta').textContent = next.cat + ' · ' + next.year;
+  document.getElementById('next-thumb-img').src = next.heroImg;
+
+  // show project page
+  document.getElementById('page-home').style.display = 'none';
+  document.getElementById('page-project').style.display = 'block';
+  window.scrollTo(0,0);
+}
+
+function showHome(){
+  document.getElementById('page-project').style.display = 'none';
+  document.getElementById('page-home').style.display = 'block';
+  window.scrollTo(0,0);
+}
+
+function nextProject(){
+  openProject(PROJECTS[currentProject].next);
+}
+
+function prevProject(){
+  const prev = PROJECTS.find((p,i)=>p.next===currentProject);
+  if(prev) openProject(prev.id);
+}
+
+/* CURSOR */
+const dot = document.getElementById('dot');
+let cx=0,cy=0;
+document.addEventListener('mousemove',e=>{cx=e.clientX;cy=e.clientY;dot.style.left=cx+'px';dot.style.top=cy+'px'});
+document.querySelectorAll('button,a,.bc,.rc,.sc,.tool,.wfb,.deliv-card,.next-project').forEach(el=>{
+  el.addEventListener('mouseenter',()=>dot.classList.add('lg'));
+  el.addEventListener('mouseleave',()=>dot.classList.remove('lg'));
+});
+
+/* THEME */
+let dark=true;
+document.getElementById('tb').addEventListener('click',()=>{
+  dark=!dark;
+  document.body.classList.toggle('light',!dark);
+  document.getElementById('tb').textContent=dark?'☀':'☾';
+});
+
+/* NAV SCROLL */
+window.addEventListener('scroll',()=>{
+  document.getElementById('nav').style.background=dark
+    ?(window.scrollY>30?'rgba(0,0,0,.92)':'rgba(0,0,0,.78)')
+    :(window.scrollY>30?'rgba(255,255,255,.92)':'rgba(255,255,255,.78)');
+},{passive:true});
+
+/* FILTER */
+function fw(btn,cat){
+  document.querySelectorAll('.wfb').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('.bc').forEach(c=>{
+    const m=cat==='all'||c.dataset.c===cat;
+    c.style.opacity=m?'1':'0.1';
+    c.style.pointerEvents=m?'auto':'none';
+    c.style.transition='opacity .3s';
+  });
+}
+
+/* REVEAL */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')}),{threshold:.07});
+document.querySelectorAll('.r').forEach(el=>io.observe(el));
+setTimeout(()=>document.querySelectorAll('.r').forEach(el=>{if(el.getBoundingClientRect().top<window.innerHeight)el.classList.add('in')}),80);
+
+/* SCROLL TO */
+function scrollTo(id){
+  setTimeout(()=>{
+    const el=document.getElementById(id);
+    if(el)el.scrollIntoView({behavior:'smooth'});
+  },100);
+}
+
+/* SMOOTH LINKS */
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'})}
+  });
+});
+</script>
+</body>
+</html>
