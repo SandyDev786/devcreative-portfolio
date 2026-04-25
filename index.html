@@ -3,71 +3,67 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sandy — Creative Digital Designer</title>
+<title>Sandy — Portfolio</title>
 <style>
 :root{
-  --bg:#000;--bg1:#0a0a0a;--bg2:#111;--bg3:#1c1c1c;--bg4:#242424;
+  --bg:#000;--bg1:#0a0a0a;--bg2:#111;--bg3:#1c1c1c;
   --line:rgba(255,255,255,.07);--line2:rgba(255,255,255,.12);--line3:rgba(255,255,255,.2);
   --text:#f5f5f7;--muted:rgba(245,245,247,.52);--dim:rgba(245,245,247,.22);
-  --blue:#2997ff;--ease:cubic-bezier(.4,0,.2,1);--spring:cubic-bezier(.34,1.56,.64,1);
+  --blue:#2997ff;--red:#ff453a;--green:#30d158;--orange:#ff9f0a;
+  --ease:cubic-bezier(.4,0,.2,1);--spring:cubic-bezier(.34,1.56,.64,1);
   --r:20px;--r-sm:14px;
 }
 .light{
-  --bg:#fff;--bg1:#f5f5f7;--bg2:#e8e8ea;--bg3:#d8d8da;--bg4:#c8c8ca;
-  --line:rgba(0,0,0,.06);--line2:rgba(0,0,0,.11);--line3:rgba(0,0,0,.2);
+  --bg:#fff;--bg1:#f5f5f7;--bg2:#e8e8ea;--bg3:#d8d8da;
+  --line:rgba(0,0,0,.07);--line2:rgba(0,0,0,.12);--line3:rgba(0,0,0,.2);
   --text:#1d1d1f;--muted:rgba(29,29,31,.52);--dim:rgba(29,29,31,.22);
 }
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+*{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;overflow-x:hidden}
-body{background:var(--bg);color:var(--text);font-family:-apple-system,'SF Pro Display','Helvetica Neue',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;cursor:none}
-
-/* CURSOR */
-#dot{position:fixed;z-index:9999;pointer-events:none;width:7px;height:7px;background:var(--text);border-radius:50%;transform:translate(-50%,-50%);transition:width .22s var(--ease),height .22s var(--ease);mix-blend-mode:difference}
-#dot.lg{width:44px;height:44px;background:rgba(255,255,255,.08);border:.5px solid rgba(255,255,255,.25)}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,'SF Pro Display','Helvetica Neue',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;line-height:1}
 
 /* NAV */
-nav{position:fixed;inset:0 0 auto;z-index:300;height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 32px;background:rgba(0,0,0,.78);backdrop-filter:saturate(180%) blur(24px);border-bottom:.5px solid var(--line);transition:background .3s}
+nav{position:fixed;inset:0 0 auto;z-index:300;height:54px;display:flex;align-items:center;justify-content:space-between;padding:0 32px;background:rgba(0,0,0,.78);backdrop-filter:saturate(180%) blur(24px);border-bottom:.5px solid var(--line);transition:background .3s}
 .light nav{background:rgba(255,255,255,.78)}
-.n-logo{font-size:17px;font-weight:700;letter-spacing:-.4px;cursor:none}
+.n-logo{font-size:17px;font-weight:700;letter-spacing:-.4px}
 .n-logo a{color:var(--text);text-decoration:none}
-.n-mid{position:absolute;left:50%;transform:translateX(-50%);display:flex;gap:28px}
-.n-mid a{font-size:13px;font-weight:400;color:var(--muted);text-decoration:none;transition:color .2s}
+.n-mid{position:absolute;left:50%;transform:translateX(-50%);display:flex;gap:24px;align-items:center}
+.n-mid a{font-size:13px;font-weight:400;color:var(--muted);text-decoration:none;transition:color .2s;cursor:pointer}
 .n-mid a:hover{color:var(--text)}
-.n-right{display:flex;align-items:center;gap:10px}
-.n-theme{width:32px;height:32px;border-radius:50%;background:none;border:none;color:var(--muted);font-size:14px;cursor:none;display:flex;align-items:center;justify-content:center;transition:color .2s,background .2s}
+.n-right{display:flex;align-items:center;gap:8px}
+.n-btn{border:none;font-family:inherit;cursor:pointer;display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:100px;font-size:13px;font-weight:500;transition:all .2s}
+.n-theme{width:32px;height:32px;border-radius:50%;background:none;border:none;color:var(--muted);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:color .2s,background .2s;padding:0}
 .n-theme:hover{color:var(--text);background:var(--bg2)}
-.n-cta{background:var(--blue);color:#fff;border:none;padding:8px 18px;border-radius:100px;font-size:13px;font-weight:500;cursor:none;font-family:inherit;transition:filter .2s,transform .15s var(--spring)}
+.n-settings{background:rgba(255,159,10,.14);color:var(--orange);border:.5px solid rgba(255,159,10,.32)}
+.n-settings:hover{background:rgba(255,159,10,.22);border-color:rgba(255,159,10,.5)}
+.n-create{background:rgba(48,209,88,.14);color:var(--green);border:.5px solid rgba(48,209,88,.32)}
+.n-create:hover{background:rgba(48,209,88,.22);border-color:rgba(48,209,88,.5)}
+.n-cta{background:var(--blue);color:#fff;border:none}
 .n-cta:hover{filter:brightness(1.14);transform:scale(1.03)}
 
-/* ═══════════════════════════════════════
-   PAGE: HOME
-═══════════════════════════════════════ */
-#page-home{display:block}
-#page-project{display:none}
+.page{display:none}
+.page.active{display:block}
 
 /* HERO */
-#hero{min-height:100vh;display:grid;grid-template-columns:1fr 400px;align-items:center;gap:64px;padding:52px 32px 0;max-width:1140px;margin:0 auto;position:relative}
+#hero{min-height:calc(100vh - 54px);display:grid;grid-template-columns:1fr 400px;align-items:center;gap:60px;padding:80px 32px 60px;max-width:1140px;margin:0 auto;position:relative}
 .hero-glow{position:absolute;top:-100px;left:-80px;width:600px;height:500px;background:radial-gradient(ellipse,rgba(41,151,255,.06) 0%,transparent 65%);pointer-events:none}
-.h-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(41,151,255,.1);border:.5px solid rgba(41,151,255,.22);padding:6px 14px;border-radius:100px;font-size:12px;font-weight:500;color:var(--blue);margin-bottom:24px;opacity:0;animation:up .6s .1s var(--ease) forwards}
-.h-badge::before{content:'';width:5px;height:5px;background:var(--blue);border-radius:50%;animation:blink 2.5s infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
-.h-name{font-size:clamp(56px,6vw,86px);font-weight:700;line-height:1.02;letter-spacing:-.04em;margin-bottom:10px;opacity:0;animation:up .75s .2s var(--ease) forwards}
-.h-title{font-size:clamp(56px,6vw,86px);font-weight:700;line-height:1.02;letter-spacing:-.04em;color:transparent;-webkit-text-stroke:1px var(--dim);margin-bottom:32px;opacity:0;animation:up .75s .3s var(--ease) forwards}
-.h-bio{font-size:17px;font-weight:300;line-height:1.7;color:var(--muted);max-width:460px;margin-bottom:32px;opacity:0;animation:up .7s .42s var(--ease) forwards}
+.h-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(41,151,255,.1);border:.5px solid rgba(41,151,255,.22);padding:6px 14px;border-radius:100px;font-size:12px;font-weight:500;color:var(--blue);margin-bottom:24px}
+.h-name{font-size:clamp(56px,6vw,86px);font-weight:700;line-height:1.02;letter-spacing:-.04em;margin-bottom:10px}
+.h-title{font-size:clamp(56px,6vw,86px);font-weight:700;line-height:1.02;letter-spacing:-.04em;color:transparent;-webkit-text-stroke:1px var(--dim);margin-bottom:32px}
+.h-bio{font-size:17px;font-weight:300;line-height:1.7;color:var(--muted);max-width:460px;margin-bottom:32px}
 .h-bio strong{color:var(--text);font-weight:500}
-.h-cta{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:52px;opacity:0;animation:up .6s .52s var(--ease) forwards}
-.btn-blue{background:var(--blue);color:#fff;border:none;padding:14px 26px;border-radius:100px;font-size:15px;font-weight:500;cursor:none;font-family:inherit;transition:filter .2s,transform .15s var(--spring)}
+.h-cta{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:52px}
+.btn-blue{background:var(--blue);color:#fff;border:none;padding:14px 26px;border-radius:100px;font-size:15px;font-weight:500;cursor:pointer;font-family:inherit;transition:filter .2s,transform .15s var(--spring)}
 .btn-blue:hover{filter:brightness(1.12);transform:scale(1.02)}
-.btn-ghost{background:var(--bg2);color:var(--text);border:.5px solid var(--line2);padding:14px 26px;border-radius:100px;font-size:15px;font-weight:500;cursor:none;font-family:inherit;transition:background .2s,transform .15s var(--spring)}
+.btn-ghost{background:var(--bg2);color:var(--text);border:.5px solid var(--line2);padding:14px 26px;border-radius:100px;font-size:15px;font-weight:500;cursor:pointer;font-family:inherit;transition:background .2s,transform .15s var(--spring)}
 .btn-ghost:hover{background:var(--bg3);transform:scale(1.02)}
-.h-stats{display:flex;gap:0;border-top:.5px solid var(--line);padding-top:28px;opacity:0;animation:up .6s .65s var(--ease) forwards}
+.h-stats{display:flex;border-top:.5px solid var(--line);padding-top:28px}
 .hs{flex:1}
 .hs+.hs{border-left:.5px solid var(--line);padding-left:24px}
 .hsn{font-size:36px;font-weight:600;letter-spacing:-.04em;display:block;line-height:1}
 .hsl{font-size:11px;color:var(--dim);margin-top:4px;display:block;text-transform:uppercase;letter-spacing:.04em}
 
-/* HERO PHOTO */
-.hero-right{opacity:0;animation:up .8s .3s var(--ease) forwards;padding-bottom:52px}
+.hero-right{padding-bottom:52px}
 .photo-wrap{position:relative;border-radius:28px;overflow:hidden;border:.5px solid var(--line2)}
 .photo-wrap img{width:100%;display:block;aspect-ratio:3/4;object-fit:cover}
 .photo-tag{position:absolute;bottom:18px;left:18px;background:rgba(0,0,0,.72);backdrop-filter:blur(16px);border:.5px solid rgba(255,255,255,.12);padding:10px 16px;border-radius:12px}
@@ -75,80 +71,50 @@ nav{position:fixed;inset:0 0 auto;z-index:300;height:52px;display:flex;align-ite
 .pt-role{font-size:11px;color:rgba(245,245,247,.55);margin-top:2px}
 .photo-loc{position:absolute;top:18px;right:18px;background:rgba(0,0,0,.65);backdrop-filter:blur(10px);border:.5px solid rgba(41,151,255,.28);color:var(--blue);font-size:11px;font-weight:500;padding:5px 12px;border-radius:100px}
 
-/* SCROLL HINT */
-.scroll-hint{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--dim);font-size:11px;font-weight:500;letter-spacing:.04em;opacity:0;animation:up .5s 1.1s var(--ease) forwards}
-.s-line{width:1px;height:44px;background:linear-gradient(to bottom,var(--line3),transparent);animation:pulse 2.2s 1.5s ease-in-out infinite}
-@keyframes pulse{0%,100%{opacity:.3}50%{opacity:1}}
-
-/* MARQUEE */
 .mq{border-top:.5px solid var(--line);border-bottom:.5px solid var(--line);padding:14px 0;overflow:hidden;background:var(--bg1)}
 .mq-t{display:flex;gap:52px;animation:mq 22s linear infinite;white-space:nowrap}
 .mq-t span{font-size:12px;font-weight:500;color:var(--dim);letter-spacing:.06em;text-transform:uppercase}
 .mq-t i{color:rgba(41,151,255,.4);font-style:normal;font-size:8px}
 @keyframes mq{to{transform:translateX(-50%)}}
 
-/* SECTION */
-.sec{padding:96px 32px;max-width:1140px;margin:0 auto}
+.sec{padding:80px 32px;max-width:1140px;margin:0 auto}
 .sec-lbl{font-size:11px;font-weight:600;color:var(--blue);letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px}
-.sec-h{font-size:clamp(36px,4vw,54px);font-weight:700;letter-spacing:-.04em;line-height:1.04;margin-bottom:48px}
+.sec-h{font-size:clamp(36px,4vw,54px);font-weight:700;letter-spacing:-.04em;line-height:1.04;margin-bottom:16px}
 .sec-h .d{color:var(--dim)}
+.sec-head-row{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:32px}
+.sec-head-row .sec-h{margin-bottom:0}
 
-/* ABOUT */
-.about-wrap{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--bg2);border-radius:var(--r);overflow:hidden}
-.about-l{background:var(--bg1);padding:52px 44px;display:flex;flex-direction:column;gap:20px}
-.about-name{font-size:52px;font-weight:700;letter-spacing:-.04em;line-height:1}
-.about-role{display:inline-flex;align-items:center;gap:8px;background:rgba(41,151,255,.1);border:.5px solid rgba(41,151,255,.22);padding:7px 16px;border-radius:100px;font-size:13px;font-weight:500;color:var(--blue);align-self:flex-start}
-.about-bio{font-size:16px;line-height:1.75;color:var(--muted);font-weight:300}
-.about-bio strong{color:var(--text);font-weight:500}
-.about-tools{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
-.tool{background:var(--bg2);border:.5px solid var(--line2);color:var(--muted);font-size:12px;font-weight:400;padding:6px 14px;border-radius:100px;transition:all .2s}
-.tool:hover{background:var(--bg3);color:var(--text);border-color:var(--line3)}
-.about-r{background:var(--bg1);padding:52px 44px;display:flex;flex-direction:column;gap:24px}
-.portrait{flex:1;min-height:280px;border-radius:var(--r-sm);overflow:hidden;border:.5px solid var(--line)}
-.portrait img{width:100%;height:100%;object-fit:cover;display:block}
-.about-stats{display:flex;gap:0;border-top:.5px solid var(--line);padding-top:24px}
-.as{flex:1;text-align:center}
-.as+.as{border-left:.5px solid var(--line)}
-.asn{font-size:32px;font-weight:600;letter-spacing:-.04em;display:block;line-height:1}
-.asl{font-size:10px;color:var(--dim);margin-top:4px;display:block;text-transform:uppercase;letter-spacing:.04em}
-
-/* WORK */
-.wfilter{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px}
-.wfb{background:none;border:.5px solid var(--line2);color:var(--muted);padding:8px 18px;border-radius:100px;font-size:12px;font-weight:500;cursor:none;font-family:inherit;transition:all .2s,transform .15s var(--spring)}
+.wfilter{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+.wfb{background:none;border:.5px solid var(--line2);color:var(--muted);padding:8px 18px;border-radius:100px;font-size:12px;font-weight:500;cursor:pointer;font-family:inherit;transition:all .2s}
 .wfb:hover{color:var(--text);border-color:var(--line3)}
 .wfb.on{background:var(--text);color:var(--bg);border-color:var(--text)}
 
-/* BENTO GRID */
-.bento{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:260px;gap:3px;background:var(--bg2);border-radius:var(--r);overflow:hidden}
-.bc{background:var(--bg1);position:relative;overflow:hidden;cursor:none}
+.bento{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:260px;gap:3px;background:var(--bg2);border-radius:var(--r);overflow:hidden;min-height:260px}
+.bc{background:var(--bg1);position:relative;overflow:hidden;cursor:pointer}
 .bc.w2{grid-column:span 2}
 .bc-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
 .bc:hover .bc-img{transform:scale(1.06)}
-.bc-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.9) 0%,rgba(0,0,0,.3) 40%,transparent 65%);opacity:0;transition:opacity .35s var(--ease);display:flex;flex-direction:column;justify-content:flex-end;padding:22px}
+.bc-ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;color:var(--dim);font-size:12px}
+.bc-ph .ic{font-size:32px;opacity:.4}
+.bc-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.92) 0%,rgba(0,0,0,.3) 40%,transparent 65%);opacity:0;transition:opacity .35s var(--ease);display:flex;flex-direction:column;justify-content:flex-end;padding:22px}
 .bc:hover .bc-ov{opacity:1}
 .bc-cat{font-size:10px;font-weight:600;color:var(--blue);letter-spacing:.06em;text-transform:uppercase;margin-bottom:5px}
 .bc-title{font-size:18px;font-weight:600;color:#fff;letter-spacing:-.02em;margin-bottom:3px}
-.bc-meta{font-size:11px;color:rgba(255,255,255,.45)}
-.bc-pill{position:absolute;top:14px;right:14px;background:rgba(0,0,0,.65);backdrop-filter:blur(10px);border:.5px solid rgba(255,255,255,.12);color:rgba(255,255,255,.7);font-size:10px;font-weight:500;padding:4px 11px;border-radius:100px}
-.bc-arrow{position:absolute;top:14px;left:14px;width:32px;height:32px;background:rgba(0,0,0,.65);backdrop-filter:blur(10px);border:.5px solid rgba(255,255,255,.12);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;opacity:0;transition:opacity .3s,transform .3s var(--spring)}
-.bc:hover .bc-arrow{opacity:1;transform:scale(1.1)}
+.bc-meta{font-size:11px;color:rgba(255,255,255,.5)}
+.bc-pill{position:absolute;top:14px;right:14px;background:rgba(0,0,0,.7);backdrop-filter:blur(10px);border:.5px solid rgba(255,255,255,.12);color:rgba(255,255,255,.7);font-size:10px;font-weight:500;padding:4px 11px;border-radius:100px}
+.bc-actions{position:absolute;top:14px;left:14px;display:flex;gap:6px;opacity:0;transition:opacity .25s}
+.bc:hover .bc-actions{opacity:1}
+.bc-act{width:32px;height:32px;border-radius:50%;background:rgba(0,0,0,.78);backdrop-filter:blur(10px);border:.5px solid rgba(255,255,255,.16);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;transition:background .2s}
+.bc-act:hover{background:rgba(0,0,0,.95)}
+.bc-act.del:hover{background:rgba(255,69,58,.85);border-color:rgba(255,69,58,.95)}
 
-/* REELS */
-.reel-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;background:var(--bg2);border-radius:var(--r);overflow:hidden}
-.rc{background:var(--bg1);position:relative;overflow:hidden;cursor:none}
-.rc-img{width:100%;aspect-ratio:9/16;object-fit:cover;display:block;transition:transform .5s var(--ease)}
-.rc:hover .rc-img{transform:scale(1.05)}
-.rc-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.9) 0%,transparent 50%);display:flex;flex-direction:column;justify-content:flex-end;padding:14px}
-.rc-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.3);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;transition:all .25s var(--spring)}
-.rc:hover .rc-play{background:rgba(255,255,255,.2);transform:translate(-50%,-50%) scale(1.12)}
-.rc-title{font-size:13px;font-weight:500;color:#fff;letter-spacing:-.01em;margin-bottom:2px}
-.rc-sub{font-size:10px;color:rgba(255,255,255,.45)}
-.rc-fmt{position:absolute;top:10px;left:10px;background:rgba(0,0,0,.6);backdrop-filter:blur(8px);font-size:9px;font-weight:600;color:rgba(255,255,255,.6);padding:3px 8px;border-radius:100px}
-.rc-dur{position:absolute;top:10px;right:10px;background:rgba(0,0,0,.6);backdrop-filter:blur(8px);font-size:9px;font-weight:600;color:rgba(255,255,255,.6);padding:3px 7px;border-radius:5px}
+.empty-state{grid-column:1/-1;background:var(--bg1);border:.5px dashed var(--line2);border-radius:var(--r);padding:80px 32px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:14px;min-height:260px;justify-content:center}
+.empty-ic{font-size:40px;opacity:.4;margin-bottom:6px}
+.empty-h{font-size:20px;font-weight:600;letter-spacing:-.03em}
+.empty-sub{font-size:14px;color:var(--muted);font-weight:300;line-height:1.6;max-width:380px;margin:0 auto}
 
-/* SERVICES */
 .svc-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;background:var(--bg2);border-radius:var(--r);overflow:hidden}
-.sc{background:var(--bg1);padding:32px 28px;cursor:none;position:relative;overflow:hidden;transition:background .2s}
+.sc{background:var(--bg1);padding:32px 28px;position:relative;overflow:hidden;transition:background .2s}
 .sc:hover{background:var(--bg2)}
 .sc::after{content:'';position:absolute;bottom:0;left:0;right:0;height:.5px;background:linear-gradient(to right,var(--blue),transparent);transform:scaleX(0);transform-origin:left;transition:transform .4s var(--ease)}
 .sc:hover::after{transform:scaleX(1)}
@@ -158,20 +124,30 @@ nav{position:fixed;inset:0 0 auto;z-index:300;height:52px;display:flex;align-ite
 .sc-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:18px}
 .sc-tag{background:var(--bg2);border:.5px solid var(--line);color:var(--dim);font-size:11px;padding:4px 12px;border-radius:100px}
 
-/* CONTACT */
-.contact-wrap{background:var(--bg1);border:.5px solid var(--line);border-radius:var(--r);padding:88px 48px;text-align:center;position:relative;overflow:hidden}
+.about-wrap{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--bg2);border-radius:var(--r);overflow:hidden}
+.about-l{background:var(--bg1);padding:48px 40px;display:flex;flex-direction:column;gap:18px}
+.about-name{font-size:48px;font-weight:700;letter-spacing:-.04em;line-height:1}
+.about-role{display:inline-flex;align-items:center;gap:8px;background:rgba(41,151,255,.1);border:.5px solid rgba(41,151,255,.22);padding:7px 16px;border-radius:100px;font-size:13px;font-weight:500;color:var(--blue);align-self:flex-start}
+.about-bio{font-size:16px;line-height:1.75;color:var(--muted);font-weight:300}
+.about-bio strong{color:var(--text);font-weight:500}
+.about-tools{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.tool{background:var(--bg2);border:.5px solid var(--line2);color:var(--muted);font-size:12px;padding:6px 14px;border-radius:100px}
+.about-r{background:var(--bg1);padding:48px 40px}
+.portrait{width:100%;aspect-ratio:3/4;border-radius:var(--r-sm);overflow:hidden;border:.5px solid var(--line)}
+.portrait img{width:100%;height:100%;object-fit:cover;display:block}
+
+.contact-wrap{background:var(--bg1);border:.5px solid var(--line);border-radius:var(--r);padding:80px 48px;text-align:center;position:relative;overflow:hidden}
 .c-glow{position:absolute;bottom:-60px;left:50%;transform:translateX(-50%);width:520px;height:320px;pointer-events:none;background:radial-gradient(ellipse,rgba(41,151,255,.06) 0%,transparent 65%)}
 .c-h{font-size:clamp(44px,5.5vw,76px);font-weight:700;letter-spacing:-.04em;line-height:1.03;margin-bottom:18px}
 .c-h .d{color:var(--dim)}
 .c-sub{font-size:17px;color:var(--muted);font-weight:300;line-height:1.65;max-width:460px;margin:0 auto 44px}
 .c-links{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
-.cl{display:flex;align-items:center;gap:8px;text-decoration:none;padding:14px 26px;border-radius:100px;font-size:15px;font-weight:500;cursor:none;font-family:inherit;transition:all .2s var(--spring)}
+.cl{display:inline-flex;align-items:center;gap:8px;text-decoration:none;padding:14px 26px;border-radius:100px;font-size:15px;font-weight:500;font-family:inherit;transition:all .2s var(--spring);cursor:pointer;border:none}
 .cl.p{background:var(--blue);color:#fff}
 .cl.p:hover{filter:brightness(1.12);transform:scale(1.02)}
 .cl.g{background:var(--bg2);border:.5px solid var(--line2);color:var(--text)}
 .cl.g:hover{background:var(--bg3);transform:scale(1.02)}
 
-/* FOOTER */
 footer{border-top:.5px solid var(--line);padding:28px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
 .f-logo{font-size:15px;font-weight:600;letter-spacing:-.02em}
 footer p{font-size:12px;color:var(--dim)}
@@ -179,159 +155,195 @@ footer p{font-size:12px;color:var(--dim)}
 .f-link{font-size:12px;color:var(--dim);text-decoration:none;transition:color .2s}
 .f-link:hover{color:var(--text)}
 
-/* REVEAL */
-.r{opacity:0;transform:translateY(22px);transition:opacity .65s var(--ease),transform .65s var(--ease)}
-.r.in{opacity:1;transform:none}
-.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}
-@keyframes up{to{opacity:1;transform:translateY(0)}}
-
-/* ═══════════════════════════════════════
-   PAGE: PROJECT DETAIL (Behance-style)
-═══════════════════════════════════════ */
-#page-project{background:var(--bg)}
-
-/* PROJECT NAV */
-.proj-nav{position:sticky;top:52px;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:16px 32px;background:rgba(0,0,0,.8);backdrop-filter:blur(20px);border-bottom:.5px solid var(--line)}
-.light .proj-nav{background:rgba(255,255,255,.8)}
-.proj-nav-back{display:flex;align-items:center;gap:8px;cursor:none;font-size:13px;font-weight:500;color:var(--muted);transition:color .2s;border:none;background:none;font-family:inherit}
-.proj-nav-back:hover{color:var(--text)}
-.proj-nav-title{font-size:14px;font-weight:500;color:var(--muted)}
+/* PROJECT DETAIL */
+.proj-nav{position:sticky;top:54px;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:14px 32px;background:rgba(0,0,0,.82);backdrop-filter:blur(24px);border-bottom:.5px solid var(--line)}
+.light .proj-nav{background:rgba(255,255,255,.82)}
+.proj-back{display:inline-flex;align-items:center;gap:8px;background:none;border:none;color:var(--muted);font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;transition:color .2s}
+.proj-back:hover{color:var(--text)}
+.proj-nav-title{font-size:14px;font-weight:500;color:var(--muted);max-width:50%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .proj-nav-actions{display:flex;gap:8px}
-.proj-nav-btn{background:var(--bg2);border:.5px solid var(--line2);color:var(--muted);padding:7px 16px;border-radius:100px;font-size:12px;font-weight:500;cursor:none;font-family:inherit;transition:all .2s}
+.proj-nav-btn{background:var(--bg2);border:.5px solid var(--line2);color:var(--muted);padding:7px 16px;border-radius:100px;font-size:12px;font-weight:500;cursor:pointer;font-family:inherit;transition:all .2s}
 .proj-nav-btn:hover{color:var(--text);border-color:var(--line3)}
 .proj-nav-btn.primary{background:var(--blue);color:#fff;border-color:var(--blue)}
-.proj-nav-btn.primary:hover{filter:brightness(1.12)}
 
-/* PROJECT HERO */
-.proj-hero{position:relative;width:100%;max-height:600px;overflow:hidden}
-.proj-hero-img{width:100%;max-height:600px;object-fit:cover;display:block}
+.proj-hero{position:relative;width:100%}
+.proj-hero img{width:100%;max-height:600px;object-fit:cover;display:block}
+.proj-hero-ph{width:100%;height:480px;background:var(--bg2);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;color:var(--dim)}
 .proj-hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.7) 0%,rgba(0,0,0,.1) 60%,transparent 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:48px}
-.proj-cat-pill{display:inline-flex;align-items:center;gap:6px;background:rgba(41,151,255,.2);border:.5px solid rgba(41,151,255,.35);color:var(--blue);font-size:12px;font-weight:600;padding:6px 14px;border-radius:100px;letter-spacing:.04em;text-transform:uppercase;margin-bottom:16px;align-self:flex-start}
-.proj-hero-title{font-size:clamp(40px,5vw,70px);font-weight:700;letter-spacing:-.04em;color:#fff;line-height:1.02;margin-bottom:10px}
-.proj-hero-subtitle{font-size:18px;color:rgba(255,255,255,.65);font-weight:300}
+.proj-cat-pill{display:inline-flex;align-items:center;background:rgba(41,151,255,.2);border:.5px solid rgba(41,151,255,.35);color:var(--blue);font-size:12px;font-weight:600;padding:6px 14px;border-radius:100px;letter-spacing:.04em;text-transform:uppercase;margin-bottom:14px;align-self:flex-start}
+.proj-hero-title{font-size:clamp(36px,4.5vw,64px);font-weight:700;letter-spacing:-.04em;color:#fff;line-height:1.04;margin-bottom:8px}
+.proj-hero-sub{font-size:17px;color:rgba(255,255,255,.65);font-weight:300}
 
-/* PROJECT BODY */
-.proj-body{max-width:1080px;margin:0 auto;padding:0 32px}
-
-/* PROJECT INFO ROW */
-.proj-info-row{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:.5px solid var(--line);border-radius:var(--r);overflow:hidden;margin:48px 0}
-.pi{padding:24px 28px;border-right:.5px solid var(--line)}
+.proj-body{max-width:980px;margin:0 auto;padding:0 32px}
+.proj-info-row{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:.5px solid var(--line);border-radius:var(--r);overflow:hidden;margin:48px 0 36px}
+.pi{padding:22px 26px;border-right:.5px solid var(--line)}
 .pi:last-child{border-right:none}
-.pi-label{font-size:11px;color:var(--dim);font-weight:500;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
-.pi-value{font-size:16px;font-weight:600;color:var(--text);letter-spacing:-.02em}
+.pi-label{font-size:11px;color:var(--dim);font-weight:500;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.pi-value{font-size:15px;font-weight:600;color:var(--text);letter-spacing:-.02em}
 
-/* PROJECT DESCRIPTION */
-.proj-desc{font-size:19px;line-height:1.75;color:var(--muted);font-weight:300;max-width:760px;margin-bottom:64px}
+.proj-desc{font-size:18px;line-height:1.75;color:var(--muted);font-weight:300;max-width:760px;margin-bottom:48px;white-space:pre-wrap}
 .proj-desc strong{color:var(--text);font-weight:500}
 
-/* PROJECT IMAGE BLOCKS */
-.proj-img-full{width:100%;border-radius:var(--r);overflow:hidden;margin-bottom:12px}
-.proj-img-full img{width:100%;display:block;aspect-ratio:16/9;object-fit:cover}
-.proj-img-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
-.proj-img-grid-2 img{width:100%;border-radius:var(--r-sm);display:block;aspect-ratio:4/3;object-fit:cover}
-.proj-img-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px}
-.proj-img-grid-3 img{width:100%;border-radius:var(--r-sm);display:block;aspect-ratio:1;object-fit:cover}
-.proj-img-tall{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
-.proj-img-tall img:first-child{border-radius:var(--r-sm);display:block;width:100%;aspect-ratio:4/5;object-fit:cover}
-.proj-img-tall .tall-stack{display:flex;flex-direction:column;gap:12px}
-.proj-img-tall .tall-stack img{border-radius:var(--r-sm);display:block;width:100%;aspect-ratio:4/3;object-fit:cover;flex:1}
+.proj-img-block{margin-bottom:12px;border-radius:var(--r-sm);overflow:hidden}
+.proj-img-block img{width:100%;display:block}
+.proj-video-block{margin-bottom:12px;border-radius:var(--r-sm);overflow:hidden;background:#000}
+.proj-video-block video{width:100%;display:block;max-height:600px}
 
-/* SECTION DIVIDER */
-.proj-divider{border:none;border-top:.5px solid var(--line);margin:52px 0}
-.proj-section-title{font-size:28px;font-weight:700;letter-spacing:-.03em;margin-bottom:16px}
-.proj-section-body{font-size:16px;line-height:1.75;color:var(--muted);font-weight:300;max-width:680px;margin-bottom:36px}
-
-/* DELIVERABLES */
-.deliverables{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:52px}
-.deliv-card{background:var(--bg1);border:.5px solid var(--line);border-radius:var(--r-sm);padding:22px;transition:border-color .2s,background .2s}
-.deliv-card:hover{background:var(--bg2);border-color:var(--line2)}
-.deliv-ico{font-size:22px;margin-bottom:12px;display:block}
-.deliv-title{font-size:15px;font-weight:600;letter-spacing:-.02em;margin-bottom:4px}
-.deliv-desc{font-size:13px;color:var(--muted);line-height:1.5;font-weight:300}
-
-/* TAGS */
-.proj-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:52px}
+.proj-tags{display:flex;flex-wrap:wrap;gap:8px;margin:48px 0;padding-top:36px;border-top:.5px solid var(--line)}
 .proj-tag{background:var(--bg2);border:.5px solid var(--line2);color:var(--muted);font-size:12px;font-weight:500;padding:7px 16px;border-radius:100px}
 
-/* NEXT PROJECT */
-.next-project{background:var(--bg1);border-top:.5px solid var(--line);margin-top:0;padding:64px 32px;cursor:none;transition:background .2s}
+.next-project{background:var(--bg1);border-top:.5px solid var(--line);padding:60px 32px;cursor:pointer;transition:background .2s}
 .next-project:hover{background:var(--bg2)}
-.next-lbl{font-size:11px;font-weight:600;color:var(--blue);letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px}
-.next-title{font-size:clamp(32px,4vw,52px);font-weight:700;letter-spacing:-.04em;margin-bottom:8px;display:flex;align-items:center;gap:16px}
-.next-arrow{width:48px;height:48px;border-radius:50%;background:var(--bg3);border:.5px solid var(--line2);display:flex;align-items:center;justify-content:center;font-size:20px;transition:all .3s var(--spring)}
-.next-project:hover .next-arrow{background:var(--blue);border-color:var(--blue);color:#fff;transform:translateX(8px)}
-.next-meta{font-size:15px;color:var(--muted)}
-.next-thumb{width:100%;max-width:400px;border-radius:var(--r-sm);overflow:hidden;border:.5px solid var(--line);margin-top:32px}
-.next-thumb img{width:100%;display:block;aspect-ratio:16/9;object-fit:cover}
+.np-inner{max-width:980px;margin:0 auto}
+.np-lbl{font-size:11px;font-weight:600;color:var(--blue);letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px}
+.np-title-row{display:flex;align-items:center;gap:16px;margin-bottom:8px}
+.np-title{font-size:clamp(28px,3.5vw,46px);font-weight:700;letter-spacing:-.04em}
+.np-arrow{width:44px;height:44px;border-radius:50%;background:var(--bg3);border:.5px solid var(--line2);display:flex;align-items:center;justify-content:center;font-size:18px;transition:all .3s var(--spring)}
+.next-project:hover .np-arrow{background:var(--blue);border-color:var(--blue);color:#fff;transform:translateX(8px)}
+.np-meta{font-size:14px;color:var(--muted)}
 
-/* RESPONSIVE */
+/* ADMIN PAGE */
+#page-admin{padding-top:54px}
+.admin-wrap{max-width:880px;margin:0 auto;padding:48px 32px 80px}
+.admin-back{display:inline-flex;align-items:center;gap:8px;background:none;border:none;color:var(--muted);font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;margin-bottom:24px;transition:color .2s}
+.admin-back:hover{color:var(--text)}
+.admin-eyebrow{font-size:11px;font-weight:600;color:var(--blue);letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px}
+.admin-h{font-size:clamp(36px,4.5vw,52px);font-weight:700;letter-spacing:-.04em;line-height:1.04;margin-bottom:8px}
+.admin-sub{font-size:16px;color:var(--muted);font-weight:300;margin-bottom:48px;line-height:1.6}
+
+.form-section{background:var(--bg1);border:.5px solid var(--line);border-radius:var(--r);padding:36px 32px;margin-bottom:20px}
+.fs-title{font-size:13px;font-weight:600;color:var(--text);letter-spacing:-.02em;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.fs-title .num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:var(--bg3);border:.5px solid var(--line2);color:var(--muted);font-size:11px;font-weight:600}
+.fs-sub{font-size:13px;color:var(--muted);font-weight:300;margin-bottom:24px;line-height:1.5}
+
+.field{margin-bottom:18px}
+.field label{display:block;font-size:13px;font-weight:500;color:var(--text);margin-bottom:8px;letter-spacing:-.01em}
+.field label .req{color:var(--red);margin-left:2px}
+.field label .opt{color:var(--dim);font-weight:400;font-size:11px;margin-left:6px}
+.input,.textarea,.select{width:100%;background:var(--bg2);border:.5px solid var(--line2);color:var(--text);padding:12px 16px;border-radius:10px;font-family:inherit;font-size:14px;font-weight:400;transition:border-color .2s,background .2s;outline:none}
+.input:focus,.textarea:focus,.select:focus{border-color:var(--blue);background:var(--bg3)}
+.textarea{min-height:140px;resize:vertical;line-height:1.6}
+.input::placeholder,.textarea::placeholder{color:var(--dim)}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+
+.uploader{
+  background:var(--bg2);border:1px dashed var(--line3);border-radius:14px;
+  padding:36px 24px;text-align:center;transition:border-color .2s,background .2s;cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+}
+.uploader:hover{border-color:var(--blue);background:var(--bg3)}
+.uploader.drag{border-color:var(--blue);background:rgba(41,151,255,.05)}
+.up-ico{font-size:28px;opacity:.6;margin-bottom:4px}
+.up-title{font-size:14px;font-weight:500}
+.up-sub{font-size:12px;color:var(--muted);font-weight:300}
+.up-btn{background:var(--blue);color:#fff;border:none;padding:8px 18px;border-radius:100px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;margin-top:8px}
+
+.previews{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px}
+.preview{position:relative;aspect-ratio:1;border-radius:10px;overflow:hidden;border:.5px solid var(--line2);background:var(--bg2)}
+.preview img,.preview video{width:100%;height:100%;object-fit:cover;display:block}
+.preview .rm{position:absolute;top:6px;right:6px;width:24px;height:24px;border-radius:50%;background:rgba(0,0,0,.78);backdrop-filter:blur(8px);color:#fff;border:none;cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.preview .rm:hover{background:rgba(255,69,58,.85)}
+.preview-vid-badge{position:absolute;bottom:6px;left:6px;background:rgba(0,0,0,.7);color:#fff;font-size:10px;padding:2px 7px;border-radius:6px;font-weight:500}
+.preview-cover-badge{position:absolute;top:6px;left:6px;background:var(--blue);color:#fff;font-size:9px;font-weight:600;padding:3px 7px;border-radius:6px;letter-spacing:.04em;text-transform:uppercase}
+.preview-set-cover{position:absolute;bottom:0;left:0;right:0;padding:6px;background:rgba(0,0,0,.85);color:#fff;font-size:10px;text-align:center;cursor:pointer;opacity:0;transition:opacity .2s}
+.preview:hover .preview-set-cover{opacity:1}
+
+.actions-row{display:flex;justify-content:space-between;gap:12px;margin-top:32px;padding-top:32px;border-top:.5px solid var(--line);align-items:center;flex-wrap:wrap}
+.actions-left{display:flex;gap:8px;align-items:center}
+.action-btn{padding:12px 22px;border-radius:100px;font-size:14px;font-weight:500;cursor:pointer;font-family:inherit;border:none;transition:filter .2s,transform .15s var(--spring)}
+.action-btn.primary{background:var(--blue);color:#fff}
+.action-btn.primary:hover{filter:brightness(1.12);transform:scale(1.02)}
+.action-btn.draft{background:var(--bg2);color:var(--text);border:.5px solid var(--line2)}
+.action-btn.draft:hover{background:var(--bg3)}
+.action-btn.danger{background:transparent;color:var(--red);border:.5px solid rgba(255,69,58,.25)}
+.action-btn.danger:hover{background:rgba(255,69,58,.1);border-color:rgba(255,69,58,.5)}
+
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--text);color:var(--bg);padding:12px 22px;border-radius:100px;font-size:14px;font-weight:500;z-index:9999;opacity:0;transition:opacity .25s,transform .25s var(--ease);box-shadow:0 8px 24px rgba(0,0,0,.4);display:flex;align-items:center;gap:8px}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast.success{background:var(--green);color:#000}
+.toast.error{background:var(--red);color:#fff}
+
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(20px);z-index:10000;display:none;align-items:center;justify-content:center;padding:24px}
+.modal-bg.open{display:flex}
+.modal{background:var(--bg1);border:.5px solid var(--line2);border-radius:var(--r);padding:32px;max-width:420px;width:100%}
+.modal h3{font-size:20px;font-weight:600;letter-spacing:-.03em;margin-bottom:8px}
+.modal p{font-size:14px;color:var(--muted);font-weight:300;line-height:1.6;margin-bottom:24px}
+.modal .actions{display:flex;gap:8px;justify-content:flex-end}
+
+.img-uploader-wrap{position:relative;aspect-ratio:3/4;border-radius:var(--r-sm);overflow:hidden;border:.5px solid var(--line2);background:var(--bg2)}
+.img-uploader-wrap img{width:100%;height:100%;object-fit:cover}
+.img-uploader-overlay{position:absolute;inset:0;background:rgba(0,0,0,0);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;color:#fff;cursor:pointer;transition:background .25s}
+.img-uploader-overlay:hover{background:rgba(0,0,0,.7)}
+.img-uploader-overlay .icon{font-size:32px;opacity:0;transition:opacity .25s}
+.img-uploader-overlay:hover .icon{opacity:.9}
+.img-uploader-overlay .label{font-size:13px;font-weight:500;opacity:0;transition:opacity .25s}
+.img-uploader-overlay:hover .label{opacity:.9}
+
 @media(max-width:960px){
-  #hero{grid-template-columns:1fr;gap:40px}
+  #hero{grid-template-columns:1fr;gap:40px;padding-top:80px}
   .hero-right{display:none}
   .n-mid{display:none}
   .about-wrap,.bento{grid-template-columns:1fr 1fr}
   .bc.w2{grid-column:span 2}
-  .reel-grid{grid-template-columns:repeat(2,1fr)}
   .svc-grid{grid-template-columns:1fr}
-  .proj-info-row{grid-template-columns:1fr 1fr}
-  .pi:nth-child(2){border-right:none}
-  .pi:nth-child(3){border-top:.5px solid var(--line)}
-  .deliverables{grid-template-columns:1fr 1fr}
-  nav,footer{padding:0 20px}
-  nav{padding:0 20px}
-  footer{padding:20px}
-  .sec{padding:72px 20px}
-  .proj-body{padding:0 20px}
-  .proj-hero-overlay{padding:28px 20px}
+  .proj-info-row{grid-template-columns:1fr}
+  .pi{border-right:none;border-bottom:.5px solid var(--line)}
+  .pi:last-child{border-bottom:none}
+  .field-row{grid-template-columns:1fr}
+  .previews{grid-template-columns:repeat(3,1fr)}
+  nav,footer{padding:0 18px}
+  footer{padding:20px 18px}
+  .sec,.admin-wrap{padding-left:18px;padding-right:18px}
+  .proj-body{padding:0 18px}
+  .proj-hero-overlay{padding:24px 18px}
+  .form-section{padding:28px 22px}
 }
 @media(max-width:600px){
   .bento{grid-template-columns:1fr;grid-auto-rows:200px}
   .bc.w2{grid-column:span 1}
-  .reel-grid{grid-template-columns:repeat(2,1fr)}
   .about-wrap{grid-template-columns:1fr}
-  .proj-img-grid-2,.proj-img-grid-3,.proj-img-tall{grid-template-columns:1fr}
-  .deliverables{grid-template-columns:1fr}
-  .proj-info-row{grid-template-columns:1fr 1fr}
-  .contact-wrap{padding:52px 22px}
+  .previews{grid-template-columns:repeat(2,1fr)}
+  .proj-nav{padding:12px 18px}
+  .proj-nav-title{display:none}
+  .actions-row{flex-direction:column;align-items:stretch}
+  .actions-left,.actions-right{width:100%}
+  .action-btn{flex:1}
+  .actions-left{display:flex}
 }
 </style>
 </head>
 <body>
 
-<div id="dot"></div>
-
-<!-- ═══ SHARED NAV ═══ -->
 <nav id="nav">
-  <div class="n-logo"><a href="#" onclick="showHome();return false">Sandy</a></div>
+  <div class="n-logo"><a href="#" onclick="showPage('home');return false" id="nav-logo">Sandy</a></div>
   <div class="n-mid">
-    <a href="#" onclick="showHome();return false">About</a>
-    <a href="#" onclick="showHome();scrollTo('work');return false">Work</a>
-    <a href="#" onclick="showHome();scrollTo('reels');return false">Reels</a>
-    <a href="#" onclick="showHome();scrollTo('services');return false">Services</a>
+    <a onclick="showPage('home');scrollToId('about')">About</a>
+    <a onclick="showPage('home');scrollToId('work')">Work</a>
+    <a onclick="showPage('home');scrollToId('services')">Services</a>
+    <a onclick="showPage('home');scrollToId('contact')">Contact</a>
+    <button class="n-btn n-settings" onclick="showPage('settings')">⚙ Settings</button>
+    <button class="n-btn n-create" onclick="openAdmin()">+ Create New</button>
   </div>
   <div class="n-right">
-    <button class="n-theme" id="tb">☀</button>
-    <button class="n-cta" onclick="showHome();scrollTo('contact')">Work with me</button>
+    <button class="n-theme" id="tb" onclick="toggleTheme()">☀</button>
+    <button class="n-btn n-cta" onclick="showPage('home');scrollToId('contact')">Work with me</button>
   </div>
 </nav>
 
-<!-- ═══════════════════════════════════
-     PAGE: HOME
-═══════════════════════════════════ -->
-<div id="page-home">
+<!-- HOME PAGE -->
+<div id="page-home" class="page active">
 
-<!-- HERO -->
-<div style="position:relative;overflow:hidden;background:var(--bg)">
+<div style="position:relative;overflow:hidden">
   <div class="hero-glow"></div>
   <section id="hero">
     <div>
-      <div class="h-badge">✦ Open to new projects</div>
-      <h1 class="h-name">Sandy.</h1>
-      <h2 class="h-title">Creative Digital<br>Designer.</h2>
-      <p class="h-bio">I design <strong>social media content, reels, real estate visuals,</strong> and <strong>web experiences</strong> that make brands impossible to scroll past. Based in Dubai, working globally.</p>
+      <div class="h-badge">✦ <span id="hero-badge-text">Open to new projects</span></div>
+      <h1 class="h-name" id="hero-name">Sandy.</h1>
+      <h2 class="h-title" id="hero-title">Creative Digital<br>Designer.</h2>
+      <p class="h-bio" id="hero-bio">I design <strong>social media content, reels, real estate visuals,</strong> and <strong>web experiences</strong> that make brands impossible to scroll past. Based in Dubai, working globally.</p>
       <div class="h-cta">
-        <button class="btn-blue" onclick="scrollTo('work')">View my work</button>
-        <button class="btn-ghost" onclick="scrollTo('contact')">Get in touch</button>
+        <button class="btn-blue" onclick="scrollToId('work')">View my work</button>
+        <button class="btn-ghost" onclick="scrollToId('contact')">Get in touch</button>
       </div>
       <div class="h-stats">
         <div class="hs"><span class="hsn">200+</span><span class="hsl">Projects</span></div>
@@ -341,189 +353,89 @@ footer p{font-size:12px;color:var(--dim)}
     </div>
     <div class="hero-right">
       <div class="photo-wrap">
-        <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=600&q=80" alt="Sandy">
-        <div class="photo-tag"><div class="pt-name">Sandy</div><div class="pt-role">Creative Digital Designer</div></div>
-        <div class="photo-loc">Dubai, UAE</div>
+        <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=600&q=80" alt="Sandy" id="hero-photo">
+        <div class="photo-tag"><div class="pt-name" id="hero-photo-name">Sandy</div><div class="pt-role" id="hero-photo-role">Creative Digital Designer</div></div>
+        <div class="photo-loc" id="hero-photo-loc">Dubai, UAE</div>
       </div>
     </div>
   </section>
-  <div class="h-stats" style="max-width:580px;margin:0 auto 64px;border-top:.5px solid var(--line);opacity:0;animation:up .6s .72s ease forwards">
-  </div>
-  <div class="scroll-hint" style="position:relative;bottom:auto;left:auto;transform:none;display:flex;justify-content:center;padding-bottom:48px">
-    <div style="display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--dim);font-size:11px;font-weight:500;letter-spacing:.04em">
-      <div class="s-line"></div><span>SCROLL</span>
-    </div>
-  </div>
 </div>
 
-<!-- MARQUEE -->
 <div class="mq">
   <div class="mq-t">
-    <span>Social Media</span><i>◆</i><span>Reels</span><i>◆</i><span>Real Estate Visuals</span><i>◆</i><span>Landing Pages</span><i>◆</i><span>Brand Identity</span><i>◆</i><span>Motion Graphics</span><i>◆</i><span>Content Strategy</span><i>◆</i><span>Web Design</span><i>◆</i>
-    <span>Social Media</span><i>◆</i><span>Reels</span><i>◆</i><span>Real Estate Visuals</span><i>◆</i><span>Landing Pages</span><i>◆</i><span>Brand Identity</span><i>◆</i><span>Motion Graphics</span><i>◆</i><span>Content Strategy</span><i>◆</i><span>Web Design</span><i>◆</i>
+    <span>Social Media</span><i>◆</i><span>Reels</span><i>◆</i><span>Real Estate Visuals</span><i>◆</i><span>Landing Pages</span><i>◆</i><span>Brand Identity</span><i>◆</i><span>Motion Graphics</span><i>◆</i><span>Web Design</span><i>◆</i>
+    <span>Social Media</span><i>◆</i><span>Reels</span><i>◆</i><span>Real Estate Visuals</span><i>◆</i><span>Landing Pages</span><i>◆</i><span>Brand Identity</span><i>◆</i><span>Motion Graphics</span><i>◆</i><span>Web Design</span><i>◆</i>
   </div>
 </div>
 
-<!-- ABOUT -->
 <section id="about" class="sec">
-  <div class="sec-lbl r">About me</div>
-  <h2 class="sec-h r d1">Who I am<span class="d">.</span></h2>
-  <div class="about-wrap r d2">
+  <div class="sec-lbl">About me</div>
+  <h2 class="sec-h">Who I am<span class="d">.</span></h2>
+  <div class="about-wrap">
     <div class="about-l">
-      <div class="about-name">Sandy</div>
-      <div class="about-role">Creative Digital Designer</div>
-      <p class="about-bio">I'm a <strong>Creative Digital Designer</strong> based in Dubai with a passion for building visual experiences that stop the scroll and drive real results.<br><br>From <strong>social media content</strong> and <strong>short-form reels</strong> to <strong>real estate campaigns</strong> and <strong>landing pages</strong> — I combine design thinking with deep platform knowledge to produce work that performs.<br><br>Every project I take on is treated like it's my own brand.</p>
+      <div class="about-name" id="about-name">Sandy</div>
+      <div class="about-role" id="about-role">Creative Digital Designer</div>
+      <p class="about-bio" id="about-bio">I'm a <strong>Creative Digital Designer</strong> based in Dubai with a passion for building visual experiences that stop the scroll and drive real results.<br><br>From <strong>social media content</strong> and <strong>short-form reels</strong> to <strong>real estate campaigns</strong> and <strong>landing pages</strong> — I combine design thinking with deep platform knowledge to produce work that performs.</p>
       <div class="about-tools">
         <span class="tool">Photoshop</span><span class="tool">After Effects</span><span class="tool">Premiere Pro</span><span class="tool">Illustrator</span><span class="tool">Figma</span><span class="tool">Webflow</span><span class="tool">Canva Pro</span><span class="tool">CapCut Pro</span>
       </div>
     </div>
     <div class="about-r">
       <div class="portrait">
-        <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&q=80" alt="Sandy portrait">
-      </div>
-      <div class="about-stats">
-        <div class="as"><span class="asn">200+</span><span class="asl">Projects</span></div>
-        <div class="as"><span class="asn">80+</span><span class="asl">Clients</span></div>
-        <div class="as"><span class="asn">6yr</span><span class="asl">Experience</span></div>
+        <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&q=80" alt="Sandy portrait" id="about-photo">
       </div>
     </div>
   </div>
 </section>
 
-<!-- WORK -->
 <section id="work" class="sec" style="padding-top:0">
-  <div class="sec-lbl r">Selected work</div>
-  <h2 class="sec-h r d1">My projects<span class="d">.</span></h2>
-  <div class="wfilter r d2">
-    <button class="wfb on" onclick="fw(this,'all')">All</button>
-    <button class="wfb" onclick="fw(this,'social')">Social Media</button>
-    <button class="wfb" onclick="fw(this,'reels')">Reels</button>
-    <button class="wfb" onclick="fw(this,'re')">Real Estate</button>
-    <button class="wfb" onclick="fw(this,'web')">Web</button>
-    <button class="wfb" onclick="fw(this,'brand')">Branding</button>
+  <div class="sec-head-row">
+    <div>
+      <div class="sec-lbl">Selected work</div>
+      <h2 class="sec-h">My projects<span class="d">.</span></h2>
+    </div>
+    <button class="n-btn n-create" onclick="openAdmin()">+ Create New</button>
   </div>
-  <div class="bento r d3" id="grid">
-    <div class="bc w2" data-c="social" onclick="openProject(0)" style="cursor:none">
-      <img class="bc-img" src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=900&q=80" alt="Instagram Campaign">
-      <div class="bc-pill">Social Media</div>
-      <div class="bc-arrow">→</div>
-      <div class="bc-ov"><div class="bc-cat">Social Media</div><div class="bc-title">Instagram Growth Campaign</div><div class="bc-meta">Content Strategy · 2024 · Click to view</div></div>
-    </div>
-    <div class="bc" data-c="re" onclick="openProject(1)">
-      <img class="bc-img" src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&q=80" alt="Real Estate">
-      <div class="bc-pill">Real Estate</div>
-      <div class="bc-arrow">→</div>
-      <div class="bc-ov"><div class="bc-cat">Real Estate</div><div class="bc-title">Luxury Tower — Dubai</div><div class="bc-meta">Digital Campaign · 2024</div></div>
-    </div>
-    <div class="bc" data-c="brand" onclick="openProject(2)">
-      <img class="bc-img" src="https://images.unsplash.com/photo-1634084462412-b54873c0a56d?w=600&q=80" alt="Branding">
-      <div class="bc-pill">Branding</div>
-      <div class="bc-arrow">→</div>
-      <div class="bc-ov"><div class="bc-cat">Branding</div><div class="bc-title">F&B Brand Full Kit</div><div class="bc-meta">Logo · Guidelines · 2024</div></div>
-    </div>
-    <div class="bc" data-c="reels" onclick="openProject(3)">
-      <img class="bc-img" src="https://images.unsplash.com/photo-1492619375914-88005aa9e8fb?w=600&q=80" alt="Reel">
-      <div class="bc-pill">Reel</div>
-      <div class="bc-arrow">→</div>
-      <div class="bc-ov"><div class="bc-cat">Reels</div><div class="bc-title">Product Launch Reel</div><div class="bc-meta">Motion Design · 2024</div></div>
-    </div>
-    <div class="bc" data-c="web" onclick="openProject(4)">
-      <img class="bc-img" src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=600&q=80" alt="Web">
-      <div class="bc-pill">Web</div>
-      <div class="bc-arrow">→</div>
-      <div class="bc-ov"><div class="bc-cat">Web Design</div><div class="bc-title">Real Estate Landing Page</div><div class="bc-meta">UI · Dev · 2024</div></div>
-    </div>
-    <div class="bc" data-c="social" onclick="openProject(5)">
-      <img class="bc-img" src="https://images.unsplash.com/photo-1563986768609-322da13575f3?w=600&q=80" alt="Social">
-      <div class="bc-pill">Social</div>
-      <div class="bc-arrow">→</div>
-      <div class="bc-ov"><div class="bc-cat">Social Media</div><div class="bc-title">30-Day Story Series</div><div class="bc-meta">Design · Copy · 2023</div></div>
-    </div>
-    <div class="bc" data-c="re" onclick="openProject(1)">
-      <img class="bc-img" src="https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=600&q=80" alt="Villa">
-      <div class="bc-pill">Real Estate</div>
-      <div class="bc-arrow">→</div>
-      <div class="bc-ov"><div class="bc-cat">Real Estate</div><div class="bc-title">Villa — Abu Dhabi</div><div class="bc-meta">Campaign · 2023</div></div>
-    </div>
-    <div class="bc" data-c="web" onclick="openProject(4)">
-      <img class="bc-img" src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80" alt="CRM">
-      <div class="bc-pill">Web</div>
-      <div class="bc-arrow">→</div>
-      <div class="bc-ov"><div class="bc-cat">Web Design</div><div class="bc-title">CRM Dashboard UI</div><div class="bc-meta">Product Design · 2023</div></div>
-    </div>
+  <div class="wfilter" id="wfilter">
+    <button class="wfb on" onclick="filterWork(this,'all')">All</button>
+    <button class="wfb" onclick="filterWork(this,'Social Media')">Social Media</button>
+    <button class="wfb" onclick="filterWork(this,'Reels & Video')">Reels</button>
+    <button class="wfb" onclick="filterWork(this,'Real Estate')">Real Estate</button>
+    <button class="wfb" onclick="filterWork(this,'Web Design')">Web</button>
+    <button class="wfb" onclick="filterWork(this,'Branding')">Branding</button>
   </div>
+  <div class="bento" id="grid"></div>
 </section>
 
-<!-- REELS -->
-<section id="reels" style="background:var(--bg1);border-top:.5px solid var(--line);border-bottom:.5px solid var(--line);padding:96px 0">
-  <div class="sec" style="padding-top:0;padding-bottom:0">
-    <div class="sec-lbl r">Motion work</div>
-    <h2 class="sec-h r d1">Reels & Video<span class="d">.</span></h2>
-    <div class="reel-grid r d2">
-      <div class="rc" onclick="openProject(3)">
-        <img class="rc-img" src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=400&q=80" alt="Reel 1">
-        <div class="rc-play">▷</div>
-        <div class="rc-fmt">9×16</div>
-        <div class="rc-dur">0:30</div>
-        <div class="rc-ov"><div class="rc-title">Real Estate Launch</div><div class="rc-sub">Dubai · 2024</div></div>
-      </div>
-      <div class="rc" onclick="openProject(3)">
-        <img class="rc-img" src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&q=80" alt="Reel 2">
-        <div class="rc-play">▷</div>
-        <div class="rc-fmt">9×16</div>
-        <div class="rc-dur">0:45</div>
-        <div class="rc-ov"><div class="rc-title">F&B Campaign</div><div class="rc-sub">Restaurant · 2024</div></div>
-      </div>
-      <div class="rc" onclick="openProject(3)">
-        <img class="rc-img" src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&q=80" alt="Reel 3">
-        <div class="rc-play">▷</div>
-        <div class="rc-fmt">16×9</div>
-        <div class="rc-dur">1:20</div>
-        <div class="rc-ov"><div class="rc-title">Product Explainer</div><div class="rc-sub">Tech · 2024</div></div>
-      </div>
-      <div class="rc" onclick="openProject(3)">
-        <img class="rc-img" src="https://images.unsplash.com/photo-1536240478700-b869ad10e2c0?w=400&q=80" alt="Reel 4">
-        <div class="rc-play">▷</div>
-        <div class="rc-fmt">16×9</div>
-        <div class="rc-dur">2:05</div>
-        <div class="rc-ov"><div class="rc-title">Showreel 2024</div><div class="rc-sub">Portfolio · 2024</div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- SERVICES -->
 <section id="services" class="sec">
-  <div class="sec-lbl r">What I do</div>
-  <h2 class="sec-h r d1">My services<span class="d">.</span></h2>
-  <div class="svc-grid r d2">
-    <div class="sc"><span class="sc-ico">📱</span><div class="sc-title">Social Media Content</div><p class="sc-body">Feed posts, stories, carousels, highlight covers, and content calendars — built to grow your audience and drive real engagement every day.</p><div class="sc-tags"><span class="sc-tag">Instagram</span><span class="sc-tag">TikTok</span><span class="sc-tag">LinkedIn</span><span class="sc-tag">Snapchat</span></div></div>
-    <div class="sc"><span class="sc-ico">🎬</span><div class="sc-title">Reels & Video</div><p class="sc-body">Short-form reels, product videos, brand films, and motion graphics crafted for every platform — from 9×16 reels to 16×9 YouTube ads.</p><div class="sc-tags"><span class="sc-tag">Reels</span><span class="sc-tag">Motion</span><span class="sc-tag">Ad Creatives</span><span class="sc-tag">Animation</span></div></div>
-    <div class="sc"><span class="sc-ico">🏠</span><div class="sc-title">Real Estate Materials</div><p class="sc-body">Brochures, floor plans, project branding, social ads, and full digital campaigns for developers, agents, and property launches across the UAE.</p><div class="sc-tags"><span class="sc-tag">Brochures</span><span class="sc-tag">Floor Plans</span><span class="sc-tag">Project Brand</span><span class="sc-tag">Ads</span></div></div>
-    <div class="sc"><span class="sc-ico">🌐</span><div class="sc-title">Websites & Landing Pages</div><p class="sc-body">High-converting landing pages and CRM-connected web experiences built to turn visitors into leads — fast, clean, and mobile-first.</p><div class="sc-tags"><span class="sc-tag">Landing Pages</span><span class="sc-tag">CRM UI</span><span class="sc-tag">Webflow</span><span class="sc-tag">Mobile First</span></div></div>
+  <div class="sec-lbl">What I do</div>
+  <h2 class="sec-h">My services<span class="d">.</span></h2>
+  <div class="svc-grid">
+    <div class="sc"><span class="sc-ico">📱</span><div class="sc-title">Social Media Content</div><p class="sc-body">Feed posts, stories, carousels, highlight covers, and content calendars built to grow your audience and drive engagement every day.</p><div class="sc-tags"><span class="sc-tag">Instagram</span><span class="sc-tag">TikTok</span><span class="sc-tag">LinkedIn</span></div></div>
+    <div class="sc"><span class="sc-ico">🎬</span><div class="sc-title">Reels & Video</div><p class="sc-body">Short-form reels, brand films, product videos, and motion graphics — every platform, every format.</p><div class="sc-tags"><span class="sc-tag">Reels</span><span class="sc-tag">Motion</span><span class="sc-tag">Ads</span></div></div>
+    <div class="sc"><span class="sc-ico">🏠</span><div class="sc-title">Real Estate Materials</div><p class="sc-body">Brochures, project branding, social ads, and full digital campaigns for developers and agents across the UAE.</p><div class="sc-tags"><span class="sc-tag">Brochures</span><span class="sc-tag">Ads</span><span class="sc-tag">Brand</span></div></div>
+    <div class="sc"><span class="sc-ico">🌐</span><div class="sc-title">Websites & Landing Pages</div><p class="sc-body">High-converting landing pages and CRM-connected web experiences built to turn visitors into leads.</p><div class="sc-tags"><span class="sc-tag">Landing Pages</span><span class="sc-tag">CRM</span><span class="sc-tag">Webflow</span></div></div>
   </div>
 </section>
 
-<!-- CONTACT -->
 <section id="contact" class="sec" style="padding-top:0">
-  <div class="contact-wrap r">
+  <div class="contact-wrap">
     <div class="c-glow"></div>
     <div class="sec-lbl" style="margin-bottom:16px">Let's work together</div>
     <h2 class="c-h">Have a project<br><span class="d">in mind?</span></h2>
-    <p class="c-sub">Whether it's a single reel, a full social media strategy, or a complete brand — I'd love to hear what you're building. Let's make it great.</p>
+    <p class="c-sub" id="contact-sub">Whether it's a single reel or a full brand — I'd love to hear what you're building.</p>
     <div class="c-links">
-      <a href="mailto:hello@sandy.ae" class="cl p">✉ Email me</a>
-      <a href="https://wa.me/971500000000" target="_blank" class="cl g">💬 WhatsApp</a>
-      <a href="https://behance.net" target="_blank" class="cl g">Behance</a>
-      <a href="https://instagram.com" target="_blank" class="cl g">Instagram</a>
+      <a href="mailto:hello@sandy.ae" class="cl p" id="contact-email">✉ Email me</a>
+      <a href="https://wa.me/971500000000" target="_blank" class="cl g" id="contact-whatsapp">💬 WhatsApp</a>
+      <a href="https://behance.net" target="_blank" class="cl g" id="contact-behance">Behance</a>
+      <a href="https://instagram.com" target="_blank" class="cl g" id="contact-instagram">Instagram</a>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
-  <div class="f-logo">Sandy</div>
-  <p>© 2025 · Sandy — Creative Digital Designer · Dubai, UAE</p>
+  <div class="f-logo" id="footer-logo">Sandy</div>
+  <p id="footer-copyright">© 2025 · Sandy — Creative Digital Designer · Dubai, UAE</p>
   <div class="f-links">
     <a href="#" class="f-link">Behance</a>
     <a href="#" class="f-link">Instagram</a>
@@ -531,376 +443,799 @@ footer p{font-size:12px;color:var(--dim)}
     <a href="#" class="f-link">WhatsApp</a>
   </div>
 </footer>
-</div><!-- end page-home -->
+</div>
 
-
-<!-- ═══════════════════════════════════
-     PAGE: PROJECT DETAIL
-═══════════════════════════════════ -->
-<div id="page-project">
-
-  <!-- Project sticky nav -->
+<!-- PROJECT DETAIL PAGE -->
+<div id="page-project" class="page" style="padding-top:54px">
   <div class="proj-nav">
-    <button class="proj-nav-back" onclick="showHome()">← Back to work</button>
-    <div class="proj-nav-title" id="proj-nav-title">Project</div>
+    <button class="proj-back" onclick="showPage('home');setTimeout(()=>scrollToId('work'),50)">← Back to work</button>
+    <div class="proj-nav-title" id="proj-nav-title"></div>
     <div class="proj-nav-actions">
-      <button class="proj-nav-btn" onclick="prevProject()">← Prev</button>
-      <button class="proj-nav-btn" onclick="nextProject()">Next →</button>
-      <button class="proj-nav-btn primary" onclick="showHome();scrollTo('contact')">Work with me</button>
+      <button class="proj-nav-btn" onclick="editProject(currentProjId)">Edit</button>
+      <button class="proj-nav-btn primary" onclick="showPage('home');setTimeout(()=>scrollToId('contact'),50)">Work with me</button>
     </div>
   </div>
-
-  <!-- Project hero image -->
-  <div class="proj-hero">
-    <img class="proj-hero-img" id="proj-hero-img" src="" alt="">
-    <div class="proj-hero-overlay">
-      <div class="proj-cat-pill" id="proj-cat-pill"></div>
-      <h1 class="proj-hero-title" id="proj-hero-title"></h1>
-      <p class="proj-hero-subtitle" id="proj-hero-subtitle"></p>
-    </div>
-  </div>
-
-  <!-- Project body -->
+  <div class="proj-hero" id="proj-hero"></div>
   <div class="proj-body">
-
-    <!-- Info row -->
     <div class="proj-info-row">
-      <div class="pi"><div class="pi-label">Client</div><div class="pi-value" id="pi-client"></div></div>
       <div class="pi"><div class="pi-label">Category</div><div class="pi-value" id="pi-cat"></div></div>
       <div class="pi"><div class="pi-label">Year</div><div class="pi-value" id="pi-year"></div></div>
-      <div class="pi"><div class="pi-label">Deliverables</div><div class="pi-value" id="pi-deliv"></div></div>
+      <div class="pi"><div class="pi-label">Client</div><div class="pi-value" id="pi-client"></div></div>
     </div>
-
-    <!-- Description -->
-    <p class="proj-desc" id="proj-desc"></p>
-
-    <!-- Images block 1 -->
-    <div class="proj-img-full">
-      <img id="img-full-1" src="" alt="">
+    <div class="proj-desc" id="proj-desc"></div>
+    <div id="proj-media"></div>
+    <div class="proj-tags" id="proj-tags"></div>
+  </div>
+  <div class="next-project" id="next-project" onclick="goToNextProject()">
+    <div class="np-inner">
+      <div class="np-lbl">Next project</div>
+      <div class="np-title-row">
+        <div class="np-title" id="np-title"></div>
+        <div class="np-arrow">→</div>
+      </div>
+      <div class="np-meta" id="np-meta"></div>
     </div>
+  </div>
+</div>
 
-    <div class="proj-img-grid-2">
-      <img id="img-g2-1" src="" alt="">
-      <img id="img-g2-2" src="" alt="">
-    </div>
+<!-- ADMIN PROJECT PAGE -->
+<div id="page-admin" class="page">
+  <div class="admin-wrap">
+    <button class="admin-back" onclick="showPage('home')">← Back to portfolio</button>
+    <div class="admin-eyebrow" id="admin-eyebrow">New project</div>
+    <h1 class="admin-h" id="admin-h">Create new project</h1>
+    <p class="admin-sub">Upload your work, add details, and publish it to your portfolio. Everything is saved on this device.</p>
 
-    <hr class="proj-divider">
-
-    <!-- Section 2 -->
-    <h3 class="proj-section-title" id="proj-s2-title"></h3>
-    <p class="proj-section-body" id="proj-s2-body"></p>
-
-    <div class="proj-img-grid-3">
-      <img id="img-g3-1" src="" alt="">
-      <img id="img-g3-2" src="" alt="">
-      <img id="img-g3-3" src="" alt="">
-    </div>
-
-    <hr class="proj-divider">
-
-    <!-- Section 3 -->
-    <h3 class="proj-section-title" id="proj-s3-title"></h3>
-    <p class="proj-section-body" id="proj-s3-body"></p>
-
-    <div class="proj-img-tall">
-      <img id="img-tall-1" src="" alt="">
-      <div class="tall-stack">
-        <img id="img-tall-2" src="" alt="">
-        <img id="img-tall-3" src="" alt="">
+    <div class="form-section">
+      <div class="fs-title"><span class="num">1</span> Project details</div>
+      <div class="fs-sub">Title, category, and year — the basics every visitor sees first.</div>
+      <div class="field">
+        <label>Project title <span class="req">*</span></label>
+        <input type="text" class="input" id="f-title" placeholder="e.g. Instagram Growth Campaign — Luxe Co.">
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>Category <span class="req">*</span></label>
+          <select class="select" id="f-cat">
+            <option value="Social Media">Social Media</option>
+            <option value="Reels & Video">Reels & Video</option>
+            <option value="Real Estate">Real Estate</option>
+            <option value="Web Design">Web Design</option>
+            <option value="Branding">Branding</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Year <span class="req">*</span></label>
+          <input type="text" class="input" id="f-year" placeholder="2024" value="2025">
+        </div>
+      </div>
+      <div class="field">
+        <label>Client <span class="opt">— optional</span></label>
+        <input type="text" class="input" id="f-client" placeholder="e.g. Emaar, Personal Project, Self-initiated">
       </div>
     </div>
 
-    <hr class="proj-divider">
+    <div class="form-section">
+      <div class="fs-title"><span class="num">2</span> Upload media</div>
+      <div class="fs-sub">Add multiple images and an optional video. The first image becomes your project cover (you can change this).</div>
+      <div class="field">
+        <label>Images <span class="opt">— multiple supported, max 5MB each</span></label>
+        <div class="uploader" id="img-up" onclick="document.getElementById('img-input').click()">
+          <div class="up-ico">🖼</div>
+          <div class="up-title">Click or drop images here</div>
+          <div class="up-sub">JPG, PNG, WebP, GIF — up to 5MB each</div>
+          <button type="button" class="up-btn" onclick="event.stopPropagation();document.getElementById('img-input').click()">Choose images</button>
+        </div>
+        <input type="file" id="img-input" accept="image/*" multiple style="display:none">
+        <div class="previews" id="img-previews"></div>
+      </div>
+      <div class="field" style="margin-top:24px">
+        <label>Video <span class="opt">— optional, MP4 / WebM, max 5MB</span></label>
+        <div class="uploader" id="vid-up" onclick="document.getElementById('vid-input').click()">
+          <div class="up-ico">🎬</div>
+          <div class="up-title">Click or drop a video here</div>
+          <div class="up-sub">For larger files, paste a YouTube/Vimeo URL below</div>
+          <button type="button" class="up-btn" onclick="event.stopPropagation();document.getElementById('vid-input').click()">Choose video</button>
+        </div>
+        <input type="file" id="vid-input" accept="video/*" style="display:none">
+        <div class="previews" id="vid-previews"></div>
+        <div style="margin-top:14px">
+          <input type="text" class="input" id="f-video-url" placeholder="Or paste YouTube / Vimeo URL (optional)">
+        </div>
+      </div>
+    </div>
 
-    <!-- Deliverables -->
-    <h3 class="proj-section-title">What was delivered</h3>
-    <div class="deliverables" id="proj-deliverables"></div>
+    <div class="form-section">
+      <div class="fs-title"><span class="num">3</span> Description & tags</div>
+      <div class="fs-sub">Tell the story behind the project — what was the brief, what did you create, what was the result.</div>
+      <div class="field">
+        <label>Short tagline <span class="opt">— 1 line</span></label>
+        <input type="text" class="input" id="f-tagline" placeholder="e.g. Full Instagram strategy & visual system for a UAE lifestyle brand">
+      </div>
+      <div class="field">
+        <label>Project description <span class="req">*</span></label>
+        <textarea class="textarea" id="f-desc" placeholder="Describe the project — the brief, your approach, the deliverables, and the results. You can write multiple paragraphs."></textarea>
+      </div>
+      <div class="field">
+        <label>Tags <span class="opt">— comma separated</span></label>
+        <input type="text" class="input" id="f-tags" placeholder="Instagram, Content Strategy, Branding, Motion">
+      </div>
+    </div>
 
-    <!-- Tags -->
-    <div class="proj-tags" id="proj-tags"></div>
-
-  </div><!-- end proj-body -->
-
-  <!-- Next project -->
-  <div class="next-project" id="next-proj-btn" onclick="nextProject()">
-    <div style="max-width:1080px;margin:0 auto;padding:0 32px">
-      <div class="next-lbl">Next Project</div>
-      <div class="next-title"><span id="next-title">—</span><div class="next-arrow">→</div></div>
-      <div class="next-meta" id="next-meta"></div>
-      <div class="next-thumb"><img id="next-thumb-img" src="" alt=""></div>
+    <div class="actions-row">
+      <div class="actions-left" id="actions-left"></div>
+      <div class="actions-right" style="display:flex;gap:8px">
+        <button class="action-btn draft" onclick="showPage('home')">Cancel</button>
+        <button class="action-btn primary" id="publish-btn" onclick="publishProject()">Publish project</button>
+      </div>
     </div>
   </div>
+</div>
 
-</div><!-- end page-project -->
+<!-- SETTINGS PAGE -->
+<div id="page-settings" class="page">
+  <div class="admin-wrap">
+    <button class="admin-back" onclick="showPage('home')">← Back to portfolio</button>
+    <div class="admin-eyebrow">Portfolio settings</div>
+    <h1 class="admin-h">Settings</h1>
+    <p class="admin-sub">Update your personal information, images, and contact details. Changes save automatically.</p>
 
+    <!-- PERSONAL INFO -->
+    <div class="form-section">
+      <div class="fs-title"><span class="num">1</span> Personal Information</div>
+      <div class="fs-sub">Your name, title, and bio shown throughout the site.</div>
+      <div class="field">
+        <label>Your name <span class="req">*</span></label>
+        <input type="text" class="input" id="s-name" placeholder="e.g. Sandy">
+      </div>
+      <div class="field">
+        <label>Your title/role <span class="req">*</span></label>
+        <input type="text" class="input" id="s-title" placeholder="e.g. Creative Digital Designer">
+      </div>
+      <div class="field">
+        <label>Location</label>
+        <input type="text" class="input" id="s-location" placeholder="e.g. Dubai, UAE">
+      </div>
+      <div class="field">
+        <label>Hero bio <span class="req">*</span></label>
+        <textarea class="textarea" id="s-hero-bio" placeholder="The short bio that appears on your homepage hero section."></textarea>
+      </div>
+      <div class="field">
+        <label>About bio <span class="req">*</span></label>
+        <textarea class="textarea" id="s-about-bio" placeholder="The longer bio that appears in your About section."></textarea>
+      </div>
+      <div class="field">
+        <label>Badge text</label>
+        <input type="text" class="input" id="s-badge" placeholder="e.g. Open to new projects" value="Open to new projects">
+      </div>
+    </div>
+
+    <!-- IMAGES -->
+    <div class="form-section">
+      <div class="fs-title"><span class="num">2</span> Profile Images</div>
+      <div class="fs-sub">Upload your profile photo and about section portrait. Click on any image to change it.</div>
+      <div class="field-row">
+        <div class="field">
+          <label>Hero profile photo</label>
+          <div class="img-uploader-wrap">
+            <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=600&q=80" alt="Profile" id="s-hero-photo-preview">
+            <div class="img-uploader-overlay" onclick="document.getElementById('s-hero-photo-input').click()">
+              <div class="icon">📷</div>
+              <div class="label">Click to upload</div>
+            </div>
+          </div>
+          <input type="file" id="s-hero-photo-input" accept="image/*" style="display:none">
+        </div>
+        <div class="field">
+          <label>About section portrait</label>
+          <div class="img-uploader-wrap">
+            <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&q=80" alt="Portrait" id="s-about-photo-preview">
+            <div class="img-uploader-overlay" onclick="document.getElementById('s-about-photo-input').click()">
+              <div class="icon">📷</div>
+              <div class="label">Click to upload</div>
+            </div>
+          </div>
+          <input type="file" id="s-about-photo-input" accept="image/*" style="display:none">
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTACT -->
+    <div class="form-section">
+      <div class="fs-title"><span class="num">3</span> Contact Information</div>
+      <div class="fs-sub">Email, WhatsApp, and social links displayed in your contact section.</div>
+      <div class="field">
+        <label>Email</label>
+        <input type="email" class="input" id="s-email" placeholder="hello@yourname.com">
+      </div>
+      <div class="field">
+        <label>WhatsApp number <span class="opt">— with country code</span></label>
+        <input type="text" class="input" id="s-whatsapp" placeholder="971500000000">
+      </div>
+      <div class="field">
+        <label>Behance URL</label>
+        <input type="url" class="input" id="s-behance" placeholder="https://behance.net/yourname">
+      </div>
+      <div class="field">
+        <label>Instagram URL</label>
+        <input type="url" class="input" id="s-instagram" placeholder="https://instagram.com/yourname">
+      </div>
+      <div class="field">
+        <label>Contact section subtitle</label>
+        <input type="text" class="input" id="s-contact-sub" placeholder="Whether it's a single reel or a full brand — I'd love to hear what you're building.">
+      </div>
+    </div>
+
+    <div class="actions-row">
+      <div class="actions-left"></div>
+      <div class="actions-right" style="display:flex;gap:8px">
+        <button class="action-btn draft" onclick="showPage('home')">Cancel</button>
+        <button class="action-btn primary" onclick="saveSettings()">Save settings</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<div class="modal-bg" id="delete-modal">
+  <div class="modal">
+    <h3>Delete project?</h3>
+    <p>This will permanently remove <strong id="del-title"></strong> from your portfolio. This action cannot be undone.</p>
+    <div class="actions">
+      <button class="action-btn draft" onclick="closeDelete()">Cancel</button>
+      <button class="action-btn danger" onclick="confirmDelete()">Delete project</button>
+    </div>
+  </div>
+</div>
 
 <script>
-/* ─ DATA ─ */
-const PROJECTS = [
-  {
-    id:0, cat:'Social Media', title:'Instagram Growth Campaign',
-    subtitle:'Full content strategy & visual system for a UAE lifestyle brand',
-    client:'Luxe Living UAE', year:'2024', deliverable:'48 Posts · Stories · Highlights',
-    desc:`This project involved building a complete <strong>Instagram visual identity system</strong> for a UAE-based lifestyle brand. From content pillars to post templates, story designs, and highlight covers — every touchpoint was considered to create a cohesive, premium look that grew the account from 12K to 80K followers in 6 months.`,
-    s2title:'Visual Content System', s2body:`We developed a modular design system using Figma that allowed the social team to produce on-brand content daily without losing consistency. The system included 24 post templates, 12 story formats, and a full colour and typography guide.`,
-    s3title:'Results', s3body:`The campaign drove an 8× increase in reach, a 340% increase in saves, and converted the profile into a consistent lead-generation channel for the brand's e-commerce store.`,
-    deliverables:[
-      {ico:'🎨',t:'48 Post Designs',d:'Feed posts, carousels, and quote cards'},
-      {ico:'📱',t:'Story Templates',d:'12 animated story formats'},
-      {ico:'✦',t:'Highlight Covers',d:'Branded icon set for all categories'},
-      {ico:'📋',t:'Content Calendar',d:'3-month strategy and scheduling plan'},
-      {ico:'🔤',t:'Brand Guidelines',d:'Social-first typography and colour rules'},
-      {ico:'📊',t:'Performance Report',d:'Monthly analytics and optimisation'},
-    ],
-    tags:['Instagram','Content Strategy','Visual Design','Social Media','Reels','Branding'],
-    heroImg:'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=1600&q=85',
-    imgFull:'https://images.unsplash.com/photo-1512486130939-2c4f79935e4f?w=1200&q=80',
-    imgG2:['https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=700&q=80','https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=700&q=80'],
-    imgG3:['https://images.unsplash.com/photo-1611162616475-46b635cb6868?w=500&q=80','https://images.unsplash.com/photo-1611162618071-b39a2ec055fb?w=500&q=80','https://images.unsplash.com/photo-1618044619888-009e412ff12a?w=500&q=80'],
-    imgTall:['https://images.unsplash.com/photo-1432888622747-4eb9a8f5a07d?w=600&q=80','https://images.unsplash.com/photo-1543269865-cbf427effbad?w=700&q=80','https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=700&q=80'],
-    next:1
-  },
-  {
-    id:1, cat:'Real Estate', title:'Luxury Tower — Dubai',
-    subtitle:'Complete digital campaign and print collateral for a luxury off-plan tower',
-    client:'Emaar Properties', year:'2024', deliverable:'Brochure · Ads · Social',
-    desc:`A full-scope <strong>real estate marketing package</strong> for a luxury off-plan tower launch in Dubai Marina. The project included a 32-page sales brochure, digital ad creatives for Instagram and Google, a social media launch campaign, and animated property walkthrough content.`,
-    s2title:'Print & Digital Collateral', s2body:`The brochure was designed to sit in the premium segment — matte stock, foil cover, large-format photography, and clear floor plan diagrams. The digital assets adapted the same premium language for social and display advertising.`,
-    s3title:'Social Campaign', s3body:`A 30-day Instagram launch campaign was designed to build anticipation before registration opened. Teaser posts, countdown stories, and a launch-day reel drove 4,200+ leads in the first week.`,
-    deliverables:[
-      {ico:'📄',t:'32-Page Brochure',d:'Print-ready with floor plans & lifestyle shots'},
-      {ico:'🖼',t:'Ad Creatives',d:'Instagram, Facebook, Google Display sets'},
-      {ico:'📱',t:'Social Campaign',d:'30-day launch content plan'},
-      {ico:'🎬',t:'Launch Reel',d:'60-second property walkthrough video'},
-      {ico:'🗺',t:'Floor Plan Design',d:'Architectural drawings styled for marketing'},
-      {ico:'🌐',t:'Landing Page',d:'Lead capture page with CRM integration'},
-    ],
-    tags:['Real Estate','Dubai','Brochure Design','Social Ads','Motion','Landing Page'],
-    heroImg:'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1600&q=85',
-    imgFull:'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200&q=80',
-    imgG2:['https://images.unsplash.com/photo-1516156008625-3a9d6067fab5?w=700&q=80','https://images.unsplash.com/photo-1613977257592-4871e5fcd7c4?w=700&q=80'],
-    imgG3:['https://images.unsplash.com/photo-1574362848149-11496d93a7c7?w=500&q=80','https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=500&q=80','https://images.unsplash.com/photo-1484154218962-a197022b5858?w=500&q=80'],
-    imgTall:['https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&q=80','https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=700&q=80','https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=700&q=80'],
-    next:2
-  },
-  {
-    id:2, cat:'Branding', title:'F&B Brand Full Kit',
-    subtitle:'Complete brand identity for a high-end Dubai restaurant group',
-    client:'Al Nawras Group', year:'2024', deliverable:'Logo · Brand System · Print',
-    desc:`A complete <strong>brand identity system</strong> for a premium F&B group launching three restaurants across Dubai. The project covered logo design, full brand guidelines, menu design, staff uniforms, packaging, social media templates, and a brand launch campaign.`,
-    s2title:'Identity System', s2body:`The brand identity was built around a refined Arabic-inspired geometric motif, combining modern typography with cultural reference. The system works across every format — from menus and packaging to billboards and digital ads.`,
-    s3title:'Application Across Touchpoints', s3body:`Every customer touchpoint was designed as part of the brand experience — from the first Instagram ad to the physical menu in-restaurant. Consistency was the goal, premium was the result.`,
-    deliverables:[
-      {ico:'✦',t:'Logo Design',d:'Primary mark + variations + icon'},
-      {ico:'📖',t:'Brand Guidelines',d:'60-page comprehensive brand bible'},
-      {ico:'🍽',t:'Menu Design',d:'Print menus for 3 restaurant concepts'},
-      {ico:'📦',t:'Packaging',d:'Takeaway bags, cups, boxes'},
-      {ico:'📱',t:'Social Templates',d:'Complete Instagram and TikTok kit'},
-      {ico:'🖨',t:'Print Collateral',d:'Business cards, signage, uniforms'},
-    ],
-    tags:['Branding','F&B','Logo Design','Brand Guidelines','Print','Social Media'],
-    heroImg:'https://images.unsplash.com/photo-1634084462412-b54873c0a56d?w=1600&q=85',
-    imgFull:'https://images.unsplash.com/photo-1559925393-8be0ec4767c8?w=1200&q=80',
-    imgG2:['https://images.unsplash.com/photo-1591456983933-0c4e8a0e4e4e?w=700&q=80','https://images.unsplash.com/photo-1600269452121-4f2416e55c28?w=700&q=80'],
-    imgG3:['https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=500&q=80','https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?w=500&q=80','https://images.unsplash.com/photo-1495214783159-3503fd1b572d?w=500&q=80'],
-    imgTall:['https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?w=600&q=80','https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=700&q=80','https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=700&q=80'],
-    next:3
-  },
-  {
-    id:3, cat:'Reels & Video', title:'Product Launch Reel',
-    subtitle:'Multi-platform video campaign for a luxury skincare brand launch',
-    client:'GLOW Skincare', year:'2024', deliverable:'Reels · Motion · Ads',
-    desc:`A <strong>short-form video campaign</strong> for a luxury skincare brand launching across the UAE and KSA. The project included a hero brand film, 9×16 Instagram reels, TikTok-native content, YouTube pre-roll ads, and animated product feature clips.`,
-    s2title:'Motion Design System', s2body:`All video content was built from a unified motion language — consistent timing, transitions, and typography animation that made every piece instantly recognisable as the same brand, whether watched on TikTok or in a YouTube ad.`,
-    s3title:'Platform Adaptation', s3body:`Each video was natively adapted for its platform — not just resized. TikTok versions used trending sounds and formats. Instagram reels led with product ASMR. YouTube ads front-loaded the brand message for skip-resistance.`,
-    deliverables:[
-      {ico:'🎬',t:'Hero Brand Film',d:'60-second brand story film'},
-      {ico:'📱',t:'Instagram Reels',d:'8× 9:16 reels, 15–30 seconds'},
-      {ico:'🎵',t:'TikTok Content',d:'6× TikTok-native videos'},
-      {ico:'▶',t:'YouTube Ads',d:'Pre-roll and bumper ad versions'},
-      {ico:'✨',t:'Product Animations',d:'Animated feature call-outs'},
-      {ico:'📊',t:'Ad Creatives',d:'Static + animated performance ads'},
-    ],
-    tags:['Reels','Video','Motion Design','TikTok','Instagram','Advertising'],
-    heroImg:'https://images.unsplash.com/photo-1492619375914-88005aa9e8fb?w=1600&q=85',
-    imgFull:'https://images.unsplash.com/photo-1536240478700-b869ad10e2c0?w=1200&q=80',
-    imgG2:['https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=700&q=80','https://images.unsplash.com/photo-1601933470096-0e34634ffcde?w=700&q=80'],
-    imgG3:['https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=500&q=80','https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=500&q=80','https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=500&q=80'],
-    imgTall:['https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=600&q=80','https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=700&q=80','https://images.unsplash.com/photo-1576426863848-c21f53c60b19?w=700&q=80'],
-    next:4
-  },
-  {
-    id:4, cat:'Web Design', title:'Real Estate Landing Page',
-    subtitle:'High-converting lead-generation page for a Dubai property launch',
-    client:'Nakheel Developers', year:'2024', deliverable:'UI Design · Webflow · CRM',
-    desc:`A <strong>high-converting landing page</strong> built for a luxury off-plan property registration campaign. The page achieved a 34% conversion rate — converting visitor interest into registered leads via an integrated HubSpot CRM pipeline. Designed in Figma, built in Webflow.`,
-    s2title:'UX & Conversion Design', s2body:`Every element was designed with conversion in mind — social proof above the fold, a sticky CTA bar, WhatsApp integration, and a multi-step form that reduced friction and increased completion rates by 62% versus the client's previous page.`,
-    s3title:'CRM Integration', s3body:`The lead form connects directly to HubSpot, triggering automated WhatsApp confirmation messages, email sequences, and sales team notifications — creating a seamless handoff from digital interest to human follow-up.`,
-    deliverables:[
-      {ico:'🎨',t:'UI Design',d:'Full Figma prototype and design system'},
-      {ico:'🌐',t:'Webflow Build',d:'Production-ready responsive site'},
-      {ico:'📊',t:'CRM Integration',d:'HubSpot pipeline + automations'},
-      {ico:'💬',t:'WhatsApp CTA',d:'Click-to-WhatsApp with pre-filled message'},
-      {ico:'📱',t:'Mobile First',d:'Optimised for UAE mobile traffic'},
-      {ico:'⚡',t:'Performance',d:'Sub-2s load time, 95+ Lighthouse score'},
-    ],
-    tags:['Web Design','Landing Page','Webflow','HubSpot','CRM','Real Estate','Conversion'],
-    heroImg:'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=1600&q=85',
-    imgFull:'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&q=80',
-    imgG2:['https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=700&q=80','https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=700&q=80'],
-    imgG3:['https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=500&q=80','https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=500&q=80','https://images.unsplash.com/photo-1516321497487-e288fb19713f?w=500&q=80'],
-    imgTall:['https://images.unsplash.com/photo-1555421689-491a97ff2040?w=600&q=80','https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=700&q=80','https://images.unsplash.com/photo-1522542550221-31fd19575a2d?w=700&q=80'],
-    next:5
-  },
-  {
-    id:5, cat:'Social Media', title:'30-Day Story Series',
-    subtitle:'Daily Instagram story campaign for a UAE fashion brand',
-    client:'Bloom Fashion', year:'2023', deliverable:'30 Stories · Highlights · Copy',
-    desc:`A <strong>30-day daily Instagram story campaign</strong> for a UAE fashion brand leading up to their summer collection launch. Each story was individually designed with motion elements, copywriting, and interactive stickers to drive profile visits, DMs, and product saves.`,
-    s2title:'Story Design System', s2body:`Rather than isolated designs, we built a connected narrative — each day's story advanced a visual storyline that rewarded followers who came back daily. The consistent visual language and recurring characters made it binge-worthy content.`,
-    s3title:'Results', s3body:`The campaign generated 2.3M story impressions, a 440% increase in DMs, and converted 18% of viewers to website visits on launch day. The highlight covers now serve as a permanent branded feature on the profile.`,
-    deliverables:[
-      {ico:'📱',t:'30 Story Designs',d:'Daily unique story designs with motion'},
-      {ico:'✍',t:'Copywriting',d:'All captions, CTAs, and link text'},
-      {ico:'✦',t:'Highlight Covers',d:'Branded icons for 8 highlight categories'},
-      {ico:'🎬',t:'Motion Elements',d:'Animated overlays and transitions'},
-      {ico:'📊',t:'Analytics Report',d:'Daily tracking and performance summary'},
-      {ico:'📋',t:'Content Calendar',d:'Scheduled posting plan with reminders'},
-    ],
-    tags:['Instagram','Stories','Social Media','Motion','Copywriting','Fashion'],
-    heroImg:'https://images.unsplash.com/photo-1563986768609-322da13575f3?w=1600&q=85',
-    imgFull:'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=1200&q=80',
-    imgG2:['https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=700&q=80','https://images.unsplash.com/photo-1485230895905-ec40ba36b9bc?w=700&q=80'],
-    imgG3:['https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=500&q=80','https://images.unsplash.com/photo-1509631179647-0177331693ae?w=500&q=80','https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=500&q=80'],
-    imgTall:['https://images.unsplash.com/photo-1483985988355-763728e1935b?w=600&q=80','https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&q=80','https://images.unsplash.com/photo-1532453288672-3a17f2e980ae?w=700&q=80'],
-    next:0
+let projects = [];
+let settings = {};
+let editingId = null;
+let currentProjId = null;
+let imageFiles = [];
+let videoFile = null;
+let pendingDelete = null;
+
+async function loadProjects(){
+  try{
+    if(typeof window.storage!=='undefined' && window.storage.get){
+      const r = await window.storage.get('sandy:projects');
+      projects = r && r.value ? JSON.parse(r.value) : seedProjects();
+    } else throw new Error('no storage');
+  }catch(e){
+    projects = seedProjects();
   }
-];
-
-let currentProject = 0;
-
-function openProject(idx){
-  currentProject = idx;
-  const p = PROJECTS[idx];
-  const next = PROJECTS[p.next];
-
-  // populate
-  document.getElementById('proj-nav-title').textContent = p.title;
-  document.getElementById('proj-hero-img').src = p.heroImg;
-  document.getElementById('proj-cat-pill').textContent = p.cat;
-  document.getElementById('proj-hero-title').textContent = p.title;
-  document.getElementById('proj-hero-subtitle').textContent = p.subtitle;
-  document.getElementById('pi-client').textContent = p.client;
-  document.getElementById('pi-cat').textContent = p.cat;
-  document.getElementById('pi-year').textContent = p.year;
-  document.getElementById('pi-deliv').textContent = p.deliverable;
-  document.getElementById('proj-desc').innerHTML = p.desc;
-  document.getElementById('img-full-1').src = p.imgFull;
-  document.getElementById('img-g2-1').src = p.imgG2[0];
-  document.getElementById('img-g2-2').src = p.imgG2[1];
-  document.getElementById('img-g3-1').src = p.imgG3[0];
-  document.getElementById('img-g3-2').src = p.imgG3[1];
-  document.getElementById('img-g3-3').src = p.imgG3[2];
-  document.getElementById('proj-s2-title').textContent = p.s2title;
-  document.getElementById('proj-s2-body').textContent = p.s2body;
-  document.getElementById('proj-s3-title').textContent = p.s3title;
-  document.getElementById('proj-s3-body').textContent = p.s3body;
-  document.getElementById('img-tall-1').src = p.imgTall[0];
-  document.getElementById('img-tall-2').src = p.imgTall[1];
-  document.getElementById('img-tall-3').src = p.imgTall[2];
-
-  // deliverables
-  document.getElementById('proj-deliverables').innerHTML = p.deliverables.map(d=>
-    `<div class="deliv-card"><span class="deliv-ico">${d.ico}</span><div class="deliv-title">${d.t}</div><div class="deliv-desc">${d.d}</div></div>`
-  ).join('');
-
-  // tags
-  document.getElementById('proj-tags').innerHTML = p.tags.map(t=>
-    `<span class="proj-tag">${t}</span>`
-  ).join('');
-
-  // next project
-  document.getElementById('next-title').textContent = next.title;
-  document.getElementById('next-meta').textContent = next.cat + ' · ' + next.year;
-  document.getElementById('next-thumb-img').src = next.heroImg;
-
-  // show project page
-  document.getElementById('page-home').style.display = 'none';
-  document.getElementById('page-project').style.display = 'block';
-  window.scrollTo(0,0);
+  renderGrid();
 }
 
-function showHome(){
-  document.getElementById('page-project').style.display = 'none';
-  document.getElementById('page-home').style.display = 'block';
-  window.scrollTo(0,0);
+async function saveProjects(){
+  try{
+    if(typeof window.storage!=='undefined' && window.storage.set){
+      await window.storage.set('sandy:projects',JSON.stringify(projects));
+    }
+  }catch(e){
+    console.warn('Could not persist:',e);
+  }
 }
 
-function nextProject(){
-  openProject(PROJECTS[currentProject].next);
+async function loadSettings(){
+  try{
+    if(typeof window.storage!=='undefined' && window.storage.get){
+      const r = await window.storage.get('sandy:settings');
+      settings = r && r.value ? JSON.parse(r.value) : defaultSettings();
+    } else throw new Error('no storage');
+  }catch(e){
+    settings = defaultSettings();
+  }
+  applySettings();
 }
 
-function prevProject(){
-  const prev = PROJECTS.find((p,i)=>p.next===currentProject);
-  if(prev) openProject(prev.id);
+async function saveSettingsToStorage(){
+  try{
+    if(typeof window.storage!=='undefined' && window.storage.set){
+      await window.storage.set('sandy:settings',JSON.stringify(settings));
+    }
+  }catch(e){
+    console.warn('Could not persist settings:',e);
+  }
 }
 
-/* CURSOR */
-const dot = document.getElementById('dot');
-let cx=0,cy=0;
-document.addEventListener('mousemove',e=>{cx=e.clientX;cy=e.clientY;dot.style.left=cx+'px';dot.style.top=cy+'px'});
-document.querySelectorAll('button,a,.bc,.rc,.sc,.tool,.wfb,.deliv-card,.next-project').forEach(el=>{
-  el.addEventListener('mouseenter',()=>dot.classList.add('lg'));
-  el.addEventListener('mouseleave',()=>dot.classList.remove('lg'));
-});
+function defaultSettings(){
+  return {
+    name:'Sandy',
+    title:'Creative Digital Designer',
+    location:'Dubai, UAE',
+    badge:'Open to new projects',
+    heroBio:`I design <strong>social media content, reels, real estate visuals,</strong> and <strong>web experiences</strong> that make brands impossible to scroll past. Based in Dubai, working globally.`,
+    aboutBio:`I'm a <strong>Creative Digital Designer</strong> based in Dubai with a passion for building visual experiences that stop the scroll and drive real results.<br><br>From <strong>social media content</strong> and <strong>short-form reels</strong> to <strong>real estate campaigns</strong> and <strong>landing pages</strong> — I combine design thinking with deep platform knowledge to produce work that performs.`,
+    heroPhoto:'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=600&q=80',
+    aboutPhoto:'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&q=80',
+    email:'hello@sandy.ae',
+    whatsapp:'971500000000',
+    behance:'https://behance.net',
+    instagram:'https://instagram.com',
+    contactSub:"Whether it's a single reel or a full brand — I'd love to hear what you're building."
+  };
+}
 
-/* THEME */
-let dark=true;
-document.getElementById('tb').addEventListener('click',()=>{
-  dark=!dark;
-  document.body.classList.toggle('light',!dark);
-  document.getElementById('tb').textContent=dark?'☀':'☾';
-});
+function applySettings(){
+  document.getElementById('nav-logo').textContent = settings.name;
+  document.getElementById('hero-name').textContent = settings.name + '.';
+  document.getElementById('hero-title').innerHTML = settings.title.replace(/\s/g,'<br>') + '.';
+  document.getElementById('hero-bio').innerHTML = settings.heroBio;
+  document.getElementById('hero-badge-text').textContent = settings.badge;
+  document.getElementById('hero-photo').src = settings.heroPhoto;
+  document.getElementById('hero-photo-name').textContent = settings.name;
+  document.getElementById('hero-photo-role').textContent = settings.title;
+  document.getElementById('hero-photo-loc').textContent = settings.location;
+  document.getElementById('about-name').textContent = settings.name;
+  document.getElementById('about-role').textContent = settings.title;
+  document.getElementById('about-bio').innerHTML = settings.aboutBio;
+  document.getElementById('about-photo').src = settings.aboutPhoto;
+  document.getElementById('contact-sub').textContent = settings.contactSub;
+  document.getElementById('contact-email').href = 'mailto:' + settings.email;
+  document.getElementById('contact-email').innerHTML = '✉ ' + settings.email;
+  document.getElementById('contact-whatsapp').href = 'https://wa.me/' + settings.whatsapp;
+  document.getElementById('contact-behance').href = settings.behance;
+  document.getElementById('contact-instagram').href = settings.instagram;
+  document.getElementById('footer-logo').textContent = settings.name;
+  document.getElementById('footer-copyright').textContent = `© 2025 · ${settings.name} — ${settings.title} · ${settings.location}`;
+}
 
-/* NAV SCROLL */
-window.addEventListener('scroll',()=>{
-  document.getElementById('nav').style.background=dark
-    ?(window.scrollY>30?'rgba(0,0,0,.92)':'rgba(0,0,0,.78)')
-    :(window.scrollY>30?'rgba(255,255,255,.92)':'rgba(255,255,255,.78)');
-},{passive:true});
+function populateSettingsForm(){
+  document.getElementById('s-name').value = settings.name;
+  document.getElementById('s-title').value = settings.title;
+  document.getElementById('s-location').value = settings.location;
+  document.getElementById('s-badge').value = settings.badge;
+  document.getElementById('s-hero-bio').value = settings.heroBio.replace(/<[^>]+>/g,'');
+  document.getElementById('s-about-bio').value = settings.aboutBio.replace(/<br><br>/g,'\n\n').replace(/<[^>]+>/g,'');
+  document.getElementById('s-email').value = settings.email;
+  document.getElementById('s-whatsapp').value = settings.whatsapp;
+  document.getElementById('s-behance').value = settings.behance;
+  document.getElementById('s-instagram').value = settings.instagram;
+  document.getElementById('s-contact-sub').value = settings.contactSub;
+  document.getElementById('s-hero-photo-preview').src = settings.heroPhoto;
+  document.getElementById('s-about-photo-preview').src = settings.aboutPhoto;
+}
 
-/* FILTER */
-function fw(btn,cat){
+async function saveSettings(){
+  const heroBioRaw = document.getElementById('s-hero-bio').value.trim();
+  const aboutBioRaw = document.getElementById('s-about-bio').value.trim();
+
+  settings.name = document.getElementById('s-name').value.trim() || 'Sandy';
+  settings.title = document.getElementById('s-title').value.trim() || 'Creative Digital Designer';
+  settings.location = document.getElementById('s-location').value.trim() || 'Dubai, UAE';
+  settings.badge = document.getElementById('s-badge').value.trim() || 'Open to new projects';
+  settings.heroBio = heroBioRaw.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');
+  settings.aboutBio = aboutBioRaw.replace(/\n\n/g,'<br><br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');
+  settings.email = document.getElementById('s-email').value.trim() || 'hello@sandy.ae';
+  settings.whatsapp = document.getElementById('s-whatsapp').value.trim() || '971500000000';
+  settings.behance = document.getElementById('s-behance').value.trim() || 'https://behance.net';
+  settings.instagram = document.getElementById('s-instagram').value.trim() || 'https://instagram.com';
+  settings.contactSub = document.getElementById('s-contact-sub').value.trim();
+
+  await saveSettingsToStorage();
+  applySettings();
+  toast('Settings saved','success');
+  showPage('home');
+}
+
+function setupSettingsImageUploaders(){
+  document.getElementById('s-hero-photo-input').addEventListener('change',async e=>{
+    const f = e.target.files[0];
+    if(!f) return;
+    if(f.size > 5*1024*1024){toast('Image too large (max 5MB)','error');return}
+    const url = await fileToDataURL(f);
+    settings.heroPhoto = url;
+    document.getElementById('s-hero-photo-preview').src = url;
+    document.getElementById('s-hero-photo-input').value = '';
+  });
+
+  document.getElementById('s-about-photo-input').addEventListener('change',async e=>{
+    const f = e.target.files[0];
+    if(!f) return;
+    if(f.size > 5*1024*1024){toast('Image too large (max 5MB)','error');return}
+    const url = await fileToDataURL(f);
+    settings.aboutPhoto = url;
+    document.getElementById('s-about-photo-preview').src = url;
+    document.getElementById('s-about-photo-input').value = '';
+  });
+}
+
+function seedProjects(){
+  return [
+    {
+      id:'p1', title:'Instagram Growth Campaign', category:'Social Media',
+      year:'2024', client:'Luxe Living UAE',
+      tagline:'Full content strategy & visual system for a UAE lifestyle brand',
+      desc:`Built a complete Instagram visual identity system from the ground up. From content pillars to post templates, story designs, and highlight covers, every touchpoint was considered to create a cohesive, premium look that grew the account from 12K to 80K followers in 6 months.\n\nThe system was modular and scalable — handed off to the in-house social team with full documentation so they could continue producing on-brand content daily without ever losing consistency.`,
+      tags:['Instagram','Content Strategy','Visual Design','Social Media','Branding'],
+      images:['https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=1200&q=85','https://images.unsplash.com/photo-1512486130939-2c4f79935e4f?w=1200&q=80','https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=900&q=80'],
+      videoUrl:'',
+    },
+    {
+      id:'p2', title:'Luxury Tower — Dubai', category:'Real Estate',
+      year:'2024', client:'Emaar Properties',
+      tagline:'Complete digital campaign and print collateral for a luxury off-plan tower',
+      desc:`Full real estate marketing package for a luxury off-plan tower launch in Dubai Marina. The project included a 32-page sales brochure, digital ad creatives for Instagram and Google, a 30-day social media launch campaign, and animated property walkthrough content.\n\nThe campaign drove 4,200+ qualified leads in the first week and helped sell 60% of inventory in the first month.`,
+      tags:['Real Estate','Dubai','Brochure Design','Social Ads','Motion'],
+      images:['https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1200&q=85','https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&q=80','https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=900&q=80'],
+      videoUrl:'',
+    },
+    {
+      id:'p3', title:'Real Estate Landing Page', category:'Web Design',
+      year:'2024', client:'Nakheel Developers',
+      tagline:'High-converting lead-generation page for a Dubai property launch',
+      desc:`A high-converting landing page built for a luxury off-plan property registration campaign. Achieved a 34% conversion rate by integrating social proof above the fold, a sticky CTA bar, WhatsApp integration, and a multi-step form that reduced friction by 62%.\n\nThe lead form connects directly to HubSpot, triggering automated WhatsApp confirmation messages, email sequences, and sales team notifications.`,
+      tags:['Web Design','Landing Page','Webflow','HubSpot','CRM','Real Estate'],
+      images:['https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=1200&q=85','https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&q=80','https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=900&q=80'],
+      videoUrl:'',
+    },
+    {
+      id:'p4', title:'Product Launch Reel', category:'Reels & Video',
+      year:'2024', client:'GLOW Skincare',
+      tagline:'Multi-platform video campaign for a luxury skincare brand launch',
+      desc:`Short-form video campaign for a luxury skincare brand launching across the UAE and KSA. The project included a 60-second hero brand film, 8 Instagram reels, 6 TikTok-native videos, and YouTube pre-roll ads.\n\nAll content was built from a unified motion language — consistent timing, transitions, and typography animation that made every piece instantly recognisable as the same brand.`,
+      tags:['Reels','Video','Motion Design','TikTok','Instagram','Advertising'],
+      images:['https://images.unsplash.com/photo-1492619375914-88005aa9e8fb?w=1200&q=85','https://images.unsplash.com/photo-1536240478700-b869ad10e2c0?w=1200&q=80'],
+      videoUrl:'',
+    },
+  ];
+}
+
+function renderGrid(){
+  const grid = document.getElementById('grid');
+  if(projects.length===0){
+    grid.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-ic">✦</div>
+        <div class="empty-h">No projects yet</div>
+        <div class="empty-sub">Click "Create New" to add your first project. You can upload images, add a video, write a description, and publish — all from this page.</div>
+        <button class="btn-blue" style="margin-top:14px" onclick="openAdmin()">+ Create your first project</button>
+      </div>`;
+    return;
+  }
+
+  grid.innerHTML = projects.map((p,i)=>{
+    const wide = (i===0 && projects.length>=2) ? 'w2' : '';
+    const cover = p.images && p.images.length ? p.images[0] : '';
+    return `
+      <div class="bc ${wide}" data-cat="${escapeAttr(p.category)}" onclick="openProject('${p.id}')">
+        ${cover ? `<img class="bc-img" src="${cover}" alt="${escapeAttr(p.title)}">` : `<div class="bc-ph"><div class="ic">${categoryIcon(p.category)}</div><span>${escapeHtml(p.category)}</span></div>`}
+        <div class="bc-pill">${escapeHtml(p.category)}</div>
+        <div class="bc-actions" onclick="event.stopPropagation()">
+          <button class="bc-act" title="Edit" onclick="event.stopPropagation();editProject('${p.id}')">✎</button>
+          <button class="bc-act del" title="Delete" onclick="event.stopPropagation();askDelete('${p.id}')">🗑</button>
+        </div>
+        <div class="bc-ov">
+          <div class="bc-cat">${escapeHtml(p.category)}</div>
+          <div class="bc-title">${escapeHtml(p.title)}</div>
+          <div class="bc-meta">${escapeHtml(p.client||'')}${p.client?' · ':''}${escapeHtml(p.year)}</div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function categoryIcon(cat){
+  return {
+    'Social Media':'📱','Reels & Video':'🎬','Real Estate':'🏠',
+    'Web Design':'🌐','Branding':'✦'
+  }[cat] || '◆';
+}
+function escapeHtml(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function escapeAttr(s){return escapeHtml(s)}
+
+function filterWork(btn,cat){
   document.querySelectorAll('.wfb').forEach(b=>b.classList.remove('on'));
   btn.classList.add('on');
   document.querySelectorAll('.bc').forEach(c=>{
-    const m=cat==='all'||c.dataset.c===cat;
-    c.style.opacity=m?'1':'0.1';
-    c.style.pointerEvents=m?'auto':'none';
+    const m = cat==='all' || c.dataset.cat===cat;
+    c.style.opacity = m ? '1' : '0.1';
+    c.style.pointerEvents = m ? 'auto' : 'none';
     c.style.transition='opacity .3s';
   });
 }
 
-/* REVEAL */
-const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')}),{threshold:.07});
-document.querySelectorAll('.r').forEach(el=>io.observe(el));
-setTimeout(()=>document.querySelectorAll('.r').forEach(el=>{if(el.getBoundingClientRect().top<window.innerHeight)el.classList.add('in')}),80);
+function openProject(id){
+  const p = projects.find(x=>x.id===id);
+  if(!p) return;
+  currentProjId = id;
 
-/* SCROLL TO */
-function scrollTo(id){
-  setTimeout(()=>{
-    const el=document.getElementById(id);
-    if(el)el.scrollIntoView({behavior:'smooth'});
-  },100);
+  document.getElementById('proj-nav-title').textContent = p.title;
+
+  const hero = document.getElementById('proj-hero');
+  const cover = p.images && p.images.length ? p.images[0] : '';
+  hero.innerHTML = `
+    ${cover ? `<img src="${cover}" alt="${escapeAttr(p.title)}">` : `<div class="proj-hero-ph"><div style="font-size:40px;opacity:.3">${categoryIcon(p.category)}</div><span>No cover image</span></div>`}
+    <div class="proj-hero-overlay">
+      <div class="proj-cat-pill">${escapeHtml(p.category)}</div>
+      <h1 class="proj-hero-title">${escapeHtml(p.title)}</h1>
+      <p class="proj-hero-sub">${escapeHtml(p.tagline||'')}</p>
+    </div>`;
+
+  document.getElementById('pi-cat').textContent = p.category;
+  document.getElementById('pi-year').textContent = p.year;
+  document.getElementById('pi-client').textContent = p.client || '—';
+  document.getElementById('proj-desc').textContent = p.desc;
+
+  const media = document.getElementById('proj-media');
+  let html = '';
+  if(p.images && p.images.length){
+    p.images.forEach(src=>{
+      html += `<div class="proj-img-block"><img src="${src}" alt=""></div>`;
+    });
+  }
+  if(p.videoUrl){
+    if(p.videoUrl.startsWith('data:video') || /\.(mp4|webm|mov)$/i.test(p.videoUrl)){
+      html += `<div class="proj-video-block"><video src="${p.videoUrl}" controls></video></div>`;
+    } else {
+      let embed = p.videoUrl;
+      const yt = p.videoUrl.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([^&?]+)/);
+      const vm = p.videoUrl.match(/vimeo\.com\/(\d+)/);
+      if(yt) embed = `https://www.youtube.com/embed/${yt[1]}`;
+      else if(vm) embed = `https://player.vimeo.com/video/${vm[1]}`;
+      html += `<div class="proj-video-block"><iframe src="${embed}" style="width:100%;aspect-ratio:16/9;border:none" allowfullscreen></iframe></div>`;
+    }
+  }
+  media.innerHTML = html;
+
+  document.getElementById('proj-tags').innerHTML = (p.tags||[]).map(t=>`<span class="proj-tag">${escapeHtml(t)}</span>`).join('');
+
+  const idx = projects.findIndex(x=>x.id===id);
+  const next = projects[(idx+1) % projects.length];
+  document.getElementById('np-title').textContent = next.title;
+  document.getElementById('np-meta').textContent = next.category + ' · ' + next.year;
+  document.getElementById('next-project').setAttribute('data-next-id',next.id);
+
+  showPage('project');
 }
 
-/* SMOOTH LINKS */
-document.querySelectorAll('a[href^="#"]').forEach(a=>{
-  a.addEventListener('click',e=>{
-    const t=document.querySelector(a.getAttribute('href'));
-    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'})}
+function goToNextProject(){
+  const nextId = document.getElementById('next-project').getAttribute('data-next-id');
+  if(nextId) openProject(nextId);
+}
+
+function openAdmin(){
+  editingId = null;
+  imageFiles = [];
+  videoFile = null;
+  document.getElementById('admin-eyebrow').textContent = 'New project';
+  document.getElementById('admin-h').textContent = 'Create new project';
+  document.getElementById('publish-btn').textContent = 'Publish project';
+  document.getElementById('actions-left').innerHTML = '';
+  document.getElementById('f-title').value = '';
+  document.getElementById('f-cat').value = 'Social Media';
+  document.getElementById('f-year').value = new Date().getFullYear();
+  document.getElementById('f-client').value = '';
+  document.getElementById('f-tagline').value = '';
+  document.getElementById('f-desc').value = '';
+  document.getElementById('f-tags').value = '';
+  document.getElementById('f-video-url').value = '';
+  renderImagePreviews();
+  renderVideoPreview();
+  showPage('admin');
+}
+
+function editProject(id){
+  const p = projects.find(x=>x.id===id);
+  if(!p) return;
+  editingId = id;
+  imageFiles = (p.images||[]).map((src,i)=>({dataUrl:src,isCover:i===0}));
+  videoFile = (p.videoUrl && (p.videoUrl.startsWith('data:video')||/\.(mp4|webm|mov)$/i.test(p.videoUrl))) ? {dataUrl:p.videoUrl} : null;
+
+  document.getElementById('admin-eyebrow').textContent = 'Editing project';
+  document.getElementById('admin-h').textContent = 'Edit project';
+  document.getElementById('publish-btn').textContent = 'Save changes';
+  document.getElementById('actions-left').innerHTML = `<button class="action-btn danger" onclick="askDelete('${id}')">Delete project</button>`;
+
+  document.getElementById('f-title').value = p.title;
+  document.getElementById('f-cat').value = p.category;
+  document.getElementById('f-year').value = p.year;
+  document.getElementById('f-client').value = p.client || '';
+  document.getElementById('f-tagline').value = p.tagline || '';
+  document.getElementById('f-desc').value = p.desc || '';
+  document.getElementById('f-tags').value = (p.tags||[]).join(', ');
+  document.getElementById('f-video-url').value = (p.videoUrl && !p.videoUrl.startsWith('data:video') && !/\.(mp4|webm|mov)$/i.test(p.videoUrl)) ? p.videoUrl : '';
+
+  renderImagePreviews();
+  renderVideoPreview();
+  showPage('admin');
+}
+
+function setupUploaders(){
+  const imgInput = document.getElementById('img-input');
+  const vidInput = document.getElementById('vid-input');
+  imgInput.addEventListener('change', e=>handleImages(e.target.files));
+  vidInput.addEventListener('change', e=>handleVideo(e.target.files[0]));
+
+  setupDrop('img-up', e=>handleImages(e.dataTransfer.files));
+  setupDrop('vid-up', e=>handleVideo(e.dataTransfer.files[0]));
+}
+
+function setupDrop(id,cb){
+  const el = document.getElementById(id);
+  ['dragenter','dragover'].forEach(ev=>el.addEventListener(ev,e=>{e.preventDefault();el.classList.add('drag')}));
+  ['dragleave','drop'].forEach(ev=>el.addEventListener(ev,e=>{e.preventDefault();el.classList.remove('drag')}));
+  el.addEventListener('drop',e=>{e.preventDefault();cb(e)});
+}
+
+async function handleImages(files){
+  if(!files || !files.length) return;
+  const arr = Array.from(files).filter(f=>f.type.startsWith('image/'));
+  if(arr.length===0){toast('Please select image files','error');return}
+
+  for(const f of arr){
+    if(f.size > 5*1024*1024){toast(`"${f.name}" is too large (max 5MB)`,'error');continue}
+    const dataUrl = await fileToDataURL(f);
+    imageFiles.push({dataUrl,isCover:false});
+  }
+  if(imageFiles.length && !imageFiles.some(i=>i.isCover)) imageFiles[0].isCover = true;
+  renderImagePreviews();
+  document.getElementById('img-input').value = '';
+}
+
+async function handleVideo(f){
+  if(!f) return;
+  if(!f.type.startsWith('video/')){toast('Please select a video file','error');return}
+  if(f.size > 5*1024*1024){toast('Video is too large (max 5MB). Use a YouTube/Vimeo URL instead.','error');return}
+  const dataUrl = await fileToDataURL(f);
+  videoFile = {dataUrl};
+  renderVideoPreview();
+  document.getElementById('vid-input').value = '';
+}
+
+function fileToDataURL(f){
+  return new Promise((res,rej)=>{
+    const r = new FileReader();
+    r.onload = ()=>res(r.result);
+    r.onerror = rej;
+    r.readAsDataURL(f);
   });
+}
+
+function renderImagePreviews(){
+  const wrap = document.getElementById('img-previews');
+  wrap.innerHTML = imageFiles.map((img,i)=>`
+    <div class="preview">
+      <img src="${img.dataUrl}" alt="">
+      ${img.isCover ? '<span class="preview-cover-badge">Cover</span>' : `<div class="preview-set-cover" onclick="setCover(${i})">Set as cover</div>`}
+      <button type="button" class="rm" onclick="removeImage(${i})">✕</button>
+    </div>
+  `).join('');
+}
+function setCover(i){
+  imageFiles.forEach((x,j)=>x.isCover=(j===i));
+  const cover = imageFiles.splice(i,1)[0];
+  imageFiles.unshift(cover);
+  renderImagePreviews();
+}
+function removeImage(i){
+  const wasCover = imageFiles[i].isCover;
+  imageFiles.splice(i,1);
+  if(wasCover && imageFiles.length) imageFiles[0].isCover = true;
+  renderImagePreviews();
+}
+
+function renderVideoPreview(){
+  const wrap = document.getElementById('vid-previews');
+  if(!videoFile){wrap.innerHTML='';return}
+  wrap.innerHTML = `
+    <div class="preview" style="aspect-ratio:16/9">
+      <video src="${videoFile.dataUrl}" muted></video>
+      <span class="preview-vid-badge">Uploaded video</span>
+      <button type="button" class="rm" onclick="removeVideo()">✕</button>
+    </div>`;
+}
+function removeVideo(){videoFile=null;renderVideoPreview()}
+
+async function publishProject(){
+  const title = document.getElementById('f-title').value.trim();
+  const desc = document.getElementById('f-desc').value.trim();
+  if(!title){toast('Please add a project title','error');return}
+  if(!desc){toast('Please add a description','error');return}
+
+  const tagsRaw = document.getElementById('f-tags').value.trim();
+  const tags = tagsRaw ? tagsRaw.split(',').map(t=>t.trim()).filter(Boolean) : [];
+  const externalVid = document.getElementById('f-video-url').value.trim();
+
+  const ordered = [...imageFiles].sort((a,b)=>(b.isCover?1:0)-(a.isCover?1:0));
+  const images = ordered.map(i=>i.dataUrl);
+
+  const project = {
+    id: editingId || 'p_' + Date.now(),
+    title,
+    category: document.getElementById('f-cat').value,
+    year: document.getElementById('f-year').value || String(new Date().getFullYear()),
+    client: document.getElementById('f-client').value.trim(),
+    tagline: document.getElementById('f-tagline').value.trim(),
+    desc,
+    tags,
+    images,
+    videoUrl: videoFile ? videoFile.dataUrl : externalVid,
+  };
+
+  if(editingId){
+    const idx = projects.findIndex(p=>p.id===editingId);
+    projects[idx] = project;
+    toast('Project updated','success');
+  } else {
+    projects.unshift(project);
+    toast('Project published','success');
+  }
+  await saveProjects();
+  renderGrid();
+  showPage('home');
+  setTimeout(()=>scrollToId('work'),100);
+}
+
+function askDelete(id){
+  pendingDelete = id;
+  const p = projects.find(x=>x.id===id);
+  if(!p) return;
+  document.getElementById('del-title').textContent = p.title;
+  document.getElementById('delete-modal').classList.add('open');
+}
+function closeDelete(){
+  pendingDelete = null;
+  document.getElementById('delete-modal').classList.remove('open');
+}
+async function confirmDelete(){
+  if(!pendingDelete) return;
+  projects = projects.filter(p=>p.id!==pendingDelete);
+  await saveProjects();
+  renderGrid();
+  closeDelete();
+  toast('Project deleted','success');
+  if(document.getElementById('page-project').classList.contains('active')){
+    showPage('home');
+    setTimeout(()=>scrollToId('work'),100);
+  }
+}
+
+function showPage(name){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  if(name==='settings') populateSettingsForm();
+  window.scrollTo(0,0);
+}
+function scrollToId(id){
+  setTimeout(()=>{
+    const el = document.getElementById(id);
+    if(el) el.scrollIntoView({behavior:'smooth'});
+  },50);
+}
+
+let dark = true;
+function toggleTheme(){
+  dark = !dark;
+  document.body.classList.toggle('light',!dark);
+  document.getElementById('tb').textContent = dark ? '☀' : '☾';
+}
+
+let toastTimer;
+function toast(msg,type=''){
+  const t = document.getElementById('toast');
+  t.className = 'toast ' + type;
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>t.classList.remove('show'),2400);
+}
+
+window.addEventListener('DOMContentLoaded',()=>{
+  loadProjects();
+  loadSettings();
+  setupUploaders();
+  setupSettingsImageUploaders();
 });
+
+window.addEventListener('scroll',()=>{
+  document.getElementById('nav').style.background = dark
+    ? (window.scrollY>30 ? 'rgba(0,0,0,.92)' : 'rgba(0,0,0,.78)')
+    : (window.scrollY>30 ? 'rgba(255,255,255,.92)' : 'rgba(255,255,255,.78)');
+},{passive:true});
 </script>
 </body>
 </html>
