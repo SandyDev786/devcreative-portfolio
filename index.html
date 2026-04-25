@@ -1219,7 +1219,97 @@ function toast(msg,type=''){
   toastTimer = setTimeout(()=>t.classList.remove('show'),2400);
 }
 
-window.addEventListener('DOMContentLoaded',()=>{
+/* AUTHENTICATION */
+const AUTH_USERNAME = 'admin';
+const AUTH_PASSWORD = 'sandy2025';
+let isLoggedIn = false;
+
+async function checkAuth(){
+  try{
+    if(typeof window.storage!=='undefined' && window.storage.get){
+      const r = await window.storage.get('sandy:auth');
+      isLoggedIn = r && r.value === 'true';
+    }
+  }catch(e){
+    const session = localStorage.getItem('sandy:auth');
+    isLoggedIn = session === 'true';
+  }
+  return isLoggedIn;
+}
+
+async function saveAuth(status){
+  try{
+    if(typeof window.storage!=='undefined' && window.storage.set){
+      await window.storage.set('sandy:auth',String(status));
+    }
+  }catch(e){
+    localStorage.setItem('sandy:auth',String(status));
+  }
+}
+
+function attemptLogin(e){
+  e.preventDefault();
+  const username = document.getElementById('login-username').value.trim();
+  const password = document.getElementById('login-password').value.trim();
+  
+  if(username === AUTH_USERNAME && password === AUTH_PASSWORD){
+    isLoggedIn = true;
+    saveAuth(true);
+    showAdminUI();
+    document.getElementById('page-login').classList.remove('active');
+    document.getElementById('page-home').classList.add('active');
+    document.getElementById('nav').style.display = 'flex';
+    toast('Welcome back!','success');
+  } else {
+    document.getElementById('login-error').classList.add('show');
+    setTimeout(()=>document.getElementById('login-error').classList.remove('show'),3000);
+  }
+}
+
+function logout(){
+  isLoggedIn = false;
+  saveAuth(false);
+  hideAdminUI();
+  document.getElementById('page-login').classList.add('active');
+  document.getElementById('page-home').classList.remove('active');
+  document.getElementById('page-admin').classList.remove('active');
+  document.getElementById('page-settings').classList.remove('active');
+  document.getElementById('page-project').classList.remove('active');
+  document.getElementById('nav').style.display = 'none';
+  document.getElementById('login-username').value = '';
+  document.getElementById('login-password').value = '';
+  toast('Logged out','success');
+}
+
+function showAdminUI(){
+  document.getElementById('settings-btn').style.display = 'inline-flex';
+  document.getElementById('create-btn').style.display = 'inline-flex';
+  document.getElementById('create-btn-work').style.display = 'inline-flex';
+  document.getElementById('logout-btn').style.display = 'inline-flex';
+  document.getElementById('edit-proj-btn').style.display = 'inline-block';
+  document.querySelectorAll('.bc-actions').forEach(el=>el.style.display='flex');
+}
+
+function hideAdminUI(){
+  document.getElementById('settings-btn').style.display = 'none';
+  document.getElementById('create-btn').style.display = 'none';
+  document.getElementById('create-btn-work').style.display = 'none';
+  document.getElementById('logout-btn').style.display = 'none';
+  document.getElementById('edit-proj-btn').style.display = 'none';
+  document.querySelectorAll('.bc-actions').forEach(el=>el.style.display='none');
+}
+
+window.addEventListener('DOMContentLoaded',async()=>{
+  const authed = await checkAuth();
+  if(authed){
+    isLoggedIn = true;
+    document.getElementById('page-login').classList.remove('active');
+    document.getElementById('page-home').classList.add('active');
+    document.getElementById('nav').style.display = 'flex';
+    showAdminUI();
+  } else {
+    hideAdminUI();
+  }
   loadProjects();
   loadSettings();
   setupUploaders();
