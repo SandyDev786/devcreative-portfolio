@@ -87,7 +87,7 @@ nav{position:fixed;inset:0 0 auto;z-index:300;height:54px;display:flex;align-ite
 .bc:hover .bc-img{transform:scale(1.06)}
 .bc-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.92) 0%,rgba(0,0,0,.3) 40%,transparent 65%);opacity:0;transition:opacity .35s var(--ease);display:flex;flex-direction:column;justify-content:flex-end;padding:22px}
 .bc:hover .bc-ov{opacity:1}
-.bc-cat{font-size:10px;font-weight:600;color:var(--blue);letter-spacing:06em;text-transform:uppercase;margin-bottom:5px}
+.bc-cat{font-size:10px;font-weight:600;color:var(--blue);letter-spacing:.06em;text-transform:uppercase;margin-bottom:5px}
 .bc-title{font-size:18px;font-weight:600;color:#fff;letter-spacing:-.02em;margin-bottom:3px}
 .bc-meta{font-size:11px;color:rgba(255,255,255,.5)}
 .bc-pill{position:absolute;top:14px;right:14px;background:rgba(0,0,0,.7);backdrop-filter:blur(10px);border:.5px solid rgba(255,255,255,.12);color:rgba(255,255,255,.7);font-size:10px;font-weight:500;padding:4px 11px;border-radius:100px}
@@ -157,7 +157,7 @@ footer p{font-size:12px;color:var(--dim)}
 .proj-img-block{margin-bottom:12px;border-radius:var(--r-sm);overflow:hidden}
 .proj-img-block img{width:100%;display:block}
 .proj-video-block{margin-bottom:12px;border-radius:var(--r-sm);overflow:hidden;background:#000}
-.proj-video-block iframe{width:100%;aspect-ratio:16/9;border:none}
+.proj-video-block video{width:100%;display:block;max-height:600px}
 
 .proj-tags{display:flex;flex-wrap:wrap;gap:8px;margin:48px 0;padding-top:36px;border-top:.5px solid var(--line)}
 .proj-tag{background:var(--bg2);border:.5px solid var(--line2);color:var(--muted);font-size:12px;font-weight:500;padding:7px 16px;border-radius:100px}
@@ -170,7 +170,7 @@ footer p{font-size:12px;color:var(--dim)}
 .np-title{font-size:clamp(28px,3.5vw,46px);font-weight:700;letter-spacing:-.04em}
 .np-arrow{width:44px;height:44px;border-radius:50%;background:var(--bg3);border:.5px solid var(--line2);display:flex;align-items:center;justify-content:center;font-size:18px;transition:all .3s var(--spring)}
 .next-project:hover .np-arrow{background:var(--blue);border-color:var(--blue);color:#fff;transform:translateX(8px)}
-.np-meta{font-size:14px;color:var(--muted)}
+.np-meta{font-size:14px;color:var(--muted}}
 
 .page{display:none}
 .page.active{display:block}
@@ -203,7 +203,7 @@ footer p{font-size:12px;color:var(--dim)}
 <body>
 
 <nav>
-  <div class="n-logo"><a href="#" onclick="showPage('home');return false">Sandy</a></div>
+  <div class="n-logo"><a href="#" onclick="showPage('home');return false" id="nav-logo">Sandy</a></div>
   <div class="n-mid">
     <a onclick="scrollToId('about')">About</a>
     <a onclick="scrollToId('work')">Work</a>
@@ -212,7 +212,7 @@ footer p{font-size:12px;color:var(--dim)}
   </div>
   <div class="n-right">
     <button class="n-theme" id="tb" onclick="toggleTheme()">☀</button>
-    <a href="sandy-cv.pdf" download class="n-btn n-cv">📥 Download CV</a>
+    <a href="#" onclick="alert('Upload your CV and update the link!');return false" class="n-btn n-cv">📥 Download CV</a>
     <button class="n-btn n-cta" onclick="scrollToId('contact')">Work with me</button>
   </div>
 </nav>
@@ -223,10 +223,10 @@ footer p{font-size:12px;color:var(--dim)}
   <div class="hero-glow"></div>
   <section id="hero">
     <div>
-      <div class="h-badge">✦ Open to new projects</div>
-      <h1 class="h-name">Sandy.</h1>
-      <h2 class="h-title">Creative Digital<br>Designer.</h2>
-      <p class="h-bio">I design <strong>social media content, reels, real estate visuals,</strong> and <strong>web experiences</strong> that make brands impossible to scroll past. Based in Dubai, working globally.</p>
+      <div class="h-badge">✦ <span id="hero-badge-text">Open to new projects</span></div>
+      <h1 class="h-name" id="hero-name">Sandy.</h1>
+      <h2 class="h-title" id="hero-title">Creative Digital<br>Designer.</h2>
+      <p class="h-bio" id="hero-bio">I design <strong>social media content, reels, real estate visuals,</strong> and <strong>web experiences</strong> that make brands impossible to scroll past. Based in Dubai, working globally.</p>
       <div class="h-cta">
         <button class="btn-blue" onclick="scrollToId('work')">View my work</button>
         <button class="btn-ghost" onclick="scrollToId('contact')">Get in touch</button>
@@ -239,9 +239,9 @@ footer p{font-size:12px;color:var(--dim)}
     </div>
     <div class="hero-right">
       <div class="photo-wrap">
-        <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=600&q=80" alt="Sandy">
-        <div class="photo-tag"><div class="pt-name">Sandy</div><div class="pt-role">Creative Digital Designer</div></div>
-        <div class="photo-loc">Dubai, UAE</div>
+        <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=600&q=80" alt="Sandy" id="hero-photo">
+        <div class="photo-tag"><div class="pt-name" id="hero-photo-name">Sandy</div><div class="pt-role" id="hero-photo-role">Creative Digital Designer</div></div>
+        <div class="photo-loc" id="hero-photo-loc">Dubai, UAE</div>
       </div>
     </div>
   </section>
@@ -259,16 +259,16 @@ footer p{font-size:12px;color:var(--dim)}
   <h2 class="sec-h">Who I am<span class="d">.</span></h2>
   <div class="about-wrap">
     <div class="about-l">
-      <div class="about-name">Sandy</div>
-      <div class="about-role">Creative Digital Designer</div>
-      <p class="about-bio">I'm a <strong>Creative Digital Designer</strong> based in Dubai with a passion for building visual experiences that stop the scroll and drive real results.<br><br>From <strong>social media content</strong> and <strong>short-form reels</strong> to <strong>real estate campaigns</strong> and <strong>landing pages</strong> — I combine design thinking with deep platform knowledge to produce work that performs.</p>
+      <div class="about-name" id="about-name">Sandy</div>
+      <div class="about-role" id="about-role">Creative Digital Designer</div>
+      <p class="about-bio" id="about-bio">I'm a <strong>Creative Digital Designer</strong> based in Dubai with a passion for building visual experiences that stop the scroll and drive real results.<br><br>From <strong>social media content</strong> and <strong>short-form reels</strong> to <strong>real estate campaigns</strong> and <strong>landing pages</strong> — I combine design thinking with deep platform knowledge to produce work that performs.</p>
       <div class="about-tools">
         <span class="tool">Photoshop</span><span class="tool">After Effects</span><span class="tool">Premiere Pro</span><span class="tool">Illustrator</span><span class="tool">Figma</span><span class="tool">Webflow</span><span class="tool">Canva Pro</span><span class="tool">CapCut Pro</span>
       </div>
     </div>
     <div class="about-r">
       <div class="portrait">
-        <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&q=80" alt="Sandy portrait">
+        <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&q=80" alt="Sandy portrait" id="about-photo">
       </div>
     </div>
   </div>
@@ -306,19 +306,19 @@ footer p{font-size:12px;color:var(--dim)}
     <div class="c-glow"></div>
     <div class="sec-lbl" style="margin-bottom:16px">Let's work together</div>
     <h2 class="c-h">Have a project<br><span class="d">in mind?</span></h2>
-    <p class="c-sub">Whether it's a single reel or a full brand — I'd love to hear what you're building.</p>
+    <p class="c-sub" id="contact-sub">Whether it's a single reel or a full brand — I'd love to hear what you're building.</p>
     <div class="c-links">
-      <a href="mailto:hello@sandy.ae" class="cl p">✉ Email me</a>
-      <a href="https://wa.me/971500000000" target="_blank" class="cl g">💬 WhatsApp</a>
-      <a href="https://behance.net" target="_blank" class="cl g">Behance</a>
-      <a href="https://instagram.com" target="_blank" class="cl g">Instagram</a>
+      <a href="mailto:hello@sandy.ae" class="cl p" id="contact-email">✉ Email me</a>
+      <a href="https://wa.me/971500000000" target="_blank" class="cl g" id="contact-whatsapp">💬 WhatsApp</a>
+      <a href="https://behance.net" target="_blank" class="cl g" id="contact-behance">Behance</a>
+      <a href="https://instagram.com" target="_blank" class="cl g" id="contact-instagram">Instagram</a>
     </div>
   </div>
 </section>
 
 <footer>
-  <div class="f-logo">Sandy</div>
-  <p>© 2025 · Sandy — Creative Digital Designer · Dubai, UAE</p>
+  <div class="f-logo" id="footer-logo">Sandy</div>
+  <p id="footer-copyright">© 2025 · Sandy — Creative Digital Designer · Dubai, UAE</p>
   <div class="f-links">
     <a href="#" class="f-link">Behance</a>
     <a href="#" class="f-link">Instagram</a>
@@ -357,142 +357,41 @@ footer p{font-size:12px;color:var(--dim)}
   </div>
 </div>
 
-<!-- Load projects data -->
-<script src="projects.js"></script>
-
 <script>
-// No localStorage - projects loaded from projects.js file
-let currentProjId = null;
-
-function renderGrid(){
-  const grid = document.getElementById('grid');
-  if(!projects || projects.length === 0){
-    grid.innerHTML = '<div style="padding:60px;text-align:center;color:var(--dim)">No projects yet. Add projects in projects.js</div>';
-    return;
+let projects=[];let settings={};let currentProjId=null;
+async function loadProjects(){
+  try{
+    const stored = localStorage.getItem('sandy:projects');
+    projects = stored ? JSON.parse(stored) : seedProjects();
+  }catch(e){
+    projects = seedProjects();
   }
-
-  grid.innerHTML = projects.map((p, i) => {
-    const wide = (i === 0 && projects.length >= 2) ? 'w2' : '';
-    const cover = p.coverImage || (p.images && p.images[0]) || '';
-    const icon = categoryIcons[p.category] || '◆';
-    
-    return `
-      <div class="bc ${wide}" data-cat="${escAttr(p.category)}" onclick="openProject('${p.id}')">
-        ${cover ? 
-          `<img class="bc-img" src="${cover}" alt="${escAttr(p.title)}">` : 
-          `<div style="display:flex;align-items:center;justify-content:center;height:100%;flex-direction:column;gap:12px"><div style="font-size:40px">${icon}</div><div style="color:var(--dim);font-size:14px">${escHtml(p.category)}</div></div>`
-        }
-        <div class="bc-pill">${escHtml(p.category)}</div>
-        <div class="bc-ov">
-          <div class="bc-cat">${escHtml(p.category)}</div>
-          <div class="bc-title">${escHtml(p.title)}</div>
-          <div class="bc-meta">${escHtml(p.client || '')}${p.client ? ' · ' : ''}${escHtml(p.year)}</div>
-        </div>
-      </div>`;
-  }).join('');
-}
-
-function escHtml(s){
-  return String(s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-}
-function escAttr(s){ return escHtml(s); }
-
-function filterWork(btn, cat){
-  document.querySelectorAll('.wfb').forEach(b => b.classList.remove('on'));
-  btn.classList.add('on');
-  document.querySelectorAll('.bc').forEach(c => {
-    const match = cat === 'all' || c.dataset.cat === cat;
-    c.style.opacity = match ? '1' : '0.1';
-    c.style.pointerEvents = match ? 'auto' : 'none';
-    c.style.transition = 'opacity .3s';
-  });
-}
-
-function openProject(id){
-  const p = projects.find(x => x.id === id);
-  if(!p) return;
-  
-  currentProjId = id;
-  document.getElementById('proj-nav-title').textContent = p.title;
-  
-  const header = document.getElementById('proj-header');
-  header.innerHTML = `
-    <div class="proj-header">
-      <div class="proj-cat-pill">${escHtml(p.category)}</div>
-      <h1 class="proj-header-title">${escHtml(p.title)}</h1>
-      <p class="proj-header-sub">${escHtml(p.tagline || '')}</p>
-    </div>`;
-  
-  document.getElementById('pi-cat').textContent = p.category;
-  document.getElementById('pi-year').textContent = p.year;
-  document.getElementById('pi-client').textContent = p.client || '—';
-  document.getElementById('proj-desc').textContent = p.description;
-  
-  const media = document.getElementById('proj-media');
-  let html = '';
-  
-  if(p.images && p.images.length){
-    p.images.forEach(src => {
-      html += `<div class="proj-img-block"><img src="${src}" alt=""></div>`;
-    });
-  }
-  
-  if(p.videoUrl){
-    let embed = p.videoUrl;
-    const yt = p.videoUrl.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([^&?]+)/);
-    const vm = p.videoUrl.match(/vimeo\.com\/(\d+)/);
-    if(yt) embed = `https://www.youtube.com/embed/${yt[1]}`;
-    else if(vm) embed = `https://player.vimeo.com/video/${vm[1]}`;
-    html += `<div class="proj-video-block"><iframe src="${embed}" allowfullscreen></iframe></div>`;
-  }
-  
-  media.innerHTML = html;
-  document.getElementById('proj-tags').innerHTML = (p.tags || []).map(t => `<span class="proj-tag">${escHtml(t)}</span>`).join('');
-  
-  const idx = projects.findIndex(x => x.id === id);
-  const next = projects[(idx + 1) % projects.length];
-  document.getElementById('np-title').textContent = next.title;
-  document.getElementById('np-meta').textContent = next.category + ' · ' + next.year;
-  document.getElementById('next-project').setAttribute('data-next-id', next.id);
-  
-  showPage('project');
-}
-
-function goToNextProject(){
-  const nextId = document.getElementById('next-project').getAttribute('data-next-id');
-  if(nextId) openProject(nextId);
-}
-
-function showPage(name){
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById('page-' + name).classList.add('active');
-  window.scrollTo(0, 0);
-}
-
-function scrollToId(id){
-  setTimeout(() => {
-    const el = document.getElementById(id);
-    if(el) el.scrollIntoView({behavior: 'smooth'});
-  }, 50);
-}
-
-let dark = true;
-function toggleTheme(){
-  dark = !dark;
-  document.body.classList.toggle('light', !dark);
-  document.getElementById('tb').textContent = dark ? '☀' : '☾';
-}
-
-window.addEventListener('DOMContentLoaded', () => {
   renderGrid();
-});
-
-window.addEventListener('scroll', () => {
-  const nav = document.querySelector('nav');
-  nav.style.background = dark ? 
-    (window.scrollY > 30 ? 'rgba(0,0,0,.92)' : 'rgba(0,0,0,.78)') : 
-    (window.scrollY > 30 ? 'rgba(255,255,255,.92)' : 'rgba(255,255,255,.78)');
-}, {passive: true});
+}
+async function loadSettings(){
+  try{
+    const stored = localStorage.getItem('sandy:settings');
+    settings = stored ? JSON.parse(stored) : defaultSettings();
+  }catch(e){
+    settings = defaultSettings();
+  }
+  applySettings();
+}
+function defaultSettings(){return{name:'Sandy',title:'Creative Digital Designer',location:'Dubai, UAE',badge:'Open to new projects',heroBio:`I design <strong>social media content, reels, real estate visuals,</strong> and <strong>web experiences</strong> that make brands impossible to scroll past. Based in Dubai, working globally.`,aboutBio:`I'm a <strong>Creative Digital Designer</strong> based in Dubai with a passion for building visual experiences that stop the scroll and drive real results.<br><br>From <strong>social media content</strong> and <strong>short-form reels</strong> to <strong>real estate campaigns</strong> and <strong>landing pages</strong> — I combine design thinking with deep platform knowledge to produce work that performs.`,heroPhoto:'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=600&q=80',aboutPhoto:'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&q=80',email:'hello@sandy.ae',whatsapp:'971500000000',behance:'https://behance.net',instagram:'https://instagram.com',contactSub:"Whether it's a single reel or a full brand — I'd love to hear what you're building."}}
+function applySettings(){document.getElementById('nav-logo').textContent=settings.name;document.getElementById('hero-name').textContent=settings.name+'.';document.getElementById('hero-title').innerHTML=settings.title.replace(/\s/g,'<br>')+'.';document.getElementById('hero-bio').innerHTML=settings.heroBio;document.getElementById('hero-badge-text').textContent=settings.badge;document.getElementById('hero-photo').src=settings.heroPhoto;document.getElementById('hero-photo-name').textContent=settings.name;document.getElementById('hero-photo-role').textContent=settings.title;document.getElementById('hero-photo-loc').textContent=settings.location;document.getElementById('about-name').textContent=settings.name;document.getElementById('about-role').textContent=settings.title;document.getElementById('about-bio').innerHTML=settings.aboutBio;document.getElementById('about-photo').src=settings.aboutPhoto;document.getElementById('contact-sub').textContent=settings.contactSub;document.getElementById('contact-email').href='mailto:'+settings.email;document.getElementById('contact-email').innerHTML='✉ '+settings.email;document.getElementById('contact-whatsapp').href='https://wa.me/'+settings.whatsapp;document.getElementById('contact-behance').href=settings.behance;document.getElementById('contact-instagram').href=settings.instagram;document.getElementById('footer-logo').textContent=settings.name;document.getElementById('footer-copyright').textContent=`© 2025 · ${settings.name} — ${settings.title} · ${settings.location}`}
+function seedProjects(){return[{id:'p1',title:'Instagram Growth Campaign',category:'Social Media',year:'2024',client:'Luxe Living UAE',tagline:'Full content strategy & visual system for a UAE lifestyle brand',desc:`Built a complete Instagram visual identity system from the ground up. From content pillars to post templates, story designs, and highlight covers, every touchpoint was considered to create a cohesive, premium look that grew the account from 12K to 80K followers in 6 months.\n\nThe system was modular and scalable — handed off to the in-house social team with full documentation so they could continue producing on-brand content daily without ever losing consistency.`,tags:['Instagram','Content Strategy','Visual Design','Social Media','Branding'],images:['https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=1200&q=85','https://images.unsplash.com/photo-1512486130939-2c4f79935e4f?w=1200&q=80','https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=900&q=80'],videoUrl:''},{id:'p2',title:'Luxury Tower — Dubai',category:'Real Estate',year:'2024',client:'Emaar Properties',tagline:'Complete digital campaign and print collateral for a luxury off-plan tower',desc:`Full real estate marketing package for a luxury off-plan tower launch in Dubai Marina. The project included a 32-page sales brochure, digital ad creatives for Instagram and Google, a 30-day social media launch campaign, and animated property walkthrough content.\n\nThe campaign drove 4,200+ qualified leads in the first week and helped sell 60% of inventory in the first month.`,tags:['Real Estate','Dubai','Brochure Design','Social Ads','Motion'],images:['https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1200&q=85','https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&q=80','https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=900&q=80'],videoUrl:''},{id:'p3',title:'Real Estate Landing Page',category:'Web Design',year:'2024',client:'Nakheel Developers',tagline:'High-converting lead-generation page for a Dubai property launch',desc:`A high-converting landing page built for a luxury off-plan property registration campaign. Achieved a 34% conversion rate by integrating social proof above the fold, a sticky CTA bar, WhatsApp integration, and a multi-step form that reduced friction by 62%.\n\nThe lead form connects directly to HubSpot, triggering automated WhatsApp confirmation messages, email sequences, and sales team notifications.`,tags:['Web Design','Landing Page','Webflow','HubSpot','CRM','Real Estate'],images:['https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=1200&q=85','https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&q=80','https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=900&q=80'],videoUrl:''},{id:'p4',title:'Product Launch Reel',category:'Reels & Video',year:'2024',client:'GLOW Skincare',tagline:'Multi-platform video campaign for a luxury skincare brand launch',desc:`Short-form video campaign for a luxury skincare brand launching across the UAE and KSA. The project included a 60-second hero brand film, 8 Instagram reels, 6 TikTok-native videos, and YouTube pre-roll ads.\n\nAll content was built from a unified motion language — consistent timing, transitions, and typography animation that made every piece instantly recognisable as the same brand.`,tags:['Reels','Video','Motion Design','TikTok','Instagram','Advertising'],images:['https://images.unsplash.com/photo-1492619375914-88005aa9e8fb?w=1200&q=85','https://images.unsplash.com/photo-1536240478700-b869ad10e2c0?w=1200&q=80'],videoUrl:''}]}
+function renderGrid(){const grid=document.getElementById('grid');if(projects.length===0){grid.innerHTML='';return}grid.innerHTML=projects.map((p,i)=>{const wide=(i===0&&projects.length>=2)?'w2':'';const cover=p.images&&p.images.length?p.images[0]:'';return`<div class="bc ${wide}" data-cat="${escapeAttr(p.category)}" onclick="openProject('${p.id}')">${cover?`<img class="bc-img" src="${cover}" alt="${escapeAttr(p.title)}">`:`<div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--dim);font-size:14px">${escapeHtml(p.category)}</div>`}<div class="bc-pill">${escapeHtml(p.category)}</div><div class="bc-ov"><div class="bc-cat">${escapeHtml(p.category)}</div><div class="bc-title">${escapeHtml(p.title)}</div><div class="bc-meta">${escapeHtml(p.client||'')}${p.client?' · ':''}${escapeHtml(p.year)}</div></div></div>`}).join('')}
+function escapeHtml(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function escapeAttr(s){return escapeHtml(s)}
+function filterWork(btn,cat){document.querySelectorAll('.wfb').forEach(b=>b.classList.remove('on'));btn.classList.add('on');document.querySelectorAll('.bc').forEach(c=>{const m=cat==='all'||c.dataset.cat===cat;c.style.opacity=m?'1':'0.1';c.style.pointerEvents=m?'auto':'none';c.style.transition='opacity .3s'})}
+function openProject(id){const p=projects.find(x=>x.id===id);if(!p)return;currentProjId=id;document.getElementById('proj-nav-title').textContent=p.title;const header=document.getElementById('proj-header');header.innerHTML=`<div class="proj-header"><div class="proj-cat-pill">${escapeHtml(p.category)}</div><h1 class="proj-header-title">${escapeHtml(p.title)}</h1><p class="proj-header-sub">${escapeHtml(p.tagline||'')}</p></div>`;document.getElementById('pi-cat').textContent=p.category;document.getElementById('pi-year').textContent=p.year;document.getElementById('pi-client').textContent=p.client||'—';document.getElementById('proj-desc').textContent=p.desc;const media=document.getElementById('proj-media');let html='';if(p.images&&p.images.length){p.images.forEach(src=>{html+=`<div class="proj-img-block"><img src="${src}" alt=""></div>`})}if(p.videoUrl){if(p.videoUrl.startsWith('data:video')||/\.(mp4|webm|mov)$/i.test(p.videoUrl)){html+=`<div class="proj-video-block"><video src="${p.videoUrl}" controls></video></div>`}else{let embed=p.videoUrl;const yt=p.videoUrl.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([^&?]+)/);const vm=p.videoUrl.match(/vimeo\.com\/(\d+)/);if(yt)embed=`https://www.youtube.com/embed/${yt[1]}`;else if(vm)embed=`https://player.vimeo.com/video/${vm[1]}`;html+=`<div class="proj-video-block"><iframe src="${embed}" style="width:100%;aspect-ratio:16/9;border:none" allowfullscreen></iframe></div>`}}media.innerHTML=html;document.getElementById('proj-tags').innerHTML=(p.tags||[]).map(t=>`<span class="proj-tag">${escapeHtml(t)}</span>`).join('');const idx=projects.findIndex(x=>x.id===id);const next=projects[(idx+1)%projects.length];document.getElementById('np-title').textContent=next.title;document.getElementById('np-meta').textContent=next.category+' · '+next.year;document.getElementById('next-project').setAttribute('data-next-id',next.id);showPage('project')}
+function goToNextProject(){const nextId=document.getElementById('next-project').getAttribute('data-next-id');if(nextId)openProject(nextId)}
+function showPage(name){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById('page-'+name).classList.add('active');window.scrollTo(0,0)}
+function scrollToId(id){setTimeout(()=>{const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth'})},50)}
+let dark=true;
+function toggleTheme(){dark=!dark;document.body.classList.toggle('light',!dark);document.getElementById('tb').textContent=dark?'☀':'☾'}
+window.addEventListener('DOMContentLoaded',()=>{loadProjects();loadSettings()});
+window.addEventListener('scroll',()=>{const nav=document.querySelector('nav');nav.style.background=dark?(window.scrollY>30?'rgba(0,0,0,.92)':'rgba(0,0,0,.78)'):(window.scrollY>30?'rgba(255,255,255,.92)':'rgba(255,255,255,.78)')},{passive:true});
 </script>
 </body>
 </html>
