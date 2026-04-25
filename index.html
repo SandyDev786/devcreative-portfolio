@@ -44,6 +44,21 @@ nav{position:fixed;inset:0 0 auto;z-index:300;height:54px;display:flex;align-ite
 .page{display:none}
 .page.active{display:block}
 
+/* LOGIN PAGE */
+#page-login{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px}
+.login-box{background:var(--bg1);border:.5px solid var(--line2);border-radius:var(--r);padding:48px 40px;max-width:400px;width:100%;box-shadow:0 8px 32px rgba(0,0,0,.4)}
+.login-logo{font-size:32px;font-weight:700;letter-spacing:-.04em;margin-bottom:8px;text-align:center}
+.login-sub{font-size:14px;color:var(--muted);text-align:center;margin-bottom:36px}
+.login-field{margin-bottom:18px}
+.login-field label{display:block;font-size:13px;font-weight:500;margin-bottom:8px}
+.login-input{width:100%;background:var(--bg2);border:.5px solid var(--line2);color:var(--text);padding:12px 16px;border-radius:10px;font-family:inherit;font-size:14px;outline:none;transition:border-color .2s}
+.login-input:focus{border-color:var(--blue)}
+.login-btn{width:100%;background:var(--blue);color:#fff;border:none;padding:14px;border-radius:100px;font-size:15px;font-weight:500;cursor:pointer;font-family:inherit;margin-top:8px;transition:filter .2s}
+.login-btn:hover{filter:brightness(1.12)}
+.login-error{background:rgba(255,69,58,.1);border:.5px solid rgba(255,69,58,.3);color:var(--red);padding:12px 16px;border-radius:10px;font-size:13px;margin-bottom:18px;display:none}
+.login-error.show{display:block}
+
+
 /* HERO */
 #hero{min-height:calc(100vh - 54px);display:grid;grid-template-columns:1fr 400px;align-items:center;gap:60px;padding:80px 32px 60px;max-width:1140px;margin:0 auto;position:relative}
 .hero-glow{position:absolute;top:-100px;left:-80px;width:600px;height:500px;background:radial-gradient(ellipse,rgba(41,151,255,.06) 0%,transparent 65%);pointer-events:none}
@@ -318,12 +333,15 @@ footer p{font-size:12px;color:var(--dim)}
     <a onclick="showPage('home');scrollToId('work')">Work</a>
     <a onclick="showPage('home');scrollToId('services')">Services</a>
     <a onclick="showPage('home');scrollToId('contact')">Contact</a>
-    <button class="n-btn n-settings" onclick="showPage('settings')">⚙ Settings</button>
-    <button class="n-btn n-create" onclick="openAdmin()">+ Create New</button>
+    <button class="n-btn n-settings" id="admin-login-btn" onclick="showLoginModal()">🔐 Admin</button>
+    <button class="n-btn n-settings" id="settings-btn" onclick="showPage('settings')" style="display:none">⚙ Settings</button>
+    <button class="n-btn n-create" id="create-btn" onclick="openAdmin()" style="display:none">+ Create New</button>
   </div>
   <div class="n-right">
     <button class="n-theme" id="tb" onclick="toggleTheme()">☀</button>
+    <a href="#" onclick="alert('Please upload your CV file and update this link!');return false" class="n-btn n-create" style="text-decoration:none">📥 Download CV</a>
     <button class="n-btn n-cta" onclick="showPage('home');scrollToId('contact')">Work with me</button>
+    <button class="n-btn n-logout" id="logout-btn" onclick="logout()" style="display:none">Logout</button>
   </div>
 </nav>
 
@@ -683,6 +701,28 @@ footer p{font-size:12px;color:var(--dim)}
       <button class="action-btn draft" onclick="closeDelete()">Cancel</button>
       <button class="action-btn danger" onclick="confirmDelete()">Delete project</button>
     </div>
+  </div>
+</div>
+
+<div class="modal-bg" id="login-modal">
+  <div class="modal">
+    <h3>Admin Login</h3>
+    <p>Enter your credentials to access the admin panel</p>
+    <div class="login-error" id="modal-login-error">Invalid username or password</div>
+    <form onsubmit="attemptLogin(event)">
+      <div class="login-field">
+        <label>Username</label>
+        <input type="text" class="login-input" id="login-username" placeholder="Enter username" required>
+      </div>
+      <div class="login-field">
+        <label>Password</label>
+        <input type="password" class="login-input" id="login-password" placeholder="Enter password" required>
+      </div>
+      <div class="actions" style="margin-top:20px">
+        <button type="button" class="action-btn draft" onclick="closeLoginModal()">Cancel</button>
+        <button type="submit" class="action-btn primary">Login</button>
+      </div>
+    </form>
   </div>
 </div>
 
@@ -1224,6 +1264,18 @@ const AUTH_USERNAME = 'admin';
 const AUTH_PASSWORD = 'sandy2025';
 let isLoggedIn = false;
 
+function showLoginModal(){
+  document.getElementById('login-modal').classList.add('open');
+  document.getElementById('login-username').focus();
+}
+
+function closeLoginModal(){
+  document.getElementById('login-modal').classList.remove('open');
+  document.getElementById('login-username').value = '';
+  document.getElementById('login-password').value = '';
+  document.getElementById('modal-login-error').classList.remove('show');
+}
+
 async function checkAuth(){
   try{
     if(typeof window.storage!=='undefined' && window.storage.get){
@@ -1256,13 +1308,11 @@ function attemptLogin(e){
     isLoggedIn = true;
     saveAuth(true);
     showAdminUI();
-    document.getElementById('page-login').classList.remove('active');
-    document.getElementById('page-home').classList.add('active');
-    document.getElementById('nav').style.display = 'flex';
+    closeLoginModal();
     toast('Welcome back!','success');
   } else {
-    document.getElementById('login-error').classList.add('show');
-    setTimeout(()=>document.getElementById('login-error').classList.remove('show'),3000);
+    document.getElementById('modal-login-error').classList.add('show');
+    setTimeout(()=>document.getElementById('modal-login-error').classList.remove('show'),3000);
   }
 }
 
@@ -1270,18 +1320,12 @@ function logout(){
   isLoggedIn = false;
   saveAuth(false);
   hideAdminUI();
-  document.getElementById('page-login').classList.add('active');
-  document.getElementById('page-home').classList.remove('active');
-  document.getElementById('page-admin').classList.remove('active');
-  document.getElementById('page-settings').classList.remove('active');
-  document.getElementById('page-project').classList.remove('active');
-  document.getElementById('nav').style.display = 'none';
-  document.getElementById('login-username').value = '';
-  document.getElementById('login-password').value = '';
   toast('Logged out','success');
+  showPage('home');
 }
 
 function showAdminUI(){
+  document.getElementById('admin-login-btn').style.display = 'none';
   document.getElementById('settings-btn').style.display = 'inline-flex';
   document.getElementById('create-btn').style.display = 'inline-flex';
   document.getElementById('create-btn-work').style.display = 'inline-flex';
@@ -1291,6 +1335,7 @@ function showAdminUI(){
 }
 
 function hideAdminUI(){
+  document.getElementById('admin-login-btn').style.display = 'inline-flex';
   document.getElementById('settings-btn').style.display = 'none';
   document.getElementById('create-btn').style.display = 'none';
   document.getElementById('create-btn-work').style.display = 'none';
@@ -1303,9 +1348,6 @@ window.addEventListener('DOMContentLoaded',async()=>{
   const authed = await checkAuth();
   if(authed){
     isLoggedIn = true;
-    document.getElementById('page-login').classList.remove('active');
-    document.getElementById('page-home').classList.add('active');
-    document.getElementById('nav').style.display = 'flex';
     showAdminUI();
   } else {
     hideAdminUI();
