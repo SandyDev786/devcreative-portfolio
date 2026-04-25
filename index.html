@@ -166,16 +166,13 @@ footer p{font-size:12px;color:var(--dim)}
 .proj-nav-btn:hover{color:var(--text);border-color:var(--line3)}
 .proj-nav-btn.primary{background:var(--blue);color:#fff;border-color:var(--blue)}
 
-.proj-hero{position:relative;width:100%}
-.proj-hero img{width:100%;max-height:600px;object-fit:cover;display:block}
-.proj-hero-ph{width:100%;height:480px;background:var(--bg2);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;color:var(--dim)}
-.proj-hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.7) 0%,rgba(0,0,0,.1) 60%,transparent 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:48px}
-.proj-cat-pill{display:inline-flex;align-items:center;background:rgba(41,151,255,.2);border:.5px solid rgba(41,151,255,.35);color:var(--blue);font-size:12px;font-weight:600;padding:6px 14px;border-radius:100px;letter-spacing:.04em;text-transform:uppercase;margin-bottom:14px;align-self:flex-start}
-.proj-hero-title{font-size:clamp(36px,4.5vw,64px);font-weight:700;letter-spacing:-.04em;color:#fff;line-height:1.04;margin-bottom:8px}
-.proj-hero-sub{font-size:17px;color:rgba(255,255,255,.65);font-weight:300}
+.proj-header{background:var(--bg);padding:48px 32px 32px;max-width:980px;margin:0 auto}
+.proj-cat-pill{display:inline-flex;align-items:center;background:rgba(41,151,255,.1);border:.5px solid rgba(41,151,255,.22);color:var(--blue);font-size:12px;font-weight:600;padding:6px 14px;border-radius:100px;letter-spacing:.04em;text-transform:uppercase;margin-bottom:14px}
+.proj-header-title{font-size:clamp(36px,4.5vw,56px);font-weight:700;letter-spacing:-.04em;line-height:1.04;margin-bottom:8px}
+.proj-header-sub{font-size:16px;color:var(--muted);font-weight:300;line-height:1.6}
 
-.proj-body{max-width:980px;margin:0 auto;padding:0 32px}
-.proj-info-row{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:.5px solid var(--line);border-radius:var(--r);overflow:hidden;margin:48px 0 36px}
+.proj-body{max-width:980px;margin:0 auto;padding:0 32px 80px}
+.proj-info-row{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:.5px solid var(--line);border-radius:var(--r);overflow:hidden;margin:0 0 36px}
 .pi{padding:22px 26px;border-right:.5px solid var(--line)}
 .pi:last-child{border-right:none}
 .pi-label{font-size:11px;color:var(--dim);font-weight:500;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
@@ -295,7 +292,7 @@ footer p{font-size:12px;color:var(--dim)}
   footer{padding:20px 18px}
   .sec,.admin-wrap{padding-left:18px;padding-right:18px}
   .proj-body{padding:0 18px}
-  .proj-hero-overlay{padding:24px 18px}
+  .proj-header{padding:32px 18px 24px}
   .form-section{padding:28px 22px}
 }
 @media(max-width:600px){
@@ -455,7 +452,7 @@ footer p{font-size:12px;color:var(--dim)}
       <button class="proj-nav-btn primary" onclick="showPage('home');setTimeout(()=>scrollToId('contact'),50)">Work with me</button>
     </div>
   </div>
-  <div class="proj-hero" id="proj-hero"></div>
+  <div id="proj-header"></div>
   <div class="proj-body">
     <div class="proj-info-row">
       <div class="pi"><div class="pi-label">Category</div><div class="pi-value" id="pi-cat"></div></div>
@@ -945,14 +942,12 @@ function openProject(id){
 
   document.getElementById('proj-nav-title').textContent = p.title;
 
-  const hero = document.getElementById('proj-hero');
-  const cover = p.images && p.images.length ? p.images[0] : '';
-  hero.innerHTML = `
-    ${cover ? `<img src="${cover}" alt="${escapeAttr(p.title)}">` : `<div class="proj-hero-ph"><div style="font-size:40px;opacity:.3">${categoryIcon(p.category)}</div><span>No cover image</span></div>`}
-    <div class="proj-hero-overlay">
+  const header = document.getElementById('proj-header');
+  header.innerHTML = `
+    <div class="proj-header">
       <div class="proj-cat-pill">${escapeHtml(p.category)}</div>
-      <h1 class="proj-hero-title">${escapeHtml(p.title)}</h1>
-      <p class="proj-hero-sub">${escapeHtml(p.tagline||'')}</p>
+      <h1 class="proj-header-title">${escapeHtml(p.title)}</h1>
+      <p class="proj-header-sub">${escapeHtml(p.tagline||'')}</p>
     </div>`;
 
   document.getElementById('pi-cat').textContent = p.category;
