@@ -789,10 +789,8 @@ let pendingDelete = null;
 
 async function loadProjects(){
   try{
-    if(typeof window.storage!=='undefined' && window.storage.get){
-      const r = await window.storage.get('sandy:projects');
-      projects = r && r.value ? JSON.parse(r.value) : seedProjects();
-    } else throw new Error('no storage');
+    const stored = localStorage.getItem('sandy:projects');
+    projects = stored ? JSON.parse(stored) : seedProjects();
   }catch(e){
     projects = seedProjects();
   }
@@ -801,9 +799,7 @@ async function loadProjects(){
 
 async function saveProjects(){
   try{
-    if(typeof window.storage!=='undefined' && window.storage.set){
-      await window.storage.set('sandy:projects',JSON.stringify(projects));
-    }
+    localStorage.setItem('sandy:projects', JSON.stringify(projects));
   }catch(e){
     console.warn('Could not persist:',e);
   }
@@ -811,10 +807,8 @@ async function saveProjects(){
 
 async function loadSettings(){
   try{
-    if(typeof window.storage!=='undefined' && window.storage.get){
-      const r = await window.storage.get('sandy:settings');
-      settings = r && r.value ? JSON.parse(r.value) : defaultSettings();
-    } else throw new Error('no storage');
+    const stored = localStorage.getItem('sandy:settings');
+    settings = stored ? JSON.parse(stored) : defaultSettings();
   }catch(e){
     settings = defaultSettings();
   }
@@ -823,9 +817,7 @@ async function loadSettings(){
 
 async function saveSettingsToStorage(){
   try{
-    if(typeof window.storage!=='undefined' && window.storage.set){
-      await window.storage.set('sandy:settings',JSON.stringify(settings));
-    }
+    localStorage.setItem('sandy:settings', JSON.stringify(settings));
   }catch(e){
     console.warn('Could not persist settings:',e);
   }
@@ -1359,24 +1351,19 @@ let isLoggedIn = false;
 
 async function checkAuth(){
   try{
-    if(typeof window.storage!=='undefined' && window.storage.get){
-      const r = await window.storage.get('sandy:auth');
-      isLoggedIn = r && r.value === 'true';
-    }
-  }catch(e){
     const session = localStorage.getItem('sandy:auth');
     isLoggedIn = session === 'true';
+  }catch(e){
+    isLoggedIn = false;
   }
   return isLoggedIn;
 }
 
 async function saveAuth(status){
   try{
-    if(typeof window.storage!=='undefined' && window.storage.set){
-      await window.storage.set('sandy:auth',String(status));
-    }
+    localStorage.setItem('sandy:auth', String(status));
   }catch(e){
-    localStorage.setItem('sandy:auth',String(status));
+    console.warn('Could not save auth:', e);
   }
 }
 
