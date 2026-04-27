@@ -5,17 +5,32 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sandy — Creative Digital Designer</title>
 <!-- 
-  ══════════════════════════════════════════════════════════════
-  PUBLIC PORTFOLIO - Reads from projects.json on GitHub
-  NO localStorage - Pure GitHub data
-  ══════════════════════════════════════════════════════════════
+  ═══════════════════════════════════════════════════════════
+  THIS IS YOUR PUBLIC PORTFOLIO PAGE
+  Clients visit this page to see your work
+  URL: https://yoursite.com/ or https://yoursite.com/index.html
+  
+  NO LOGIN REQUIRED - Everyone can see your projects
+  ═══════════════════════════════════════════════════════════
 -->
 <style>
-:root{--bg:#000;--bg1:#0a0a0a;--bg2:#111;--bg3:#1c1c1c;--line:rgba(255,255,255,.07);--line2:rgba(255,255,255,.12);--line3:rgba(255,255,255,.2);--text:#f5f5f7;--muted:rgba(245,245,247,.52);--dim:rgba(245,245,247,.22);--blue:#2997ff;--green:#30d158;--ease:cubic-bezier(.4,0,.2,1);--spring:cubic-bezier(.34,1.56,.64,1);--r:20px;--r-sm:14px}
-.light{--bg:#fff;--bg1:#f5f5f7;--bg2:#e8e8ea;--bg3:#d8d8da;--line:rgba(0,0,0,.07);--line2:rgba(0,0,0,.12);--line3:rgba(0,0,0,.2);--text:#1d1d1f;--muted:rgba(29,29,31,.52);--dim:rgba(29,29,31,.22)}
+:root{
+  --bg:#000;--bg1:#0a0a0a;--bg2:#111;--bg3:#1c1c1c;
+  --line:rgba(255,255,255,.07);--line2:rgba(255,255,255,.12);--line3:rgba(255,255,255,.2);
+  --text:#f5f5f7;--muted:rgba(245,245,247,.52);--dim:rgba(245,245,247,.22);
+  --blue:#2997ff;--green:#30d158;
+  --ease:cubic-bezier(.4,0,.2,1);--spring:cubic-bezier(.34,1.56,.64,1);
+  --r:20px;--r-sm:14px;
+}
+.light{
+  --bg:#fff;--bg1:#f5f5f7;--bg2:#e8e8ea;--bg3:#d8d8da;
+  --line:rgba(0,0,0,.07);--line2:rgba(0,0,0,.12);--line3:rgba(0,0,0,.2);
+  --text:#1d1d1f;--muted:rgba(29,29,31,.52);--dim:rgba(29,29,31,.22);
+}
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;overflow-x:hidden}
 body{background:var(--bg);color:var(--text);font-family:-apple-system,'SF Pro Display','Helvetica Neue',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;line-height:1}
+
 nav{position:fixed;inset:0 0 auto;z-index:300;height:54px;display:flex;align-items:center;justify-content:space-between;padding:0 32px;background:rgba(0,0,0,.78);backdrop-filter:saturate(180%) blur(24px);border-bottom:.5px solid var(--line);transition:background .3s}
 .light nav{background:rgba(255,255,255,.78)}
 .n-logo{font-size:17px;font-weight:700;letter-spacing:-.4px}
@@ -27,10 +42,11 @@ nav{position:fixed;inset:0 0 auto;z-index:300;height:54px;display:flex;align-ite
 .n-btn{border:none;font-family:inherit;cursor:pointer;display:inline-flex;align-items:center;gap:6px;padding:8px 18px;border-radius:100px;font-size:13px;font-weight:500;transition:all .2s;text-decoration:none}
 .n-theme{width:32px;height:32px;border-radius:50%;background:none;border:none;color:var(--muted);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:color .2s,background .2s;padding:0}
 .n-theme:hover{color:var(--text);background:var(--bg2)}
-.n-cv{background:rgba(41,151,255,.1);color:var(--blue);border:.5px solid rgba(41,151,255,.22)}
+.n-cv{background:rgba(41,151,255,.1);color:var(--blue);border:.5px solid rgba(41,151,255,.22);display:inline-flex;align-items:center;gap:6px}
 .n-cv:hover{background:rgba(41,151,255,.18);border-color:rgba(41,151,255,.35)}
 .n-cta{background:var(--blue);color:#fff;border:none}
 .n-cta:hover{filter:brightness(1.14);transform:scale(1.03)}
+
 #hero{min-height:calc(100vh - 54px);display:grid;grid-template-columns:1fr 400px;align-items:center;gap:60px;padding:80px 32px 60px;max-width:1140px;margin:0 auto;position:relative}
 .hero-glow{position:absolute;top:-100px;left:-80px;width:600px;height:500px;background:radial-gradient(ellipse,rgba(41,151,255,.06) 0%,transparent 65%);pointer-events:none}
 .h-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(41,151,255,.1);border:.5px solid rgba(41,151,255,.22);padding:6px 14px;border-radius:100px;font-size:12px;font-weight:500;color:var(--blue);margin-bottom:24px}
@@ -48,6 +64,7 @@ nav{position:fixed;inset:0 0 auto;z-index:300;height:54px;display:flex;align-ite
 .hs+.hs{border-left:.5px solid var(--line);padding-left:24px}
 .hsn{font-size:36px;font-weight:600;letter-spacing:-.04em;display:block;line-height:1}
 .hsl{font-size:11px;color:var(--dim);margin-top:4px;display:block;text-transform:uppercase;letter-spacing:.04em}
+
 .hero-right{padding-bottom:52px}
 .photo-wrap{position:relative;border-radius:28px;overflow:hidden;border:.5px solid var(--line2)}
 .photo-wrap img{width:100%;display:block;aspect-ratio:3/4;object-fit:cover}
@@ -55,19 +72,23 @@ nav{position:fixed;inset:0 0 auto;z-index:300;height:54px;display:flex;align-ite
 .pt-name{font-size:14px;font-weight:600;color:#f5f5f7}
 .pt-role{font-size:11px;color:rgba(245,245,247,.55);margin-top:2px}
 .photo-loc{position:absolute;top:18px;right:18px;background:rgba(0,0,0,.65);backdrop-filter:blur(10px);border:.5px solid rgba(41,151,255,.28);color:var(--blue);font-size:11px;font-weight:500;padding:5px 12px;border-radius:100px}
+
 .mq{border-top:.5px solid var(--line);border-bottom:.5px solid var(--line);padding:14px 0;overflow:hidden;background:var(--bg1)}
 .mq-t{display:flex;gap:52px;animation:mq 22s linear infinite;white-space:nowrap}
 .mq-t span{font-size:12px;font-weight:500;color:var(--dim);letter-spacing:.06em;text-transform:uppercase}
 .mq-t i{color:rgba(41,151,255,.4);font-style:normal;font-size:8px}
 @keyframes mq{to{transform:translateX(-50%)}}
+
 .sec{padding:80px 32px;max-width:1140px;margin:0 auto}
 .sec-lbl{font-size:11px;font-weight:600;color:var(--blue);letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px}
 .sec-h{font-size:clamp(36px,4vw,54px);font-weight:700;letter-spacing:-.04em;line-height:1.04;margin-bottom:16px}
 .sec-h .d{color:var(--dim)}
+
 .wfilter{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
 .wfb{background:none;border:.5px solid var(--line2);color:var(--muted);padding:8px 18px;border-radius:100px;font-size:12px;font-weight:500;cursor:pointer;font-family:inherit;transition:all .2s}
 .wfb:hover{color:var(--text);border-color:var(--line3)}
 .wfb.on{background:var(--text);color:var(--bg);border-color:var(--text)}
+
 .bento{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:260px;gap:3px;background:var(--bg2);border-radius:var(--r);overflow:hidden;min-height:260px}
 .bc{background:var(--bg1);position:relative;overflow:hidden;cursor:pointer}
 .bc.w2{grid-column:span 2}
@@ -79,6 +100,7 @@ nav{position:fixed;inset:0 0 auto;z-index:300;height:54px;display:flex;align-ite
 .bc-title{font-size:18px;font-weight:600;color:#fff;letter-spacing:-.02em;margin-bottom:3px}
 .bc-meta{font-size:11px;color:rgba(255,255,255,.5)}
 .bc-pill{position:absolute;top:14px;right:14px;background:rgba(0,0,0,.7);backdrop-filter:blur(10px);border:.5px solid rgba(255,255,255,.12);color:rgba(255,255,255,.7);font-size:10px;font-weight:500;padding:4px 11px;border-radius:100px}
+
 .svc-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;background:var(--bg2);border-radius:var(--r);overflow:hidden}
 .sc{background:var(--bg1);padding:32px 28px;position:relative;overflow:hidden;transition:background .2s}
 .sc:hover{background:var(--bg2)}
@@ -89,6 +111,7 @@ nav{position:fixed;inset:0 0 auto;z-index:300;height:54px;display:flex;align-ite
 .sc-body{font-size:14px;line-height:1.65;color:var(--muted);font-weight:300}
 .sc-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:18px}
 .sc-tag{background:var(--bg2);border:.5px solid var(--line);color:var(--dim);font-size:11px;padding:4px 12px;border-radius:100px}
+
 .about-wrap{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--bg2);border-radius:var(--r);overflow:hidden}
 .about-l{background:var(--bg1);padding:48px 40px;display:flex;flex-direction:column;gap:18px}
 .about-name{font-size:48px;font-weight:700;letter-spacing:-.04em;line-height:1}
@@ -100,6 +123,7 @@ nav{position:fixed;inset:0 0 auto;z-index:300;height:54px;display:flex;align-ite
 .about-r{background:var(--bg1);padding:48px 40px}
 .portrait{width:100%;aspect-ratio:3/4;border-radius:var(--r-sm);overflow:hidden;border:.5px solid var(--line)}
 .portrait img{width:100%;height:100%;object-fit:cover;display:block}
+
 .contact-wrap{background:var(--bg1);border:.5px solid var(--line);border-radius:var(--r);padding:80px 48px;text-align:center;position:relative;overflow:hidden}
 .c-glow{position:absolute;bottom:-60px;left:50%;transform:translateX(-50%);width:520px;height:320px;pointer-events:none;background:radial-gradient(ellipse,rgba(41,151,255,.06) 0%,transparent 65%)}
 .c-h{font-size:clamp(44px,5.5vw,76px);font-weight:700;letter-spacing:-.04em;line-height:1.03;margin-bottom:18px}
@@ -111,41 +135,51 @@ nav{position:fixed;inset:0 0 auto;z-index:300;height:54px;display:flex;align-ite
 .cl.p:hover{filter:brightness(1.12);transform:scale(1.02)}
 .cl.g{background:var(--bg2);border:.5px solid var(--line2);color:var(--text)}
 .cl.g:hover{background:var(--bg3);transform:scale(1.02)}
+
 footer{border-top:.5px solid var(--line);padding:28px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
 .f-logo{font-size:15px;font-weight:600;letter-spacing:-.02em}
 footer p{font-size:12px;color:var(--dim)}
 .f-links{display:flex;gap:20px}
 .f-link{font-size:12px;color:var(--dim);text-decoration:none;transition:color .2s}
 .f-link:hover{color:var(--text)}
+
 .proj-nav{position:sticky;top:54px;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:14px 32px;background:rgba(0,0,0,.82);backdrop-filter:blur(24px);border-bottom:.5px solid var(--line)}
 .light .proj-nav{background:rgba(255,255,255,.82)}
 .proj-back{display:inline-flex;align-items:center;gap:8px;background:none;border:none;color:var(--muted);font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;transition:color .2s}
 .proj-back:hover{color:var(--text)}
 .proj-nav-title{font-size:14px;font-weight:500;color:var(--muted);max-width:50%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .proj-nav-btn{background:var(--blue);color:#fff;border-color:var(--blue);padding:7px 16px;border-radius:100px;font-size:12px;font-weight:500;cursor:pointer;font-family:inherit;transition:all .2s;border:none}
+
 .proj-header{background:var(--bg);padding:48px 32px 32px;max-width:980px;margin:0 auto}
 .proj-cat-pill{display:inline-flex;align-items:center;background:rgba(41,151,255,.1);border:.5px solid rgba(41,151,255,.22);color:var(--blue);font-size:12px;font-weight:600;padding:6px 14px;border-radius:100px;letter-spacing:.04em;text-transform:uppercase;margin-bottom:14px}
 .proj-header-title{font-size:clamp(36px,4.5vw,56px);font-weight:700;letter-spacing:-.04em;line-height:1.04;margin-bottom:8px}
 .proj-header-sub{font-size:16px;color:var(--muted);font-weight:300;line-height:1.6}
+
 .proj-body{max-width:980px;margin:0 auto;padding:0 32px 80px}
 .proj-info-row{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:.5px solid var(--line);border-radius:var(--r);overflow:hidden;margin:0 0 36px}
 .pi{padding:22px 26px;border-right:.5px solid var(--line)}
 .pi:last-child{border-right:none}
 .pi-label{font-size:11px;color:var(--dim);font-weight:500;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
 .pi-value{font-size:15px;font-weight:600;color:var(--text);letter-spacing:-.02em}
+
 .proj-desc{font-size:18px;line-height:1.75;color:var(--muted);font-weight:300;max-width:760px;margin-bottom:48px;white-space:pre-wrap}
+
 .proj-view-toggle{display:flex;gap:4px;background:var(--bg2);padding:4px;border-radius:100px;margin-bottom:24px;width:fit-content}
 .proj-view-btn{width:36px;height:36px;border-radius:50%;background:none;border:none;color:var(--muted);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;padding:0}
 .proj-view-btn:hover{color:var(--text);background:var(--bg3)}
 .proj-view-btn.active{background:var(--text);color:var(--bg)}
+
 .proj-gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 .proj-gallery.list-view{grid-template-columns:1fr}
 .proj-img-block{border-radius:var(--r-sm);overflow:hidden}
 .proj-img-block img{width:100%;display:block}
+
 .proj-video-block{margin-bottom:12px;border-radius:var(--r-sm);overflow:hidden;background:#000}
 .proj-video-block iframe{width:100%;aspect-ratio:16/9;border:none}
+
 .proj-tags{display:flex;flex-wrap:wrap;gap:8px;margin:48px 0;padding-top:36px;border-top:.5px solid var(--line)}
 .proj-tag{background:var(--bg2);border:.5px solid var(--line2);color:var(--muted);font-size:12px;font-weight:500;padding:7px 16px;border-radius:100px}
+
 .next-project{background:var(--bg1);border-top:.5px solid var(--line);padding:60px 32px;cursor:pointer;transition:background .2s}
 .next-project:hover{background:var(--bg2)}
 .np-inner{max-width:980px;margin:0 auto}
@@ -155,345 +189,416 @@ footer p{font-size:12px;color:var(--dim)}
 .np-arrow{width:44px;height:44px;border-radius:50%;background:var(--bg3);border:.5px solid var(--line2);display:flex;align-items:center;justify-content:center;font-size:18px;transition:all .3s var(--spring)}
 .next-project:hover .np-arrow{background:var(--blue);border-color:var(--blue);color:#fff;transform:translateX(8px)}
 .np-meta{font-size:14px;color:var(--muted)}
+
 .page{display:none}
 .page.active{display:block}
-@media(max-width:960px){#hero{grid-template-columns:1fr;gap:40px;padding-top:80px}.hero-right{display:none}.n-mid{display:none}.about-wrap,.bento{grid-template-columns:1fr 1fr}.bc.w2{grid-column:span 2}.svc-grid{grid-template-columns:1fr}.proj-info-row{grid-template-columns:1fr}.pi{border-right:none;border-bottom:.5px solid var(--line)}.pi:last-child{border-bottom:none}.proj-gallery{grid-template-columns:repeat(2,1fr)}nav,footer{padding:0 18px}footer{padding:20px 18px}.sec{padding-left:18px;padding-right:18px}.proj-body{padding:0 18px 80px}.proj-header{padding:32px 18px 24px}}
-@media(max-width:600px){.bento{grid-template-columns:1fr;grid-auto-rows:200px}.bc.w2{grid-column:span 1}.about-wrap{grid-template-columns:1fr}.proj-nav{padding:12px 18px}.proj-nav-title{display:none}.proj-gallery{grid-template-columns:1fr}.proj-gallery.list-view{grid-template-columns:1fr}}
+
+@media(max-width:960px){
+  #hero{grid-template-columns:1fr;gap:40px;padding-top:80px}
+  .hero-right{display:none}
+  .n-mid{display:none}
+  .about-wrap,.bento{grid-template-columns:1fr 1fr}
+  .bc.w2{grid-column:span 2}
+  .svc-grid{grid-template-columns:1fr}
+  .proj-info-row{grid-template-columns:1fr}
+  .pi{border-right:none;border-bottom:.5px solid var(--line)}
+  .pi:last-child{border-bottom:none}
+  .proj-gallery{grid-template-columns:repeat(2,1fr)}
+  nav,footer{padding:0 18px}
+  footer{padding:20px 18px}
+  .sec{padding-left:18px;padding-right:18px}
+  .proj-body{padding:0 18px 80px}
+  .proj-header{padding:32px 18px 24px}
+}
+@media(max-width:600px){
+  .bento{grid-template-columns:1fr;grid-auto-rows:200px}
+  .bc.w2{grid-column:span 1}
+  .about-wrap{grid-template-columns:1fr}
+  .proj-nav{padding:12px 18px}
+  .proj-nav-title{display:none}
+  .proj-gallery{grid-template-columns:1fr}
+  .proj-gallery.list-view{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
+
 <nav>
-<div class="n-logo"><a href="#" onclick="showPage('home');return false" id="nav-logo">Sandy</a></div>
-<div class="n-mid">
-<a onclick="scrollToId('about')">About</a>
-<a onclick="scrollToId('work')">Work</a>
-<a onclick="scrollToId('services')">Services</a>
-<a onclick="scrollToId('contact')">Contact</a>
-</div>
-<div class="n-right">
-<button class="n-theme" id="tb" onclick="toggleTheme()">☀</button>
-<a href="sandy-cv.pdf" download class="n-btn n-cv">✦ Download CV</a>
-<button class="n-btn n-cta" onclick="scrollToId('contact')">Work with me</button>
-</div>
+  <div class="n-logo"><a href="#" onclick="showPage('home');return false" id="nav-logo">Sandy</a></div>
+  <div class="n-mid">
+    <a onclick="scrollToId('about')">About</a>
+    <a onclick="scrollToId('work')">Work</a>
+    <a onclick="scrollToId('services')">Services</a>
+    <a onclick="scrollToId('contact')">Contact</a>
+  </div>
+  <div class="n-right">
+    <button class="n-theme" id="tb" onclick="toggleTheme()">☀</button>
+    <a href="sandy-cv.pdf" download class="n-btn n-cv">✦ Download CV</a>
+    <button class="n-btn n-cta" onclick="scrollToId('contact')">Work with me</button>
+  </div>
 </nav>
 
 <div id="page-home" class="page active">
+
 <div style="position:relative;overflow:hidden">
-<div class="hero-glow"></div>
-<section id="hero">
-<div>
-<div class="h-badge"><span id="hero-badge">✦ Open to new projects</span></div>
-<h1 class="h-name" id="hero-name">Sandy.</h1>
-<h2 class="h-title" id="hero-title">Creative Digital<br>Designer.</h2>
-<p class="h-bio" id="hero-bio">I design <strong>social media content, reels, real estate visuals,</strong> and <strong>web experiences</strong> that make brands impossible to scroll past. Based in Dubai, working globally.</p>
-<div class="h-cta">
-<button class="btn-blue" onclick="scrollToId('work')">View my work</button>
-<button class="btn-ghost" onclick="scrollToId('contact')">Get in touch</button>
-</div>
-<div class="h-stats">
-<div class="hs"><span class="hsn">200+</span><span class="hsl">Projects</span></div>
-<div class="hs" style="padding-left:24px"><span class="hsn">80+</span><span class="hsl">Brands</span></div>
-<div class="hs" style="padding-left:24px"><span class="hsn">6yr</span><span class="hsl">Experience</span></div>
-</div>
-</div>
-<div class="hero-right">
-<div class="photo-wrap">
-<img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=600&q=80" alt="Sandy" id="hero-photo">
-<div class="photo-tag"><div class="pt-name" id="hero-photo-name">Sandy</div><div class="pt-role" id="hero-photo-role">Creative Digital Designer</div></div>
-<div class="photo-loc" id="hero-photo-loc">Dubai, UAE</div>
-</div>
-</div>
-</section>
+  <div class="hero-glow"></div>
+  <section id="hero">
+    <div>
+      <div class="h-badge"><span id="hero-badge">✦ Open to new projects</span></div>
+      <h1 class="h-name" id="hero-name">Sandy.</h1>
+      <h2 class="h-title" id="hero-title">Creative Digital<br>Designer.</h2>
+      <p class="h-bio" id="hero-bio">I design <strong>social media content, reels, real estate visuals,</strong> and <strong>web experiences</strong> that make brands impossible to scroll past. Based in Dubai, working globally.</p>
+      <div class="h-cta">
+        <button class="btn-blue" onclick="scrollToId('work')">View my work</button>
+        <button class="btn-ghost" onclick="scrollToId('contact')">Get in touch</button>
+      </div>
+      <div class="h-stats">
+        <div class="hs"><span class="hsn">200+</span><span class="hsl">Projects</span></div>
+        <div class="hs" style="padding-left:24px"><span class="hsn">80+</span><span class="hsl">Brands</span></div>
+        <div class="hs" style="padding-left:24px"><span class="hsn">6yr</span><span class="hsl">Experience</span></div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="photo-wrap">
+        <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=600&q=80" alt="Sandy" id="hero-photo">
+        <div class="photo-tag"><div class="pt-name" id="hero-photo-name">Sandy</div><div class="pt-role" id="hero-photo-role">Creative Digital Designer</div></div>
+        <div class="photo-loc" id="hero-photo-loc">Dubai, UAE</div>
+      </div>
+    </div>
+  </section>
 </div>
 
 <div class="mq">
-<div class="mq-t">
-<span>Social Media</span><i>◆</i><span>Reels</span><i>◆</i><span>Real Estate Visuals</span><i>◆</i><span>Landing Pages</span><i>◆</i><span>Brand Identity</span><i>◆</i><span>Motion Graphics</span><i>◆</i><span>Web Design</span><i>◆</i>
-<span>Social Media</span><i>◆</i><span>Reels</span><i>◆</i><span>Real Estate Visuals</span><i>◆</i><span>Landing Pages</span><i>◆</i><span>Brand Identity</span><i>◆</i><span>Motion Graphics</span><i>◆</i><span>Web Design</span><i>◆</i>
-</div>
+  <div class="mq-t">
+    <span>Social Media</span><i>◆</i><span>Reels</span><i>◆</i><span>Real Estate Visuals</span><i>◆</i><span>Landing Pages</span><i>◆</i><span>Brand Identity</span><i>◆</i><span>Motion Graphics</span><i>◆</i><span>Web Design</span><i>◆</i>
+    <span>Social Media</span><i>◆</i><span>Reels</span><i>◆</i><span>Real Estate Visuals</span><i>◆</i><span>Landing Pages</span><i>◆</i><span>Brand Identity</span><i>◆</i><span>Motion Graphics</span><i>◆</i><span>Web Design</span><i>◆</i>
+  </div>
 </div>
 
 <section id="about" class="sec">
-<div class="sec-lbl">About me</div>
-<h2 class="sec-h">Who I am<span class="d">.</span></h2>
-<div class="about-wrap">
-<div class="about-l">
-<div class="about-name" id="about-name">Sandy</div>
-<div class="about-role" id="about-role">Creative Digital Designer</div>
-<p class="about-bio" id="about-bio">I'm a <strong>Creative Digital Designer</strong> based in Dubai with a passion for building visual experiences that stop the scroll and drive real results.<br><br>From <strong>social media content</strong> and <strong>short-form reels</strong> to <strong>real estate campaigns</strong> and <strong>landing pages</strong> — I combine design thinking with deep platform knowledge to produce work that performs.</p>
-<div class="about-tools">
-<span class="tool">Photoshop</span><span class="tool">After Effects</span><span class="tool">Premiere Pro</span><span class="tool">Illustrator</span><span class="tool">Figma</span><span class="tool">Webflow</span><span class="tool">Canva Pro</span><span class="tool">CapCut Pro</span>
-</div>
-</div>
-<div class="about-r">
-<div class="portrait">
-<img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&q=80" alt="Sandy portrait" id="about-photo">
-</div>
-</div>
-</div>
+  <div class="sec-lbl">About me</div>
+  <h2 class="sec-h">Who I am<span class="d">.</span></h2>
+  <div class="about-wrap">
+    <div class="about-l">
+      <div class="about-name" id="about-name">Sandy</div>
+      <div class="about-role" id="about-role">Creative Digital Designer</div>
+      <p class="about-bio" id="about-bio">I'm a <strong>Creative Digital Designer</strong> based in Dubai with a passion for building visual experiences that stop the scroll and drive real results.<br><br>From <strong>social media content</strong> and <strong>short-form reels</strong> to <strong>real estate campaigns</strong> and <strong>landing pages</strong> — I combine design thinking with deep platform knowledge to produce work that performs.</p>
+      <div class="about-tools">
+        <span class="tool">Photoshop</span><span class="tool">After Effects</span><span class="tool">Premiere Pro</span><span class="tool">Illustrator</span><span class="tool">Figma</span><span class="tool">Webflow</span><span class="tool">Canva Pro</span><span class="tool">CapCut Pro</span>
+      </div>
+    </div>
+    <div class="about-r">
+      <div class="portrait">
+        <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&q=80" alt="Sandy portrait" id="about-photo">
+      </div>
+    </div>
+  </div>
 </section>
 
 <section id="work" class="sec" style="padding-top:0">
-<div>
-<div class="sec-lbl">Selected work</div>
-<h2 class="sec-h">My projects<span class="d">.</span></h2>
-</div>
-<div class="wfilter" id="wfilter">
-<button class="wfb on" onclick="filterWork(this,'all')">All</button>
-<button class="wfb" onclick="filterWork(this,'Social Media')">Social Media</button>
-<button class="wfb" onclick="filterWork(this,'Reels & Video')">Reels</button>
-<button class="wfb" onclick="filterWork(this,'Real Estate')">Real Estate</button>
-<button class="wfb" onclick="filterWork(this,'Web Design')">Web</button>
-<button class="wfb" onclick="filterWork(this,'Branding')">Branding</button>
-</div>
-<div class="bento" id="grid"></div>
+  <div>
+    <div class="sec-lbl">Selected work</div>
+    <h2 class="sec-h">My projects<span class="d">.</span></h2>
+  </div>
+  <div class="wfilter" id="wfilter">
+    <button class="wfb on" onclick="filterWork(this,'all')">All</button>
+    <button class="wfb" onclick="filterWork(this,'Social Media')">Social Media</button>
+    <button class="wfb" onclick="filterWork(this,'Reels & Video')">Reels</button>
+    <button class="wfb" onclick="filterWork(this,'Real Estate')">Real Estate</button>
+    <button class="wfb" onclick="filterWork(this,'Web Design')">Web</button>
+    <button class="wfb" onclick="filterWork(this,'Branding')">Branding</button>
+  </div>
+  <div class="bento" id="grid"></div>
 </section>
 
 <section id="services" class="sec">
-<div class="sec-lbl">What I do</div>
-<h2 class="sec-h">My services<span class="d">.</span></h2>
-<div class="svc-grid">
-<div class="sc"><span class="sc-ico">📱</span><div class="sc-title">Social Media Content</div><p class="sc-body">Feed posts, stories, carousels, highlight covers, and content calendars built to grow your audience and drive engagement every day.</p><div class="sc-tags"><span class="sc-tag">Instagram</span><span class="sc-tag">TikTok</span><span class="sc-tag">LinkedIn</span></div></div>
-<div class="sc"><span class="sc-ico">🎬</span><div class="sc-title">Reels & Video</div><p class="sc-body">Short-form reels, brand films, product videos, and motion graphics — every platform, every format.</p><div class="sc-tags"><span class="sc-tag">Reels</span><span class="sc-tag">Motion</span><span class="sc-tag">Ads</span></div></div>
-<div class="sc"><span class="sc-ico">🏠</span><div class="sc-title">Real Estate Materials</div><p class="sc-body">Brochures, project branding, social ads, and full digital campaigns for developers and agents across the UAE.</p><div class="sc-tags"><span class="sc-tag">Brochures</span><span class="sc-tag">Ads</span><span class="sc-tag">Brand</span></div></div>
-<div class="sc"><span class="sc-ico">🌐</span><div class="sc-title">Websites & Landing Pages</div><p class="sc-body">High-converting landing pages and CRM-connected web experiences built to turn visitors into leads.</p><div class="sc-tags"><span class="sc-tag">Landing Pages</span><span class="sc-tag">CRM</span><span class="sc-tag">Webflow</span></div></div>
-</div>
+  <div class="sec-lbl">What I do</div>
+  <h2 class="sec-h">My services<span class="d">.</span></h2>
+  <div class="svc-grid">
+    <div class="sc"><span class="sc-ico">📱</span><div class="sc-title">Social Media Content</div><p class="sc-body">Feed posts, stories, carousels, highlight covers, and content calendars built to grow your audience and drive engagement every day.</p><div class="sc-tags"><span class="sc-tag">Instagram</span><span class="sc-tag">TikTok</span><span class="sc-tag">LinkedIn</span></div></div>
+    <div class="sc"><span class="sc-ico">🎬</span><div class="sc-title">Reels & Video</div><p class="sc-body">Short-form reels, brand films, product videos, and motion graphics — every platform, every format.</p><div class="sc-tags"><span class="sc-tag">Reels</span><span class="sc-tag">Motion</span><span class="sc-tag">Ads</span></div></div>
+    <div class="sc"><span class="sc-ico">🏠</span><div class="sc-title">Real Estate Materials</div><p class="sc-body">Brochures, project branding, social ads, and full digital campaigns for developers and agents across the UAE.</p><div class="sc-tags"><span class="sc-tag">Brochures</span><span class="sc-tag">Ads</span><span class="sc-tag">Brand</span></div></div>
+    <div class="sc"><span class="sc-ico">🌐</span><div class="sc-title">Websites & Landing Pages</div><p class="sc-body">High-converting landing pages and CRM-connected web experiences built to turn visitors into leads.</p><div class="sc-tags"><span class="sc-tag">Landing Pages</span><span class="sc-tag">CRM</span><span class="sc-tag">Webflow</span></div></div>
+  </div>
 </section>
 
 <section id="contact" class="sec" style="padding-top:0">
-<div class="contact-wrap">
-<div class="c-glow"></div>
-<div class="sec-lbl" style="margin-bottom:16px">Let's work together</div>
-<h2 class="c-h">Have a project<br><span class="d">in mind?</span></h2>
-<p class="c-sub" id="contact-sub">Whether it's a single reel or a full brand — I'd love to hear what you're building.</p>
-<div class="c-links">
-<a href="mailto:hello@sandy.ae" class="cl p" id="contact-email">✉ Email me</a>
-<a href="https://wa.me/971500000000" target="_blank" class="cl g" id="contact-whatsapp">💬 WhatsApp</a>
-<a href="https://behance.net" target="_blank" class="cl g" id="contact-behance">Behance</a>
-<a href="https://instagram.com" target="_blank" class="cl g" id="contact-instagram">Instagram</a>
-</div>
-</div>
+  <div class="contact-wrap">
+    <div class="c-glow"></div>
+    <div class="sec-lbl" style="margin-bottom:16px">Let's work together</div>
+    <h2 class="c-h">Have a project<br><span class="d">in mind?</span></h2>
+    <p class="c-sub" id="contact-sub">Whether it's a single reel or a full brand — I'd love to hear what you're building.</p>
+    <div class="c-links">
+      <a href="mailto:hello@sandy.ae" class="cl p" id="contact-email">✉ Email me</a>
+      <a href="https://wa.me/971500000000" target="_blank" class="cl g" id="contact-whatsapp">💬 WhatsApp</a>
+      <a href="https://behance.net" target="_blank" class="cl g" id="contact-behance">Behance</a>
+      <a href="https://instagram.com" target="_blank" class="cl g" id="contact-instagram">Instagram</a>
+    </div>
+  </div>
 </section>
 
 <footer>
-<div class="f-logo" id="footer-logo">Sandy</div>
-<p id="footer-copyright">© 2025 · Sandy — Creative Digital Designer · Dubai, UAE</p>
-<div class="f-links">
-<a href="#" class="f-link">Behance</a>
-<a href="#" class="f-link">Instagram</a>
-<a href="#" class="f-link">LinkedIn</a>
-<a href="#" class="f-link">WhatsApp</a>
-</div>
+  <div class="f-logo" id="footer-logo">Sandy</div>
+  <p id="footer-copyright">© 2025 · Sandy — Creative Digital Designer · Dubai, UAE</p>
+  <div class="f-links">
+    <a href="#" class="f-link">Behance</a>
+    <a href="#" class="f-link">Instagram</a>
+    <a href="#" class="f-link">LinkedIn</a>
+    <a href="#" class="f-link">WhatsApp</a>
+  </div>
 </footer>
 </div>
 
 <div id="page-project" class="page" style="padding-top:54px">
-<div class="proj-nav">
-<button class="proj-back" onclick="showPage('home');setTimeout(()=>scrollToId('work'),50)">← Back to work</button>
-<div class="proj-nav-title" id="proj-nav-title"></div>
-<div><button class="proj-nav-btn" onclick="showPage('home');setTimeout(()=>scrollToId('contact'),50)">Work with me</button></div>
+  <div class="proj-nav">
+    <button class="proj-back" onclick="showPage('home');setTimeout(()=>scrollToId('work'),50)">← Back to work</button>
+    <div class="proj-nav-title" id="proj-nav-title"></div>
+    <div><button class="proj-nav-btn" onclick="showPage('home');setTimeout(()=>scrollToId('contact'),50)">Work with me</button></div>
+  </div>
+  <div id="proj-header"></div>
+  <div class="proj-body">
+    <div class="proj-info-row">
+      <div class="pi"><div class="pi-label">Category</div><div class="pi-value" id="pi-cat"></div></div>
+      <div class="pi"><div class="pi-label">Year</div><div class="pi-value" id="pi-year"></div></div>
+      <div class="pi"><div class="pi-label">Client</div><div class="pi-value" id="pi-client"></div></div>
+    </div>
+    <div class="proj-desc" id="proj-desc"></div>
+    <div class="proj-view-toggle">
+      <button class="proj-view-btn active" id="proj-grid-btn" onclick="setProjectView('grid')" title="Grid View">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <rect x="1" y="1" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.5"/>
+          <rect x="10" y="1" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.5"/>
+          <rect x="1" y="10" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.5"/>
+          <rect x="10" y="10" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.5"/>
+        </svg>
+      </button>
+      <button class="proj-view-btn" id="proj-list-btn" onclick="setProjectView('list')" title="List View">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <rect x="1" y="2" width="16" height="3" rx="1" stroke="currentColor" stroke-width="1.5"/>
+          <rect x="1" y="7.5" width="16" height="3" rx="1" stroke="currentColor" stroke-width="1.5"/>
+          <rect x="1" y="13" width="16" height="3" rx="1" stroke="currentColor" stroke-width="1.5"/>
+        </svg>
+      </button>
+    </div>
+    <div id="proj-media" class="proj-gallery"></div>
+    <div class="proj-tags" id="proj-tags"></div>
+  </div>
+  <div class="next-project" id="next-project" onclick="goToNextProject()">
+    <div class="np-inner">
+      <div class="np-lbl">Next project</div>
+      <div class="np-title-row">
+        <div class="np-title" id="np-title"></div>
+        <div class="np-arrow">→</div>
+      </div>
+      <div class="np-meta" id="np-meta"></div>
+    </div>
+  </div>
 </div>
-<div id="proj-header"></div>
-<div class="proj-body">
-<div class="proj-info-row">
-<div class="pi"><div class="pi-label">Category</div><div class="pi-value" id="pi-cat"></div></div>
-<div class="pi"><div class="pi-label">Year</div><div class="pi-value" id="pi-year"></div></div>
-<div class="pi"><div class="pi-label">Client</div><div class="pi-value" id="pi-client"></div></div>
-</div>
-<div class="proj-desc" id="proj-desc"></div>
-<div class="proj-view-toggle">
-<button class="proj-view-btn active" id="proj-grid-btn" onclick="setProjectView('grid')" title="Grid View">
-<svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-<rect x="1" y="1" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.5"/>
-<rect x="10" y="1" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.5"/>
-<rect x="1" y="10" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.5"/>
-<rect x="10" y="10" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.5"/>
-</svg>
-</button>
-<button class="proj-view-btn" id="proj-list-btn" onclick="setProjectView('list')" title="List View">
-<svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-<rect x="1" y="2" width="16" height="3" rx="1" stroke="currentColor" stroke-width="1.5"/>
-<rect x="1" y="7.5" width="16" height="3" rx="1" stroke="currentColor" stroke-width="1.5"/>
-<rect x="1" y="13" width="16" height="3" rx="1" stroke="currentColor" stroke-width="1.5"/>
-</svg>
-</button>
-</div>
-<div id="proj-media" class="proj-gallery"></div>
-<div class="proj-tags" id="proj-tags"></div>
-</div>
-<div class="next-project" id="next-project" onclick="goToNextProject()">
-<div class="np-inner">
-<div class="np-lbl">Next project</div>
-<div class="np-title-row">
-<div class="np-title" id="np-title"></div>
-<div class="np-arrow">→</div>
-</div>
-<div class="np-meta" id="np-meta"></div>
-</div>
-</div>
-</div>
+
+<!-- Load shared storage functions -->
+<script src="storage.js"></script>
 
 <script>
-// Load data from projects.json on GitHub (NO localStorage!)
-let projects=[];let settings={};let currentProjId=null;let projectView='grid';
-const categoryIcons={'Social Media':'📱','Reels & Video':'🎬','Real Estate':'🏠','Web Design':'🌐','Branding':'✦'};
+// Load projects and settings from localStorage (shared with admin.html)
+let projects = [];
+let settings = {};
+let currentProjId = null;
+let projectView = 'grid';
 
-// Fetch projects.json from GitHub
-async function loadData(){
-  try{
-    const response=await fetch('projects.json?t='+Date.now());
-    const data=await response.json();
-    projects=data.projects||[];
-    settings=data.settings||{};
-    applySettings();
-    renderGrid();
-  }catch(e){
-    console.error('Error loading projects.json:',e);
-    document.getElementById('grid').innerHTML='<div style="grid-column:1/-1;padding:60px;text-align:center;color:var(--dim)">Error loading projects. Please refresh the page.</div>';
+// Load data on page load
+projects = loadProjects();
+settings = loadSettings();
+
+// Apply settings to page
+function applySettings() {
+  document.getElementById('nav-logo').textContent = settings.name || 'Sandy';
+  document.getElementById('hero-name').textContent = (settings.name || 'Sandy') + '.';
+  document.getElementById('hero-title').innerHTML = (settings.title || 'Creative Digital Designer').replace(/\s+/g, '<br>') + '.';
+  document.getElementById('hero-bio').innerHTML = settings.heroBio || '';
+  document.getElementById('hero-badge').innerHTML = '✦ ' + (settings.badge || 'Open to new projects');
+  
+  if(settings.heroPhoto) document.getElementById('hero-photo').src = settings.heroPhoto;
+  document.getElementById('hero-photo-name').textContent = settings.name || 'Sandy';
+  document.getElementById('hero-photo-role').textContent = settings.title || 'Creative Digital Designer';
+  document.getElementById('hero-photo-loc').textContent = settings.location || 'Dubai, UAE';
+  
+  document.getElementById('about-name').textContent = settings.name || 'Sandy';
+  document.getElementById('about-role').textContent = settings.title || 'Creative Digital Designer';
+  document.getElementById('about-bio').innerHTML = settings.aboutBio || '';
+  if(settings.aboutPhoto) document.getElementById('about-photo').src = settings.aboutPhoto;
+  
+  document.getElementById('contact-sub').textContent = settings.contactSub || '';
+  if(settings.email) {
+    document.getElementById('contact-email').href = 'mailto:' + settings.email;
+    document.getElementById('contact-email').innerHTML = '✉ ' + settings.email;
   }
+  if(settings.whatsapp) document.getElementById('contact-whatsapp').href = 'https://wa.me/' + settings.whatsapp;
+  if(settings.behance) document.getElementById('contact-behance').href = settings.behance;
+  if(settings.instagram) document.getElementById('contact-instagram').href = settings.instagram;
+  
+  document.getElementById('footer-logo').textContent = settings.name || 'Sandy';
+  document.getElementById('footer-copyright').textContent = `© 2025 · ${settings.name || 'Sandy'} — ${settings.title || 'Creative Digital Designer'} · ${settings.location || 'Dubai, UAE'}`;
 }
 
-function applySettings(){
-  document.getElementById('nav-logo').textContent=settings.name||'Sandy';
-  document.getElementById('hero-name').textContent=(settings.name||'Sandy')+'.';
-  document.getElementById('hero-title').innerHTML=(settings.title||'Creative Digital Designer').replace(/\s+/g,'<br>')+'.';
-  document.getElementById('hero-bio').innerHTML=settings.heroBio||'';
-  document.getElementById('hero-badge').innerHTML='✦ '+(settings.badge||'Open to new projects');
-  if(settings.heroPhoto)document.getElementById('hero-photo').src=settings.heroPhoto;
-  document.getElementById('hero-photo-name').textContent=settings.name||'Sandy';
-  document.getElementById('hero-photo-role').textContent=settings.title||'Creative Digital Designer';
-  document.getElementById('hero-photo-loc').textContent=settings.location||'Dubai, UAE';
-  document.getElementById('about-name').textContent=settings.name||'Sandy';
-  document.getElementById('about-role').textContent=settings.title||'Creative Digital Designer';
-  document.getElementById('about-bio').innerHTML=settings.aboutBio||'';
-  if(settings.aboutPhoto)document.getElementById('about-photo').src=settings.aboutPhoto;
-  document.getElementById('contact-sub').textContent=settings.contactSub||'';
-  if(settings.email){
-    document.getElementById('contact-email').href='mailto:'+settings.email;
-    document.getElementById('contact-email').innerHTML='✉ '+settings.email;
-  }
-  if(settings.whatsapp)document.getElementById('contact-whatsapp').href='https://wa.me/'+settings.whatsapp;
-  if(settings.behance)document.getElementById('contact-behance').href=settings.behance;
-  if(settings.instagram)document.getElementById('contact-instagram').href=settings.instagram;
-  document.getElementById('footer-logo').textContent=settings.name||'Sandy';
-  document.getElementById('footer-copyright').textContent=`© 2025 · ${settings.name||'Sandy'} — ${settings.title||'Creative Digital Designer'} · ${settings.location||'Dubai, UAE'}`;
-}
-
-function renderGrid(){
-  const grid=document.getElementById('grid');
-  if(!projects||projects.length===0){
-    grid.innerHTML='<div style="grid-column:1/-1;padding:60px;text-align:center;color:var(--dim)">No projects yet.</div>';
+// Render project grid
+function renderGrid() {
+  const grid = document.getElementById('grid');
+  if(!projects || projects.length === 0) {
+    grid.innerHTML = '<div style="grid-column:1/-1;padding:60px;text-align:center;color:var(--dim)">No projects yet. Use the admin panel to add projects.</div>';
     return;
   }
-  grid.innerHTML=projects.map((p,i)=>{
-    const wide=(i===0&&projects.length>=2)?'w2':'';
-    const cover=p.coverImage||(p.images&&p.images[0])||'';
-    const icon=categoryIcons[p.category]||'◆';
-    return`<div class="bc ${wide}" data-cat="${escHtml(p.category)}" onclick="openProject('${p.id}')">
-${cover?`<img class="bc-img" src="${cover}" alt="${escHtml(p.title)}">`:`<div style="display:flex;align-items:center;justify-content:center;height:100%;flex-direction:column;gap:12px"><div style="font-size:40px">${icon}</div><div style="color:var(--dim);font-size:14px">${escHtml(p.category)}</div></div>`}
-<div class="bc-pill">${escHtml(p.category)}</div>
-<div class="bc-ov">
-<div class="bc-cat">${escHtml(p.category)}</div>
-<div class="bc-title">${escHtml(p.title)}</div>
-<div class="bc-meta">${escHtml(p.client||'')}${p.client?' · ':''}${escHtml(p.year)}</div>
-</div></div>`}).join('')}
+  
+  grid.innerHTML = projects.map((p, i) => {
+    const wide = (i === 0 && projects.length >= 2) ? 'w2' : '';
+    const cover = p.coverImage || (p.images && p.images[0]) || '';
+    const icon = categoryIcons[p.category] || '◆';
+    
+    return `
+      <div class="bc ${wide}" data-cat="${escapeHtml(p.category)}" onclick="openProject('${p.id}')">
+        ${cover ? 
+          `<img class="bc-img" src="${cover}" alt="${escapeHtml(p.title)}">` : 
+          `<div style="display:flex;align-items:center;justify-content:center;height:100%;flex-direction:column;gap:12px"><div style="font-size:40px">${icon}</div><div style="color:var(--dim);font-size:14px">${escapeHtml(p.category)}</div></div>`
+        }
+        <div class="bc-pill">${escapeHtml(p.category)}</div>
+        <div class="bc-ov">
+          <div class="bc-cat">${escapeHtml(p.category)}</div>
+          <div class="bc-title">${escapeHtml(p.title)}</div>
+          <div class="bc-meta">${escapeHtml(p.client || '')}${p.client ? ' · ' : ''}${escapeHtml(p.year)}</div>
+        </div>
+      </div>`;
+  }).join('');
+}
 
-function filterWork(btn,cat){
-  document.querySelectorAll('.wfb').forEach(b=>b.classList.remove('on'));
+// Filter projects by category
+function filterWork(btn, cat) {
+  document.querySelectorAll('.wfb').forEach(b => b.classList.remove('on'));
   btn.classList.add('on');
-  document.querySelectorAll('.bc').forEach(c=>{
-    const match=cat==='all'||c.dataset.cat===cat;
-    c.style.opacity=match?'1':'0.1';
-    c.style.pointerEvents=match?'auto':'none';
-    c.style.transition='opacity .3s'});
+  document.querySelectorAll('.bc').forEach(c => {
+    const match = cat === 'all' || c.dataset.cat === cat;
+    c.style.opacity = match ? '1' : '0.1';
+    c.style.pointerEvents = match ? 'auto' : 'none';
+    c.style.transition = 'opacity .3s';
+  });
 }
 
-function openProject(id){
-  const p=projects.find(x=>x.id===id);
-  if(!p)return;
-  currentProjId=id;
-  document.getElementById('proj-nav-title').textContent=p.title;
-  const header=document.getElementById('proj-header');
-  header.innerHTML=`<div class="proj-header"><div class="proj-cat-pill">${escHtml(p.category)}</div><h1 class="proj-header-title">${escHtml(p.title)}</h1><p class="proj-header-sub">${escHtml(p.tagline||'')}</p></div>`;
-  document.getElementById('pi-cat').textContent=p.category;
-  document.getElementById('pi-year').textContent=p.year;
-  document.getElementById('pi-client').textContent=p.client||'—';
-  document.getElementById('proj-desc').textContent=p.description;
-  const media=document.getElementById('proj-media');
-  let html='';
-  if(p.images&&p.images.length){
-    p.images.forEach(src=>{html+=`<div class="proj-img-block"><img src="${src}" alt=""></div>`})
+// Open project detail page
+function openProject(id) {
+  const p = projects.find(x => x.id === id);
+  if(!p) return;
+  
+  currentProjId = id;
+  document.getElementById('proj-nav-title').textContent = p.title;
+  
+  const header = document.getElementById('proj-header');
+  header.innerHTML = `
+    <div class="proj-header">
+      <div class="proj-cat-pill">${escapeHtml(p.category)}</div>
+      <h1 class="proj-header-title">${escapeHtml(p.title)}</h1>
+      <p class="proj-header-sub">${escapeHtml(p.tagline || '')}</p>
+    </div>`;
+  
+  document.getElementById('pi-cat').textContent = p.category;
+  document.getElementById('pi-year').textContent = p.year;
+  document.getElementById('pi-client').textContent = p.client || '—';
+  document.getElementById('proj-desc').textContent = p.description;
+  
+  const media = document.getElementById('proj-media');
+  let html = '';
+  
+  if(p.images && p.images.length) {
+    p.images.forEach(src => {
+      html += `<div class="proj-img-block"><img src="${src}" alt=""></div>`;
+    });
   }
-  if(p.videoUrl){
-    let embed=p.videoUrl;
-    const yt=p.videoUrl.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([^&?]+)/);
-    const vm=p.videoUrl.match(/vimeo\.com\/(\d+)/);
-    if(yt)embed=`https://www.youtube.com/embed/${yt[1]}`;
-    else if(vm)embed=`https://player.vimeo.com/video/${vm[1]}`;
-    html+=`<div class="proj-video-block"><iframe src="${embed}" allowfullscreen></iframe></div>`
+  
+  if(p.videoUrl) {
+    let embed = p.videoUrl;
+    const yt = p.videoUrl.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([^&?]+)/);
+    const vm = p.videoUrl.match(/vimeo\.com\/(\d+)/);
+    if(yt) embed = `https://www.youtube.com/embed/${yt[1]}`;
+    else if(vm) embed = `https://player.vimeo.com/video/${vm[1]}`;
+    html += `<div class="proj-video-block"><iframe src="${embed}" allowfullscreen></iframe></div>`;
   }
-  media.innerHTML=html;
-  document.getElementById('proj-tags').innerHTML=(p.tags||[]).map(t=>`<span class="proj-tag">${escHtml(t)}</span>`).join('');
-  const idx=projects.findIndex(x=>x.id===id);
-  const next=projects[(idx+1)%projects.length];
-  document.getElementById('np-title').textContent=next.title;
-  document.getElementById('np-meta').textContent=next.category+' · '+next.year;
-  document.getElementById('next-project').setAttribute('data-next-id',next.id);
-  showPage('project')
+  
+  media.innerHTML = html;
+  document.getElementById('proj-tags').innerHTML = (p.tags || []).map(t => `<span class="proj-tag">${escapeHtml(t)}</span>`).join('');
+  
+  const idx = projects.findIndex(x => x.id === id);
+  const next = projects[(idx + 1) % projects.length];
+  document.getElementById('np-title').textContent = next.title;
+  document.getElementById('np-meta').textContent = next.category + ' · ' + next.year;
+  document.getElementById('next-project').setAttribute('data-next-id', next.id);
+  
+  showPage('project');
 }
 
-function setProjectView(view){
-  projectView=view;
-  const gallery=document.getElementById('proj-media');
-  const gridBtn=document.getElementById('proj-grid-btn');
-  const listBtn=document.getElementById('proj-list-btn');
-  if(view==='list'){
+// Set project view (grid/list)
+function setProjectView(view) {
+  projectView = view;
+  const gallery = document.getElementById('proj-media');
+  const gridBtn = document.getElementById('proj-grid-btn');
+  const listBtn = document.getElementById('proj-list-btn');
+  
+  if(view === 'list') {
     gallery.classList.add('list-view');
     gridBtn.classList.remove('active');
-    listBtn.classList.add('active')
-  }else{
+    listBtn.classList.add('active');
+  } else {
     gallery.classList.remove('list-view');
     gridBtn.classList.add('active');
-    listBtn.classList.remove('active')
+    listBtn.classList.remove('active');
   }
 }
 
-function goToNextProject(){
-  const nextId=document.getElementById('next-project').getAttribute('data-next-id');
-  if(nextId)openProject(nextId)
+// Go to next project
+function goToNextProject() {
+  const nextId = document.getElementById('next-project').getAttribute('data-next-id');
+  if(nextId) openProject(nextId);
 }
 
-function showPage(name){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.getElementById('page-'+name).classList.add('active');
-  window.scrollTo(0,0)
+// Show page (home/project)
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  window.scrollTo(0, 0);
 }
 
-function scrollToId(id){
-  setTimeout(()=>{
-    const el=document.getElementById(id);
-    if(el)el.scrollIntoView({behavior:'smooth'})
-  },50)
+// Scroll to section
+function scrollToId(id) {
+  setTimeout(() => {
+    const el = document.getElementById(id);
+    if(el) el.scrollIntoView({behavior: 'smooth'});
+  }, 50);
 }
 
-let dark=true;
-function toggleTheme(){
-  dark=!dark;
-  document.body.classList.toggle('light',!dark);
-  document.getElementById('tb').textContent=dark?'☀':'☾'
+// Theme toggle
+let dark = true;
+function toggleTheme() {
+  dark = !dark;
+  document.body.classList.toggle('light', !dark);
+  document.getElementById('tb').textContent = dark ? '☀' : '☾';
 }
 
-function escHtml(str){
-  const div=document.createElement('div');
-  div.textContent=str;
-  return div.innerHTML
+// Escape HTML
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
 }
 
-window.addEventListener('DOMContentLoaded',()=>{loadData()});
-window.addEventListener('scroll',()=>{
-  const nav=document.querySelector('nav');
-  nav.style.background=dark?(window.scrollY>30?'rgba(0,0,0,.92)':'rgba(0,0,0,.78)'):(window.scrollY>30?'rgba(255,255,255,.92)':'rgba(255,255,255,.78)')
-},{passive:true});
+// Initialize on load
+window.addEventListener('DOMContentLoaded', () => {
+  applySettings();
+  renderGrid();
+});
+
+// Nav scroll effect
+window.addEventListener('scroll', () => {
+  const nav = document.querySelector('nav');
+  nav.style.background = dark ? 
+    (window.scrollY > 30 ? 'rgba(0,0,0,.92)' : 'rgba(0,0,0,.78)') : 
+    (window.scrollY > 30 ? 'rgba(255,255,255,.92)' : 'rgba(255,255,255,.78)');
+}, {passive: true});
 </script>
 </body>
 </html>
