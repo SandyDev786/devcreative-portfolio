@@ -3,402 +3,1456 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Panel — Portfolio CMS</title>
-<!--
-  ══════════════════════════════════════════════════════════════
-  ADMIN PANEL - Reads from projects.json on GitHub
-  Edit projects and download new projects.json file
-  Upload to GitHub to update live site
-  ══════════════════════════════════════════════════════════════
--->
+<title>Sandy — Admin Panel</title>
 <style>
-:root{--bg:#000;--bg1:#0a0a0a;--bg2:#111;--bg3:#1c1c1c;--line:rgba(255,255,255,.07);--line2:rgba(255,255,255,.12);--line3:rgba(255,255,255,.2);--text:#f5f5f7;--muted:rgba(245,245,247,.52);--dim:rgba(245,245,247,.22);--blue:#2997ff;--green:#30d158;--red:#ff3b30;--orange:#ff9500;--ease:cubic-bezier(.4,0,.2,1);--spring:cubic-bezier(.34,1.56,.64,1);--r:20px;--r-sm:14px}
-.light{--bg:#fff;--bg1:#f5f5f7;--bg2:#e8e8ea;--bg3:#d8d8da;--line:rgba(0,0,0,.07);--line2:rgba(0,0,0,.12);--line3:rgba(0,0,0,.2);--text:#1d1d1f;--muted:rgba(29,29,31,.52);--dim:rgba(29,29,31,.22)}
+:root{
+  --bg:#000;--bg1:#0a0a0a;--bg2:#111;--bg3:#1c1c1c;
+  --line:rgba(255,255,255,.07);--line2:rgba(255,255,255,.12);--line3:rgba(255,255,255,.2);
+  --text:#f5f5f7;--muted:rgba(245,245,247,.52);--dim:rgba(245,245,247,.22);
+  --blue:#2997ff;--red:#ff453a;--green:#30d158;--orange:#ff9f0a;
+  --ease:cubic-bezier(.4,0,.2,1);--spring:cubic-bezier(.34,1.56,.64,1);
+  --r:20px;--r-sm:14px;
+}
+.light{
+  --bg:#fff;--bg1:#f5f5f7;--bg2:#e8e8ea;--bg3:#d8d8da;
+  --line:rgba(0,0,0,.07);--line2:rgba(0,0,0,.12);--line3:rgba(0,0,0,.2);
+  --text:#1d1d1f;--muted:rgba(29,29,31,.52);--dim:rgba(29,29,31,.22);
+}
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--text);font-family:-apple-system,'SF Pro Display','Helvetica Neue',sans-serif;-webkit-font-smoothing:antialiased;line-height:1.6;padding:20px}
-.container{max-width:1200px;margin:0 auto}
-h1{font-size:32px;font-weight:700;margin-bottom:10px}
-.subtitle{color:var(--muted);margin-bottom:30px}
-.btn{border:none;padding:12px 24px;border-radius:100px;font-size:14px;font-weight:500;cursor:pointer;transition:all .2s;font-family:inherit}
-.btn-blue{background:var(--blue);color:#fff}
-.btn-blue:hover{filter:brightness(1.15)}
-.btn-green{background:var(--green);color:#fff}
-.btn-green:hover{filter:brightness(1.15)}
-.btn-orange{background:var(--orange);color:#fff}
-.btn-orange:hover{filter:brightness(1.15)}
-.btn-red{background:var(--red);color:#fff}
-.btn-red:hover{filter:brightness(1.15)}
-.card{background:var(--bg1);border:.5px solid var(--line);border-radius:var(--r);padding:24px;margin-bottom:20px}
-.project-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;margin-top:20px}
-.project-card{background:var(--bg1);border:.5px solid var(--line);border-radius:var(--r);padding:20px;position:relative}
-.project-card h3{font-size:18px;margin-bottom:8px}
-.project-card p{font-size:13px;color:var(--muted);margin-bottom:12px}
-.project-actions{display:flex;gap:8px}
-.project-actions button{padding:8px 16px;font-size:13px}
-.form-group{margin-bottom:20px}
-.form-group label{display:block;font-size:14px;font-weight:500;margin-bottom:8px}
-.form-group input,.form-group textarea,.form-group select{width:100%;padding:12px;background:var(--bg2);border:.5px solid var(--line2);border-radius:8px;color:var(--text);font-family:inherit;font-size:14px}
-.form-group textarea{min-height:120px;resize:vertical}
-.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:9999;align-items:center;justify-content:center}
-.modal.show{display:flex}
-.modal-content{background:var(--bg);border:.5px solid var(--line);border-radius:var(--r);padding:32px;max-width:600px;width:90%;max-height:90vh;overflow-y:auto}
-.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
-.modal-header h2{font-size:24px}
-.modal-close{background:none;border:none;color:var(--muted);font-size:24px;cursor:pointer;padding:0;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:all .2s}
-.modal-close:hover{background:var(--bg2);color:var(--text)}
-.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--blue);color:#fff;padding:12px 24px;border-radius:100px;font-size:14px;z-index:10000;opacity:0;transition:opacity .3s}
-.toast.show{opacity:1}
-.download-banner{background:linear-gradient(135deg,var(--orange),#ff6b00);color:#fff;padding:16px 24px;border-radius:var(--r);margin-bottom:24px;display:flex;align-items:center;justify-content:space-between}
-.download-banner strong{font-size:16px}
-.download-banner .btn{background:#fff;color:var(--orange);padding:10px 20px}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,'SF Pro Display','Helvetica Neue',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;line-height:1}
+
+/* NAV */
+nav{position:fixed;inset:0 0 auto;z-index:300;height:54px;display:flex;align-items:center;justify-content:space-between;padding:0 32px;background:rgba(0,0,0,.78);backdrop-filter:saturate(180%) blur(24px);border-bottom:.5px solid var(--line);transition:background .3s}
+.light nav{background:rgba(255,255,255,.78)}
+.n-logo{font-size:17px;font-weight:700;letter-spacing:-.4px}
+.n-logo a{color:var(--text);text-decoration:none}
+.n-mid{position:absolute;left:50%;transform:translateX(-50%);display:flex;gap:24px;align-items:center}
+.n-mid a{font-size:13px;font-weight:400;color:var(--muted);text-decoration:none;transition:color .2s;cursor:pointer}
+.n-mid a:hover{color:var(--text)}
+.n-right{display:flex;align-items:center;gap:8px}
+.n-btn{border:none;font-family:inherit;cursor:pointer;display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:100px;font-size:13px;font-weight:500;transition:all .2s}
+.n-theme{width:32px;height:32px;border-radius:50%;background:none;border:none;color:var(--muted);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:color .2s,background .2s;padding:0}
+.n-theme:hover{color:var(--text);background:var(--bg2)}
+.n-settings{background:rgba(255,159,10,.14);color:var(--orange);border:.5px solid rgba(255,159,10,.32)}
+.n-settings:hover{background:rgba(255,159,10,.22);border-color:rgba(255,159,10,.5)}
+.n-create{background:rgba(48,209,88,.14);color:var(--green);border:.5px solid rgba(48,209,88,.32)}
+.n-create:hover{background:rgba(48,209,88,.22);border-color:rgba(48,209,88,.5)}
+.n-cta{background:var(--blue);color:#fff;border:none}
+.n-cta:hover{filter:brightness(1.14);transform:scale(1.03)}
+
+.page{display:none}
+.page.active{display:block}
+
+/* LOGIN PAGE */
+#page-login{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px}
+.login-box{background:var(--bg1);border:.5px solid var(--line2);border-radius:var(--r);padding:48px 40px;max-width:400px;width:100%;box-shadow:0 8px 32px rgba(0,0,0,.4)}
+.login-logo{font-size:32px;font-weight:700;letter-spacing:-.04em;margin-bottom:8px;text-align:center}
+.login-sub{font-size:14px;color:var(--muted);text-align:center;margin-bottom:36px}
+.login-field{margin-bottom:18px}
+.login-field label{display:block;font-size:13px;font-weight:500;margin-bottom:8px}
+.login-input{width:100%;background:var(--bg2);border:.5px solid var(--line2);color:var(--text);padding:12px 16px;border-radius:10px;font-family:inherit;font-size:14px;outline:none;transition:border-color .2s}
+.login-input:focus{border-color:var(--blue)}
+.login-btn{width:100%;background:var(--blue);color:#fff;border:none;padding:14px;border-radius:100px;font-size:15px;font-weight:500;cursor:pointer;font-family:inherit;margin-top:8px;transition:filter .2s}
+.login-btn:hover{filter:brightness(1.12)}
+.login-error{background:rgba(255,69,58,.1);border:.5px solid rgba(255,69,58,.3);color:var(--red);padding:12px 16px;border-radius:10px;font-size:13px;margin-bottom:18px;display:none}
+.login-error.show{display:block}
+
+
+/* HERO */
+#hero{min-height:calc(100vh - 54px);display:grid;grid-template-columns:1fr 400px;align-items:center;gap:60px;padding:80px 32px 60px;max-width:1140px;margin:0 auto;position:relative}
+.hero-glow{position:absolute;top:-100px;left:-80px;width:600px;height:500px;background:radial-gradient(ellipse,rgba(41,151,255,.06) 0%,transparent 65%);pointer-events:none}
+.h-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(41,151,255,.1);border:.5px solid rgba(41,151,255,.22);padding:6px 14px;border-radius:100px;font-size:12px;font-weight:500;color:var(--blue);margin-bottom:24px}
+.h-name{font-size:clamp(56px,6vw,86px);font-weight:700;line-height:1.02;letter-spacing:-.04em;margin-bottom:10px}
+.h-title{font-size:clamp(56px,6vw,86px);font-weight:700;line-height:1.02;letter-spacing:-.04em;color:transparent;-webkit-text-stroke:1px var(--dim);margin-bottom:32px}
+.h-bio{font-size:17px;font-weight:300;line-height:1.7;color:var(--muted);max-width:460px;margin-bottom:32px}
+.h-bio strong{color:var(--text);font-weight:500}
+.h-cta{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:52px}
+.btn-blue{background:var(--blue);color:#fff;border:none;padding:14px 26px;border-radius:100px;font-size:15px;font-weight:500;cursor:pointer;font-family:inherit;transition:filter .2s,transform .15s var(--spring)}
+.btn-blue:hover{filter:brightness(1.12);transform:scale(1.02)}
+.btn-ghost{background:var(--bg2);color:var(--text);border:.5px solid var(--line2);padding:14px 26px;border-radius:100px;font-size:15px;font-weight:500;cursor:pointer;font-family:inherit;transition:background .2s,transform .15s var(--spring)}
+.btn-ghost:hover{background:var(--bg3);transform:scale(1.02)}
+.h-stats{display:flex;border-top:.5px solid var(--line);padding-top:28px}
+.hs{flex:1}
+.hs+.hs{border-left:.5px solid var(--line);padding-left:24px}
+.hsn{font-size:36px;font-weight:600;letter-spacing:-.04em;display:block;line-height:1}
+.hsl{font-size:11px;color:var(--dim);margin-top:4px;display:block;text-transform:uppercase;letter-spacing:.04em}
+
+.hero-right{padding-bottom:52px}
+.photo-wrap{position:relative;border-radius:28px;overflow:hidden;border:.5px solid var(--line2)}
+.photo-wrap img{width:100%;display:block;aspect-ratio:3/4;object-fit:cover}
+.photo-tag{position:absolute;bottom:18px;left:18px;background:rgba(0,0,0,.72);backdrop-filter:blur(16px);border:.5px solid rgba(255,255,255,.12);padding:10px 16px;border-radius:12px}
+.pt-name{font-size:14px;font-weight:600;color:#f5f5f7}
+.pt-role{font-size:11px;color:rgba(245,245,247,.55);margin-top:2px}
+.photo-loc{position:absolute;top:18px;right:18px;background:rgba(0,0,0,.65);backdrop-filter:blur(10px);border:.5px solid rgba(41,151,255,.28);color:var(--blue);font-size:11px;font-weight:500;padding:5px 12px;border-radius:100px}
+
+.mq{border-top:.5px solid var(--line);border-bottom:.5px solid var(--line);padding:14px 0;overflow:hidden;background:var(--bg1)}
+.mq-t{display:flex;gap:52px;animation:mq 22s linear infinite;white-space:nowrap}
+.mq-t span{font-size:12px;font-weight:500;color:var(--dim);letter-spacing:.06em;text-transform:uppercase}
+.mq-t i{color:rgba(41,151,255,.4);font-style:normal;font-size:8px}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+.sec{padding:80px 32px;max-width:1140px;margin:0 auto}
+.sec-lbl{font-size:11px;font-weight:600;color:var(--blue);letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px}
+.sec-h{font-size:clamp(36px,4vw,54px);font-weight:700;letter-spacing:-.04em;line-height:1.04;margin-bottom:16px}
+.sec-h .d{color:var(--dim)}
+.sec-head-row{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:32px}
+.sec-head-row .sec-h{margin-bottom:0}
+
+.wfilter{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+.wfb{background:none;border:.5px solid var(--line2);color:var(--muted);padding:8px 18px;border-radius:100px;font-size:12px;font-weight:500;cursor:pointer;font-family:inherit;transition:all .2s}
+.wfb:hover{color:var(--text);border-color:var(--line3)}
+.wfb.on{background:var(--text);color:var(--bg);border-color:var(--text)}
+
+.view-toggle{width:32px;height:32px;border-radius:50%;background:none;border:none;color:var(--muted);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;padding:0}
+.view-toggle:hover{color:var(--text);background:var(--bg3)}
+.view-toggle.on{color:var(--text);background:var(--text);color:var(--bg)}
+
+.bento{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:260px;gap:3px;background:var(--bg2);border-radius:var(--r);overflow:hidden;min-height:260px}
+.bento.list-view{grid-template-columns:1fr;grid-auto-rows:auto}
+.bc{background:var(--bg1);position:relative;overflow:hidden;cursor:pointer}
+.bc.w2{grid-column:span 2}
+.list-view .bc{grid-column:span 1;display:grid;grid-template-columns:300px 1fr;gap:20px;padding:20px;min-height:180px}
+.list-view .bc.w2{grid-column:span 1}
+.bc-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
+.bc:hover .bc-img{transform:scale(1.06)}
+.list-view .bc-img{position:relative;width:100%;height:100%;border-radius:var(--r-sm);grid-column:1}
+.list-view .bc-content{grid-column:2;display:flex;flex-direction:column;justify-content:center;gap:12px;padding-right:20px}
+.bc-ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;color:var(--dim);font-size:12px}
+.bc-ph .ic{font-size:32px;opacity:.4}
+.bc-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.92) 0%,rgba(0,0,0,.3) 40%,transparent 65%);opacity:0;transition:opacity .35s var(--ease);display:flex;flex-direction:column;justify-content:flex-end;padding:22px}
+.bc:hover .bc-ov{opacity:1}
+.list-view .bc-ov{position:relative;opacity:1;background:none;inset:auto;padding:0;justify-content:flex-start}
+.list-view .bc-cat{color:var(--blue)}
+.list-view .bc-title{color:var(--text);font-size:24px}
+.list-view .bc-meta{color:var(--muted)}
+.bc-cat{font-size:10px;font-weight:600;color:var(--blue);letter-spacing:.06em;text-transform:uppercase;margin-bottom:5px}
+.bc-title{font-size:18px;font-weight:600;color:#fff;letter-spacing:-.02em;margin-bottom:3px}
+.bc-meta{font-size:11px;color:rgba(255,255,255,.5)}
+.bc-pill{position:absolute;top:14px;right:14px;background:rgba(0,0,0,.7);backdrop-filter:blur(10px);border:.5px solid rgba(255,255,255,.12);color:rgba(255,255,255,.7);font-size:10px;font-weight:500;padding:4px 11px;border-radius:100px}
+.bc-actions{position:absolute;top:14px;left:14px;display:flex;gap:6px;opacity:0;transition:opacity .25s}
+.bc:hover .bc-actions{opacity:1}
+.bc-act{width:32px;height:32px;border-radius:50%;background:rgba(0,0,0,.78);backdrop-filter:blur(10px);border:.5px solid rgba(255,255,255,.16);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;transition:background .2s}
+.bc-act:hover{background:rgba(0,0,0,.95)}
+.bc-act.del:hover{background:rgba(255,69,58,.85);border-color:rgba(255,69,58,.95)}
+
+.empty-state{grid-column:1/-1;background:var(--bg1);border:.5px dashed var(--line2);border-radius:var(--r);padding:80px 32px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:14px;min-height:260px;justify-content:center}
+.empty-ic{font-size:40px;opacity:.4;margin-bottom:6px}
+.empty-h{font-size:20px;font-weight:600;letter-spacing:-.03em}
+.empty-sub{font-size:14px;color:var(--muted);font-weight:300;line-height:1.6;max-width:380px;margin:0 auto}
+
+.svc-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;background:var(--bg2);border-radius:var(--r);overflow:hidden}
+.sc{background:var(--bg1);padding:32px 28px;position:relative;overflow:hidden;transition:background .2s}
+.sc:hover{background:var(--bg2)}
+.sc::after{content:'';position:absolute;bottom:0;left:0;right:0;height:.5px;background:linear-gradient(to right,var(--blue),transparent);transform:scaleX(0);transform-origin:left;transition:transform .4s var(--ease)}
+.sc:hover::after{transform:scaleX(1)}
+.sc-ico{font-size:28px;margin-bottom:18px;display:block}
+.sc-title{font-size:20px;font-weight:600;letter-spacing:-.03em;margin-bottom:8px}
+.sc-body{font-size:14px;line-height:1.65;color:var(--muted);font-weight:300}
+.sc-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:18px}
+.sc-tag{background:var(--bg2);border:.5px solid var(--line);color:var(--dim);font-size:11px;padding:4px 12px;border-radius:100px}
+
+.about-wrap{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--bg2);border-radius:var(--r);overflow:hidden}
+.about-l{background:var(--bg1);padding:48px 40px;display:flex;flex-direction:column;gap:18px}
+.about-name{font-size:48px;font-weight:700;letter-spacing:-.04em;line-height:1}
+.about-role{display:inline-flex;align-items:center;gap:8px;background:rgba(41,151,255,.1);border:.5px solid rgba(41,151,255,.22);padding:7px 16px;border-radius:100px;font-size:13px;font-weight:500;color:var(--blue);align-self:flex-start}
+.about-bio{font-size:16px;line-height:1.75;color:var(--muted);font-weight:300}
+.about-bio strong{color:var(--text);font-weight:500}
+.about-tools{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.tool{background:var(--bg2);border:.5px solid var(--line2);color:var(--muted);font-size:12px;padding:6px 14px;border-radius:100px}
+.about-r{background:var(--bg1);padding:48px 40px}
+.portrait{width:100%;aspect-ratio:3/4;border-radius:var(--r-sm);overflow:hidden;border:.5px solid var(--line)}
+.portrait img{width:100%;height:100%;object-fit:cover;display:block}
+
+.contact-wrap{background:var(--bg1);border:.5px solid var(--line);border-radius:var(--r);padding:80px 48px;text-align:center;position:relative;overflow:hidden}
+.c-glow{position:absolute;bottom:-60px;left:50%;transform:translateX(-50%);width:520px;height:320px;pointer-events:none;background:radial-gradient(ellipse,rgba(41,151,255,.06) 0%,transparent 65%)}
+.c-h{font-size:clamp(44px,5.5vw,76px);font-weight:700;letter-spacing:-.04em;line-height:1.03;margin-bottom:18px}
+.c-h .d{color:var(--dim)}
+.c-sub{font-size:17px;color:var(--muted);font-weight:300;line-height:1.65;max-width:460px;margin:0 auto 44px}
+.c-links{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.cl{display:inline-flex;align-items:center;gap:8px;text-decoration:none;padding:14px 26px;border-radius:100px;font-size:15px;font-weight:500;font-family:inherit;transition:all .2s var(--spring);cursor:pointer;border:none}
+.cl.p{background:var(--blue);color:#fff}
+.cl.p:hover{filter:brightness(1.12);transform:scale(1.02)}
+.cl.g{background:var(--bg2);border:.5px solid var(--line2);color:var(--text)}
+.cl.g:hover{background:var(--bg3);transform:scale(1.02)}
+
+footer{border-top:.5px solid var(--line);padding:28px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.f-logo{font-size:15px;font-weight:600;letter-spacing:-.02em}
+footer p{font-size:12px;color:var(--dim)}
+.f-links{display:flex;gap:20px}
+.f-link{font-size:12px;color:var(--dim);text-decoration:none;transition:color .2s}
+.f-link:hover{color:var(--text)}
+
+/* PROJECT DETAIL */
+.proj-nav{position:sticky;top:54px;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:14px 32px;background:rgba(0,0,0,.82);backdrop-filter:blur(24px);border-bottom:.5px solid var(--line)}
+.light .proj-nav{background:rgba(255,255,255,.82)}
+.proj-back{display:inline-flex;align-items:center;gap:8px;background:none;border:none;color:var(--muted);font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;transition:color .2s}
+.proj-back:hover{color:var(--text)}
+.proj-nav-title{font-size:14px;font-weight:500;color:var(--muted);max-width:50%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.proj-nav-actions{display:flex;gap:8px}
+.proj-nav-btn{background:var(--bg2);border:.5px solid var(--line2);color:var(--muted);padding:7px 16px;border-radius:100px;font-size:12px;font-weight:500;cursor:pointer;font-family:inherit;transition:all .2s}
+.proj-nav-btn:hover{color:var(--text);border-color:var(--line3)}
+.proj-nav-btn.primary{background:var(--blue);color:#fff;border-color:var(--blue)}
+
+.proj-header{background:var(--bg);padding:48px 32px 32px;max-width:980px;margin:0 auto}
+.proj-cat-pill{display:inline-flex;align-items:center;background:rgba(41,151,255,.1);border:.5px solid rgba(41,151,255,.22);color:var(--blue);font-size:12px;font-weight:600;padding:6px 14px;border-radius:100px;letter-spacing:.04em;text-transform:uppercase;margin-bottom:14px}
+.proj-header-title{font-size:clamp(36px,4.5vw,56px);font-weight:700;letter-spacing:-.04em;line-height:1.04;margin-bottom:8px}
+.proj-header-sub{font-size:16px;color:var(--muted);font-weight:300;line-height:1.6}
+
+.proj-body{max-width:980px;margin:0 auto;padding:0 32px 80px}
+.proj-info-row{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:.5px solid var(--line);border-radius:var(--r);overflow:hidden;margin:0 0 36px}
+.pi{padding:22px 26px;border-right:.5px solid var(--line)}
+.pi:last-child{border-right:none}
+.pi-label{font-size:11px;color:var(--dim);font-weight:500;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.pi-value{font-size:15px;font-weight:600;color:var(--text);letter-spacing:-.02em}
+
+.proj-desc{font-size:18px;line-height:1.75;color:var(--muted);font-weight:300;max-width:760px;margin-bottom:48px;white-space:pre-wrap}
+.proj-desc strong{color:var(--text);font-weight:500}
+
+.proj-img-block{margin-bottom:12px;border-radius:var(--r-sm);overflow:hidden}
+.proj-img-block img{width:100%;display:block}
+.proj-video-block{margin-bottom:12px;border-radius:var(--r-sm);overflow:hidden;background:#000}
+.proj-video-block video{width:100%;display:block;max-height:600px}
+
+.proj-tags{display:flex;flex-wrap:wrap;gap:8px;margin:48px 0;padding-top:36px;border-top:.5px solid var(--line)}
+.proj-tag{background:var(--bg2);border:.5px solid var(--line2);color:var(--muted);font-size:12px;font-weight:500;padding:7px 16px;border-radius:100px}
+
+.next-project{background:var(--bg1);border-top:.5px solid var(--line);padding:60px 32px;cursor:pointer;transition:background .2s}
+.next-project:hover{background:var(--bg2)}
+.np-inner{max-width:980px;margin:0 auto}
+.np-lbl{font-size:11px;font-weight:600;color:var(--blue);letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px}
+.np-title-row{display:flex;align-items:center;gap:16px;margin-bottom:8px}
+.np-title{font-size:clamp(28px,3.5vw,46px);font-weight:700;letter-spacing:-.04em}
+.np-arrow{width:44px;height:44px;border-radius:50%;background:var(--bg3);border:.5px solid var(--line2);display:flex;align-items:center;justify-content:center;font-size:18px;transition:all .3s var(--spring)}
+.next-project:hover .np-arrow{background:var(--blue);border-color:var(--blue);color:#fff;transform:translateX(8px)}
+.np-meta{font-size:14px;color:var(--muted)}
+
+/* ADMIN PAGE */
+#page-admin{padding-top:54px}
+.admin-wrap{max-width:880px;margin:0 auto;padding:48px 32px 80px}
+.admin-back{display:inline-flex;align-items:center;gap:8px;background:none;border:none;color:var(--muted);font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;margin-bottom:24px;transition:color .2s}
+.admin-back:hover{color:var(--text)}
+.admin-eyebrow{font-size:11px;font-weight:600;color:var(--blue);letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px}
+.admin-h{font-size:clamp(36px,4.5vw,52px);font-weight:700;letter-spacing:-.04em;line-height:1.04;margin-bottom:8px}
+.admin-sub{font-size:16px;color:var(--muted);font-weight:300;margin-bottom:48px;line-height:1.6}
+
+.form-section{background:var(--bg1);border:.5px solid var(--line);border-radius:var(--r);padding:36px 32px;margin-bottom:20px}
+.fs-title{font-size:13px;font-weight:600;color:var(--text);letter-spacing:-.02em;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.fs-title .num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:var(--bg3);border:.5px solid var(--line2);color:var(--muted);font-size:11px;font-weight:600}
+.fs-sub{font-size:13px;color:var(--muted);font-weight:300;margin-bottom:24px;line-height:1.5}
+
+.field{margin-bottom:18px}
+.field label{display:block;font-size:13px;font-weight:500;color:var(--text);margin-bottom:8px;letter-spacing:-.01em}
+.field label .req{color:var(--red);margin-left:2px}
+.field label .opt{color:var(--dim);font-weight:400;font-size:11px;margin-left:6px}
+.input,.textarea,.select{width:100%;background:var(--bg2);border:.5px solid var(--line2);color:var(--text);padding:12px 16px;border-radius:10px;font-family:inherit;font-size:14px;font-weight:400;transition:border-color .2s,background .2s;outline:none}
+.input:focus,.textarea:focus,.select:focus{border-color:var(--blue);background:var(--bg3)}
+.textarea{min-height:140px;resize:vertical;line-height:1.6}
+.input::placeholder,.textarea::placeholder{color:var(--dim)}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+
+.uploader{
+  background:var(--bg2);border:1px dashed var(--line3);border-radius:14px;
+  padding:36px 24px;text-align:center;transition:border-color .2s,background .2s;cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+}
+.uploader:hover{border-color:var(--blue);background:var(--bg3)}
+.uploader.drag{border-color:var(--blue);background:rgba(41,151,255,.05)}
+.up-ico{font-size:28px;opacity:.6;margin-bottom:4px}
+.up-title{font-size:14px;font-weight:500}
+.up-sub{font-size:12px;color:var(--muted);font-weight:300}
+.up-btn{background:var(--blue);color:#fff;border:none;padding:8px 18px;border-radius:100px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;margin-top:8px}
+
+.previews{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px}
+.preview{position:relative;aspect-ratio:1;border-radius:10px;overflow:hidden;border:.5px solid var(--line2);background:var(--bg2)}
+.preview img,.preview video{width:100%;height:100%;object-fit:cover;display:block}
+.preview .rm{position:absolute;top:6px;right:6px;width:24px;height:24px;border-radius:50%;background:rgba(0,0,0,.78);backdrop-filter:blur(8px);color:#fff;border:none;cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.preview .rm:hover{background:rgba(255,69,58,.85)}
+.preview-vid-badge{position:absolute;bottom:6px;left:6px;background:rgba(0,0,0,.7);color:#fff;font-size:10px;padding:2px 7px;border-radius:6px;font-weight:500}
+.preview-cover-badge{position:absolute;top:6px;left:6px;background:var(--blue);color:#fff;font-size:9px;font-weight:600;padding:3px 7px;border-radius:6px;letter-spacing:.04em;text-transform:uppercase}
+.preview-set-cover{position:absolute;bottom:0;left:0;right:0;padding:6px;background:rgba(0,0,0,.85);color:#fff;font-size:10px;text-align:center;cursor:pointer;opacity:0;transition:opacity .2s}
+.preview:hover .preview-set-cover{opacity:1}
+
+.actions-row{display:flex;justify-content:space-between;gap:12px;margin-top:32px;padding-top:32px;border-top:.5px solid var(--line);align-items:center;flex-wrap:wrap}
+.actions-left{display:flex;gap:8px;align-items:center}
+.action-btn{padding:12px 22px;border-radius:100px;font-size:14px;font-weight:500;cursor:pointer;font-family:inherit;border:none;transition:filter .2s,transform .15s var(--spring)}
+.action-btn.primary{background:var(--blue);color:#fff}
+.action-btn.primary:hover{filter:brightness(1.12);transform:scale(1.02)}
+.action-btn.draft{background:var(--bg2);color:var(--text);border:.5px solid var(--line2)}
+.action-btn.draft:hover{background:var(--bg3)}
+.action-btn.danger{background:transparent;color:var(--red);border:.5px solid rgba(255,69,58,.25)}
+.action-btn.danger:hover{background:rgba(255,69,58,.1);border-color:rgba(255,69,58,.5)}
+
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--text);color:var(--bg);padding:12px 22px;border-radius:100px;font-size:14px;font-weight:500;z-index:9999;opacity:0;transition:opacity .25s,transform .25s var(--ease);box-shadow:0 8px 24px rgba(0,0,0,.4);display:flex;align-items:center;gap:8px}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast.success{background:var(--green);color:#000}
+.toast.error{background:var(--red);color:#fff}
+.toast.welcome{top:50%;bottom:auto;left:50%;transform:translateX(-50%) translateY(-50%) scale(0.8);background:linear-gradient(135deg,var(--blue),#0077ff);color:#fff;padding:32px 48px;font-size:28px;font-weight:600;letter-spacing:-.02em;box-shadow:0 20px 60px rgba(41,151,255,.4);animation:welcomeAppear 0.6s var(--spring) forwards}
+@keyframes welcomeAppear{0%{transform:translateX(-50%) translateY(-50%) scale(0.8);opacity:0}60%{transform:translateX(-50%) translateY(-50%) scale(1.08)}100%{transform:translateX(-50%) translateY(-50%) scale(1);opacity:1}}
+
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(20px);z-index:10000;display:none;align-items:center;justify-content:center;padding:24px}
+.modal-bg.open{display:flex}
+.modal{background:var(--bg1);border:.5px solid var(--line2);border-radius:var(--r);padding:32px;max-width:420px;width:100%}
+.modal h3{font-size:20px;font-weight:600;letter-spacing:-.03em;margin-bottom:8px}
+.modal p{font-size:14px;color:var(--muted);font-weight:300;line-height:1.6;margin-bottom:24px}
+.modal .actions{display:flex;gap:8px;justify-content:flex-end}
+
+.img-uploader-wrap{position:relative;aspect-ratio:3/4;border-radius:var(--r-sm);overflow:hidden;border:.5px solid var(--line2);background:var(--bg2)}
+.img-uploader-wrap img{width:100%;height:100%;object-fit:cover}
+.img-uploader-overlay{position:absolute;inset:0;background:rgba(0,0,0,0);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;color:#fff;cursor:pointer;transition:background .25s}
+.img-uploader-overlay:hover{background:rgba(0,0,0,.7)}
+.img-uploader-overlay .icon{font-size:32px;opacity:0;transition:opacity .25s}
+.img-uploader-overlay:hover .icon{opacity:.9}
+.img-uploader-overlay .label{font-size:13px;font-weight:500;opacity:0;transition:opacity .25s}
+.img-uploader-overlay:hover .label{opacity:.9}
+
+@media(max-width:960px){
+  #hero{grid-template-columns:1fr;gap:40px;padding-top:80px}
+  .hero-right{display:none}
+  .n-mid{display:none}
+  .about-wrap,.bento{grid-template-columns:1fr 1fr}
+  .bc.w2{grid-column:span 2}
+  .svc-grid{grid-template-columns:1fr}
+  .proj-info-row{grid-template-columns:1fr}
+  .pi{border-right:none;border-bottom:.5px solid var(--line)}
+  .pi:last-child{border-bottom:none}
+  .field-row{grid-template-columns:1fr}
+  .previews{grid-template-columns:repeat(3,1fr)}
+  nav,footer{padding:0 18px}
+  footer{padding:20px 18px}
+  .sec,.admin-wrap{padding-left:18px;padding-right:18px}
+  .proj-body{padding:0 18px}
+  .proj-header{padding:32px 18px 24px}
+  .form-section{padding:28px 22px}
+}
+@media(max-width:600px){
+  .bento{grid-template-columns:1fr;grid-auto-rows:200px}
+  .bc.w2{grid-column:span 1}
+  .about-wrap{grid-template-columns:1fr}
+  .previews{grid-template-columns:repeat(2,1fr)}
+  .proj-nav{padding:12px 18px}
+  .proj-nav-title{display:none}
+  .actions-row{flex-direction:column;align-items:stretch}
+  .actions-left,.actions-right{width:100%}
+  .action-btn{flex:1}
+  .actions-left{display:flex}
+}
 </style>
 </head>
 <body>
-<div class="container">
-  <h1>🎨 Portfolio Admin Panel</h1>
-  <p class="subtitle">Manage your portfolio projects and settings</p>
 
-  <div class="download-banner" id="download-banner" style="display:none">
+<!-- LOGIN PAGE -->
+<div id="page-login" class="page active">
+  <div class="login-box">
+    <div class="login-logo">Sandy</div>
+    <div class="login-sub">Admin Panel — Enter credentials to continue</div>
+    <div class="login-error" id="login-error">Invalid username or password</div>
+    <form onsubmit="attemptLogin(event)">
+      <div class="login-field">
+        <label>Username</label>
+        <input type="text" class="login-input" id="login-username" placeholder="Enter username" required autofocus>
+      </div>
+      <div class="login-field">
+        <label>Password</label>
+        <input type="password" class="login-input" id="login-password" placeholder="Enter password" required>
+      </div>
+      <button type="submit" class="login-btn">Login</button>
+    </form>
+  </div>
+</div>
+
+<nav id="nav" style="display:none">
+  <div class="n-logo"><a href="#" onclick="showPage('home');return false" id="nav-logo">Sandy</a></div>
+  <div class="n-mid">
+    <a onclick="showPage('home');scrollToId('about')">About</a>
+    <a onclick="showPage('home');scrollToId('work')">Work</a>
+    <a onclick="showPage('home');scrollToId('services')">Services</a>
+    <a onclick="showPage('home');scrollToId('contact')">Contact</a>
+    <button class="n-btn n-settings" id="settings-btn" onclick="showPage('settings')" style="display:none">⚙ Settings</button>
+    <button class="n-btn n-create" id="create-btn" onclick="openAdmin()" style="display:none">+ Create New</button>
+  </div>
+  <div class="n-right">
+    <button class="n-theme" id="tb" onclick="toggleTheme()">☀</button>
+    <button class="n-btn n-logout" id="logout-btn" onclick="logout()" style="display:none">Logout</button>
+  </div>
+</nav>
+
+<!-- HOME PAGE -->
+<div id="page-home" class="page">
+
+<div style="position:relative;overflow:hidden">
+  <div class="hero-glow"></div>
+  <section id="hero">
     <div>
-      <strong>⚠️ Changes Made!</strong>
-      <p style="margin:4px 0 0;font-size:13px">Download the updated projects.json and upload it to GitHub to make changes live.</p>
+      <div class="h-badge">✦ <span id="hero-badge-text">Open to new projects</span></div>
+      <h1 class="h-name" id="hero-name">Sandy.</h1>
+      <h2 class="h-title" id="hero-title">Creative Digital<br>Designer.</h2>
+      <p class="h-bio" id="hero-bio">I design <strong>social media content, reels, real estate visuals,</strong> and <strong>web experiences</strong> that make brands impossible to scroll past. Based in Dubai, working globally.</p>
+      <div class="h-cta">
+        <button class="btn-blue" onclick="scrollToId('work')">View my work</button>
+        <button class="btn-ghost" onclick="scrollToId('contact')">Get in touch</button>
+      </div>
+      <div class="h-stats">
+        <div class="hs"><span class="hsn">200+</span><span class="hsl">Projects</span></div>
+        <div class="hs" style="padding-left:24px"><span class="hsn">80+</span><span class="hsl">Brands</span></div>
+        <div class="hs" style="padding-left:24px"><span class="hsn">6yr</span><span class="hsl">Experience</span></div>
+      </div>
     </div>
-    <button class="btn" onclick="downloadJSON()">📥 Download JSON</button>
-  </div>
+    <div class="hero-right">
+      <div class="photo-wrap">
+        <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=600&q=80" alt="Sandy" id="hero-photo">
+        <div class="photo-tag"><div class="pt-name" id="hero-photo-name">Sandy</div><div class="pt-role" id="hero-photo-role">Creative Digital Designer</div></div>
+        <div class="photo-loc" id="hero-photo-loc">Dubai, UAE</div>
+      </div>
+    </div>
+  </section>
+</div>
 
-  <div class="card">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
-      <h2>Projects (<span id="project-count">0</span>)</h2>
-      <button class="btn btn-green" onclick="openCreateModal()">+ Create New Project</button>
-    </div>
-    <div class="project-grid" id="project-list"></div>
+<div class="mq">
+  <div class="mq-t">
+    <span>Social Media</span><i>◆</i><span>Reels</span><i>◆</i><span>Real Estate Visuals</span><i>◆</i><span>Landing Pages</span><i>◆</i><span>Brand Identity</span><i>◆</i><span>Motion Graphics</span><i>◆</i><span>Web Design</span><i>◆</i>
+    <span>Social Media</span><i>◆</i><span>Reels</span><i>◆</i><span>Real Estate Visuals</span><i>◆</i><span>Landing Pages</span><i>◆</i><span>Brand Identity</span><i>◆</i><span>Motion Graphics</span><i>◆</i><span>Web Design</span><i>◆</i>
   </div>
+</div>
 
-  <div class="card">
-    <h2>Settings</h2>
-    <div class="form-group">
-      <label>Your Name</label>
-      <input type="text" id="setting-name" onchange="updateSettings()">
+<section id="about" class="sec">
+  <div class="sec-lbl">About me</div>
+  <h2 class="sec-h">Who I am<span class="d">.</span></h2>
+  <div class="about-wrap">
+    <div class="about-l">
+      <div class="about-name" id="about-name">Sandy</div>
+      <div class="about-role" id="about-role">Creative Digital Designer</div>
+      <p class="about-bio" id="about-bio">I'm a <strong>Creative Digital Designer</strong> based in Dubai with a passion for building visual experiences that stop the scroll and drive real results.<br><br>From <strong>social media content</strong> and <strong>short-form reels</strong> to <strong>real estate campaigns</strong> and <strong>landing pages</strong> — I combine design thinking with deep platform knowledge to produce work that performs.</p>
+      <div class="about-tools">
+        <span class="tool">Photoshop</span><span class="tool">After Effects</span><span class="tool">Premiere Pro</span><span class="tool">Illustrator</span><span class="tool">Figma</span><span class="tool">Webflow</span><span class="tool">Canva Pro</span><span class="tool">CapCut Pro</span>
+      </div>
     </div>
-    <div class="form-group">
-      <label>Title</label>
-      <input type="text" id="setting-title" onchange="updateSettings()">
+    <div class="about-r">
+      <div class="portrait">
+        <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&q=80" alt="Sandy portrait" id="about-photo">
+      </div>
     </div>
-    <div class="form-group">
-      <label>Location</label>
-      <input type="text" id="setting-location" onchange="updateSettings()">
+  </div>
+</section>
+
+<section id="work" class="sec" style="padding-top:0">
+  <div class="sec-head-row">
+    <div>
+      <div class="sec-lbl">Selected work</div>
+      <h2 class="sec-h">My projects<span class="d">.</span></h2>
     </div>
-    <div class="form-group">
-      <label>Badge Text</label>
-      <input type="text" id="setting-badge" onchange="updateSettings()">
+    <div style="display:flex;gap:8px;align-items:center">
+      <div style="display:flex;gap:4px;background:var(--bg2);padding:4px;border-radius:100px">
+        <button class="view-toggle on" id="view-grid-btn" onclick="setView('grid')" title="Grid View">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <rect x="1" y="1" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/>
+            <rect x="9" y="1" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/>
+            <rect x="1" y="9" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/>
+            <rect x="9" y="9" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+        </button>
+        <button class="view-toggle" id="view-list-btn" onclick="setView('list')" title="List View">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <rect x="1" y="2" width="14" height="3" rx="1" stroke="currentColor" stroke-width="1.5"/>
+            <rect x="1" y="7" width="14" height="3" rx="1" stroke="currentColor" stroke-width="1.5"/>
+            <rect x="1" y="12" width="14" height="3" rx="1" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+        </button>
+      </div>
+      <button class="n-btn n-create" onclick="openAdmin()">+ Create New</button>
     </div>
-    <div class="form-group">
-      <label>Hero Bio (HTML allowed)</label>
-      <textarea id="setting-hero-bio" onchange="updateSettings()"></textarea>
+  </div>
+  <div class="wfilter" id="wfilter">
+    <button class="wfb on" onclick="filterWork(this,'all')">All</button>
+    <button class="wfb" onclick="filterWork(this,'Social Media')">Social Media</button>
+    <button class="wfb" onclick="filterWork(this,'Reels & Video')">Reels</button>
+    <button class="wfb" onclick="filterWork(this,'Real Estate')">Real Estate</button>
+    <button class="wfb" onclick="filterWork(this,'Web Design')">Web</button>
+    <button class="wfb" onclick="filterWork(this,'Branding')">Branding</button>
+  </div>
+  <div class="bento" id="grid"></div>
+</section>
+
+<section id="services" class="sec">
+  <div class="sec-lbl">What I do</div>
+  <h2 class="sec-h">My services<span class="d">.</span></h2>
+  <div class="svc-grid">
+    <div class="sc"><span class="sc-ico">📱</span><div class="sc-title">Social Media Content</div><p class="sc-body">Feed posts, stories, carousels, highlight covers, and content calendars built to grow your audience and drive engagement every day.</p><div class="sc-tags"><span class="sc-tag">Instagram</span><span class="sc-tag">TikTok</span><span class="sc-tag">LinkedIn</span></div></div>
+    <div class="sc"><span class="sc-ico">🎬</span><div class="sc-title">Reels & Video</div><p class="sc-body">Short-form reels, brand films, product videos, and motion graphics — every platform, every format.</p><div class="sc-tags"><span class="sc-tag">Reels</span><span class="sc-tag">Motion</span><span class="sc-tag">Ads</span></div></div>
+    <div class="sc"><span class="sc-ico">🏠</span><div class="sc-title">Real Estate Materials</div><p class="sc-body">Brochures, project branding, social ads, and full digital campaigns for developers and agents across the UAE.</p><div class="sc-tags"><span class="sc-tag">Brochures</span><span class="sc-tag">Ads</span><span class="sc-tag">Brand</span></div></div>
+    <div class="sc"><span class="sc-ico">🌐</span><div class="sc-title">Websites & Landing Pages</div><p class="sc-body">High-converting landing pages and CRM-connected web experiences built to turn visitors into leads.</p><div class="sc-tags"><span class="sc-tag">Landing Pages</span><span class="sc-tag">CRM</span><span class="sc-tag">Webflow</span></div></div>
+  </div>
+</section>
+
+<section id="contact" class="sec" style="padding-top:0">
+  <div class="contact-wrap">
+    <div class="c-glow"></div>
+    <div class="sec-lbl" style="margin-bottom:16px">Let's work together</div>
+    <h2 class="c-h">Have a project<br><span class="d">in mind?</span></h2>
+    <p class="c-sub" id="contact-sub">Whether it's a single reel or a full brand — I'd love to hear what you're building.</p>
+    <div class="c-links">
+      <a href="mailto:hello@sandy.ae" class="cl p" id="contact-email">✉ Email me</a>
+      <a href="https://wa.me/971500000000" target="_blank" class="cl g" id="contact-whatsapp">💬 WhatsApp</a>
+      <a href="https://behance.net" target="_blank" class="cl g" id="contact-behance">Behance</a>
+      <a href="https://instagram.com" target="_blank" class="cl g" id="contact-instagram">Instagram</a>
     </div>
-    <div class="form-group">
-      <label>About Bio (HTML allowed)</label>
-      <textarea id="setting-about-bio" onchange="updateSettings()"></textarea>
+  </div>
+</section>
+
+<footer>
+  <div class="f-logo" id="footer-logo">Sandy</div>
+  <p id="footer-copyright">© 2025 · Sandy — Creative Digital Designer · Dubai, UAE</p>
+  <div class="f-links">
+    <a href="#" class="f-link">Behance</a>
+    <a href="#" class="f-link">Instagram</a>
+    <a href="#" class="f-link">LinkedIn</a>
+    <a href="#" class="f-link">WhatsApp</a>
+  </div>
+</footer>
+</div>
+
+<!-- PROJECT DETAIL PAGE -->
+<div id="page-project" class="page" style="padding-top:54px">
+  <div class="proj-nav">
+    <button class="proj-back" onclick="showPage('home');setTimeout(()=>scrollToId('work'),50)">← Back to work</button>
+    <div class="proj-nav-title" id="proj-nav-title"></div>
+    <div class="proj-nav-actions">
+      <button class="proj-nav-btn" onclick="editProject(currentProjId)">Edit</button>
+      <button class="proj-nav-btn primary" onclick="showPage('home');setTimeout(()=>scrollToId('contact'),50)">Work with me</button>
     </div>
-    <div class="form-group">
-      <label>Hero Photo Path (e.g., images/hero.jpg)</label>
-      <input type="text" id="setting-hero-photo" onchange="updateSettings()">
+  </div>
+  <div id="proj-header"></div>
+  <div class="proj-body">
+    <div class="proj-info-row">
+      <div class="pi"><div class="pi-label">Category</div><div class="pi-value" id="pi-cat"></div></div>
+      <div class="pi"><div class="pi-label">Year</div><div class="pi-value" id="pi-year"></div></div>
+      <div class="pi"><div class="pi-label">Client</div><div class="pi-value" id="pi-client"></div></div>
     </div>
-    <div class="form-group">
-      <label>About Photo Path (e.g., images/about.jpg)</label>
-      <input type="text" id="setting-about-photo" onchange="updateSettings()">
-    </div>
-    <div class="form-group">
-      <label>Email</label>
-      <input type="email" id="setting-email" onchange="updateSettings()">
-    </div>
-    <div class="form-group">
-      <label>WhatsApp Number (with country code, e.g., 971500000000)</label>
-      <input type="text" id="setting-whatsapp" onchange="updateSettings()">
-    </div>
-    <div class="form-group">
-      <label>Behance URL</label>
-      <input type="url" id="setting-behance" onchange="updateSettings()">
-    </div>
-    <div class="form-group">
-      <label>Instagram URL</label>
-      <input type="url" id="setting-instagram" onchange="updateSettings()">
-    </div>
-    <div class="form-group">
-      <label>Contact Subtitle</label>
-      <input type="text" id="setting-contact-sub" onchange="updateSettings()">
+    <div class="proj-desc" id="proj-desc"></div>
+    <div id="proj-media"></div>
+    <div class="proj-tags" id="proj-tags"></div>
+  </div>
+  <div class="next-project" id="next-project" onclick="goToNextProject()">
+    <div class="np-inner">
+      <div class="np-lbl">Next project</div>
+      <div class="np-title-row">
+        <div class="np-title" id="np-title"></div>
+        <div class="np-arrow">→</div>
+      </div>
+      <div class="np-meta" id="np-meta"></div>
     </div>
   </div>
 </div>
 
-<!-- Create/Edit Modal -->
-<div class="modal" id="project-modal">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h2 id="modal-title">Create New Project</h2>
-      <button class="modal-close" onclick="closeModal()">×</button>
+<!-- ADMIN PROJECT PAGE -->
+<div id="page-admin" class="page">
+  <div class="admin-wrap">
+    <button class="admin-back" onclick="showPage('home')">← Back to portfolio</button>
+    <div class="admin-eyebrow" id="admin-eyebrow">New project</div>
+    <h1 class="admin-h" id="admin-h">Create new project</h1>
+    <p class="admin-sub">Upload your work, add details, and publish it to your portfolio. Everything is saved on this device.</p>
+
+    <div class="form-section">
+      <div class="fs-title"><span class="num">1</span> Project details</div>
+      <div class="fs-sub">Title, category, and year — the basics every visitor sees first.</div>
+      <div class="field">
+        <label>Project title <span class="req">*</span></label>
+        <input type="text" class="input" id="f-title" placeholder="e.g. Instagram Growth Campaign — Luxe Co.">
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>Category <span class="req">*</span></label>
+          <select class="select" id="f-cat">
+            <option value="Social Media">Social Media</option>
+            <option value="Reels & Video">Reels & Video</option>
+            <option value="Real Estate">Real Estate</option>
+            <option value="Web Design">Web Design</option>
+            <option value="Branding">Branding</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Year <span class="req">*</span></label>
+          <input type="text" class="input" id="f-year" placeholder="2024" value="2025">
+        </div>
+      </div>
+      <div class="field">
+        <label>Client <span class="opt">— optional</span></label>
+        <input type="text" class="input" id="f-client" placeholder="e.g. Emaar, Personal Project, Self-initiated">
+      </div>
     </div>
-    <div class="form-group">
-      <label>Project Title</label>
-      <input type="text" id="proj-title">
+
+    <div class="form-section">
+      <div class="fs-title"><span class="num">2</span> Upload media</div>
+      <div class="fs-sub">Add multiple images and an optional video. The first image becomes your project cover (you can change this).</div>
+      <div class="field">
+        <label>Images <span class="opt">— multiple supported, max 5MB each</span></label>
+        <div class="uploader" id="img-up" onclick="document.getElementById('img-input').click()">
+          <div class="up-ico">🖼</div>
+          <div class="up-title">Click or drop images here</div>
+          <div class="up-sub">JPG, PNG, WebP, GIF — up to 5MB each</div>
+          <button type="button" class="up-btn" onclick="event.stopPropagation();document.getElementById('img-input').click()">Choose images</button>
+        </div>
+        <input type="file" id="img-input" accept="image/*" multiple style="display:none">
+        <div class="previews" id="img-previews"></div>
+      </div>
+      <div class="field" style="margin-top:24px">
+        <label>Video <span class="opt">— optional, MP4 / WebM, max 5MB</span></label>
+        <div class="uploader" id="vid-up" onclick="document.getElementById('vid-input').click()">
+          <div class="up-ico">🎬</div>
+          <div class="up-title">Click or drop a video here</div>
+          <div class="up-sub">For larger files, paste a YouTube/Vimeo URL below</div>
+          <button type="button" class="up-btn" onclick="event.stopPropagation();document.getElementById('vid-input').click()">Choose video</button>
+        </div>
+        <input type="file" id="vid-input" accept="video/*" style="display:none">
+        <div class="previews" id="vid-previews"></div>
+        <div style="margin-top:14px">
+          <input type="text" class="input" id="f-video-url" placeholder="Or paste YouTube / Vimeo URL (optional)">
+        </div>
+      </div>
     </div>
-    <div class="form-group">
-      <label>Category</label>
-      <select id="proj-category">
-        <option>Social Media</option>
-        <option>Reels & Video</option>
-        <option>Real Estate</option>
-        <option>Web Design</option>
-        <option>Branding</option>
-      </select>
+
+    <div class="form-section">
+      <div class="fs-title"><span class="num">3</span> Description & tags</div>
+      <div class="fs-sub">Tell the story behind the project — what was the brief, what did you create, what was the result.</div>
+      <div class="field">
+        <label>Short tagline <span class="opt">— 1 line</span></label>
+        <input type="text" class="input" id="f-tagline" placeholder="e.g. Full Instagram strategy & visual system for a UAE lifestyle brand">
+      </div>
+      <div class="field">
+        <label>Project description <span class="req">*</span></label>
+        <textarea class="textarea" id="f-desc" placeholder="Describe the project — the brief, your approach, the deliverables, and the results. You can write multiple paragraphs."></textarea>
+      </div>
+      <div class="field">
+        <label>Tags <span class="opt">— comma separated</span></label>
+        <input type="text" class="input" id="f-tags" placeholder="Instagram, Content Strategy, Branding, Motion">
+      </div>
     </div>
-    <div class="form-group">
-      <label>Tagline</label>
-      <input type="text" id="proj-tagline">
+
+    <div class="actions-row">
+      <div class="actions-left" id="actions-left"></div>
+      <div class="actions-right" style="display:flex;gap:8px">
+        <button class="action-btn draft" onclick="showPage('home')">Cancel</button>
+        <button class="action-btn primary" id="publish-btn" onclick="publishProject()">Publish project</button>
+      </div>
     </div>
-    <div class="form-group">
-      <label>Description</label>
-      <textarea id="proj-description"></textarea>
+  </div>
+</div>
+
+<!-- SETTINGS PAGE -->
+<div id="page-settings" class="page">
+  <div class="admin-wrap">
+    <button class="admin-back" onclick="showPage('home')">← Back to portfolio</button>
+    <div class="admin-eyebrow">Portfolio settings</div>
+    <h1 class="admin-h">Settings</h1>
+    <p class="admin-sub">Update your personal information, images, and contact details. Changes save automatically.</p>
+
+    <!-- PERSONAL INFO -->
+    <div class="form-section">
+      <div class="fs-title"><span class="num">1</span> Personal Information</div>
+      <div class="fs-sub">Your name, title, and bio shown throughout the site.</div>
+      <div class="field">
+        <label>Your name <span class="req">*</span></label>
+        <input type="text" class="input" id="s-name" placeholder="e.g. Sandy">
+      </div>
+      <div class="field">
+        <label>Your title/role <span class="req">*</span></label>
+        <input type="text" class="input" id="s-title" placeholder="e.g. Creative Digital Designer">
+      </div>
+      <div class="field">
+        <label>Location</label>
+        <input type="text" class="input" id="s-location" placeholder="e.g. Dubai, UAE">
+      </div>
+      <div class="field">
+        <label>Hero bio <span class="req">*</span></label>
+        <textarea class="textarea" id="s-hero-bio" placeholder="The short bio that appears on your homepage hero section."></textarea>
+      </div>
+      <div class="field">
+        <label>About bio <span class="req">*</span></label>
+        <textarea class="textarea" id="s-about-bio" placeholder="The longer bio that appears in your About section."></textarea>
+      </div>
+      <div class="field">
+        <label>Badge text</label>
+        <input type="text" class="input" id="s-badge" placeholder="e.g. Open to new projects" value="Open to new projects">
+      </div>
     </div>
-    <div class="form-group">
-      <label>Client Name</label>
-      <input type="text" id="proj-client">
+
+    <!-- IMAGES -->
+    <div class="form-section">
+      <div class="fs-title"><span class="num">2</span> Profile Images</div>
+      <div class="fs-sub">Upload your profile photo and about section portrait. Click on any image to change it.</div>
+      <div class="field-row">
+        <div class="field">
+          <label>Hero profile photo</label>
+          <div class="img-uploader-wrap">
+            <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=600&q=80" alt="Profile" id="s-hero-photo-preview">
+            <div class="img-uploader-overlay" onclick="document.getElementById('s-hero-photo-input').click()">
+              <div class="icon">📷</div>
+              <div class="label">Click to upload</div>
+            </div>
+          </div>
+          <input type="file" id="s-hero-photo-input" accept="image/*" style="display:none">
+        </div>
+        <div class="field">
+          <label>About section portrait</label>
+          <div class="img-uploader-wrap">
+            <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&q=80" alt="Portrait" id="s-about-photo-preview">
+            <div class="img-uploader-overlay" onclick="document.getElementById('s-about-photo-input').click()">
+              <div class="icon">📷</div>
+              <div class="label">Click to upload</div>
+            </div>
+          </div>
+          <input type="file" id="s-about-photo-input" accept="image/*" style="display:none">
+        </div>
+      </div>
     </div>
-    <div class="form-group">
-      <label>Year</label>
-      <input type="text" id="proj-year" value="2025">
+
+    <!-- CONTACT -->
+    <div class="form-section">
+      <div class="fs-title"><span class="num">3</span> Contact Information</div>
+      <div class="fs-sub">Email, WhatsApp, and social links displayed in your contact section.</div>
+      <div class="field">
+        <label>Email</label>
+        <input type="email" class="input" id="s-email" placeholder="hello@yourname.com">
+      </div>
+      <div class="field">
+        <label>WhatsApp number <span class="opt">— with country code</span></label>
+        <input type="text" class="input" id="s-whatsapp" placeholder="971500000000">
+      </div>
+      <div class="field">
+        <label>Behance URL</label>
+        <input type="url" class="input" id="s-behance" placeholder="https://behance.net/yourname">
+      </div>
+      <div class="field">
+        <label>Instagram URL</label>
+        <input type="url" class="input" id="s-instagram" placeholder="https://instagram.com/yourname">
+      </div>
+      <div class="field">
+        <label>Contact section subtitle</label>
+        <input type="text" class="input" id="s-contact-sub" placeholder="Whether it's a single reel or a full brand — I'd love to hear what you're building.">
+      </div>
     </div>
-    <div class="form-group">
-      <label>Cover Image Path (e.g., project-cover.jpg)</label>
-      <input type="text" id="proj-cover">
-      <small style="color:var(--muted);font-size:12px">Upload image to GitHub /images/ folder first, then enter filename here. Auto-adds "images/" prefix.</small>
-    </div>
-    <div class="form-group">
-      <label>Gallery Images (comma-separated, e.g., img1.jpg, img2.jpg)</label>
-      <input type="text" id="proj-images">
-      <small style="color:var(--muted);font-size:12px">Upload images to GitHub /images/ folder first. Auto-adds "images/" prefix.</small>
-    </div>
-    <div class="form-group">
-      <label>Video URL (YouTube or Vimeo, optional)</label>
-      <input type="url" id="proj-video">
-    </div>
-    <div class="form-group">
-      <label>Tags (comma-separated)</label>
-      <input type="text" id="proj-tags" placeholder="Tag1, Tag2, Tag3">
-    </div>
-    <div style="display:flex;gap:12px;margin-top:24px">
-      <button class="btn btn-blue" onclick="saveProject()">💾 Save Project</button>
-      <button class="btn" style="background:var(--bg2);color:var(--text)" onclick="closeModal()">Cancel</button>
+
+    <div class="actions-row">
+      <div class="actions-left"></div>
+      <div class="actions-right" style="display:flex;gap:8px">
+        <button class="action-btn draft" onclick="showPage('home')">Cancel</button>
+        <button class="action-btn primary" onclick="saveSettings()">Save settings</button>
+      </div>
     </div>
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
-<script>
-let data = {projects: [], settings: {}};
-let editingProjectId = null;
-let hasChanges = false;
+<div class="modal-bg" id="delete-modal">
+  <div class="modal">
+    <h3>Delete project?</h3>
+    <p>This will permanently remove <strong id="del-title"></strong> from your portfolio. This action cannot be undone.</p>
+    <div class="actions">
+      <button class="action-btn draft" onclick="closeDelete()">Cancel</button>
+      <button class="action-btn danger" onclick="confirmDelete()">Delete project</button>
+    </div>
+  </div>
+</div>
 
-// Load projects.json from GitHub
-async function loadData() {
-  try {
-    const response = await fetch('projects.json?t=' + Date.now());
-    data = await response.json();
-    renderProjects();
-    loadSettings();
-  } catch(e) {
-    console.error('Error loading projects.json:', e);
-    toast('Error loading data. Make sure projects.json is uploaded to GitHub.');
+<div class="modal-bg" id="login-modal">
+  <div class="modal">
+    <h3>Admin Login</h3>
+    <p>Enter your credentials to access the admin panel</p>
+    <div class="login-error" id="modal-login-error">Invalid username or password</div>
+    <form onsubmit="attemptLogin(event)">
+      <div class="login-field">
+        <label>Username</label>
+        <input type="text" class="login-input" id="login-username" placeholder="Enter username" required>
+      </div>
+      <div class="login-field">
+        <label>Password</label>
+        <input type="password" class="login-input" id="login-password" placeholder="Enter password" required>
+      </div>
+      <div class="actions" style="margin-top:20px">
+        <button type="button" class="action-btn draft" onclick="closeLoginModal()">Cancel</button>
+        <button type="submit" class="action-btn primary">Login</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+let projects = [];
+let settings = {};
+let editingId = null;
+let currentProjId = null;
+let currentView = 'grid';
+let imageFiles = [];
+let videoFile = null;
+let pendingDelete = null;
+
+async function loadProjects(){
+  try{
+    const stored = localStorage.getItem('sandy:projects');
+    projects = stored ? JSON.parse(stored) : seedProjects();
+  }catch(e){
+    projects = seedProjects();
+  }
+  renderGrid();
+}
+
+async function saveProjects(){
+  try{
+    localStorage.setItem('sandy:projects', JSON.stringify(projects));
+  }catch(e){
+    console.warn('Could not persist:',e);
   }
 }
 
-function renderProjects() {
-  const list = document.getElementById('project-list');
-  document.getElementById('project-count').textContent = data.projects.length;
+async function loadSettings(){
+  try{
+    const stored = localStorage.getItem('sandy:settings');
+    settings = stored ? JSON.parse(stored) : defaultSettings();
+  }catch(e){
+    settings = defaultSettings();
+  }
+  applySettings();
+}
+
+async function saveSettingsToStorage(){
+  try{
+    localStorage.setItem('sandy:settings', JSON.stringify(settings));
+  }catch(e){
+    console.warn('Could not persist settings:',e);
+  }
+}
+
+function defaultSettings(){
+  return {
+    name:'Sandy',
+    title:'Creative Digital Designer',
+    location:'Dubai, UAE',
+    badge:'Open to new projects',
+    heroBio:`I design <strong>social media content, reels, real estate visuals,</strong> and <strong>web experiences</strong> that make brands impossible to scroll past. Based in Dubai, working globally.`,
+    aboutBio:`I'm a <strong>Creative Digital Designer</strong> based in Dubai with a passion for building visual experiences that stop the scroll and drive real results.<br><br>From <strong>social media content</strong> and <strong>short-form reels</strong> to <strong>real estate campaigns</strong> and <strong>landing pages</strong> — I combine design thinking with deep platform knowledge to produce work that performs.`,
+    heroPhoto:'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=600&q=80',
+    aboutPhoto:'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&q=80',
+    email:'hello@sandy.ae',
+    whatsapp:'971500000000',
+    behance:'https://behance.net',
+    instagram:'https://instagram.com',
+    contactSub:"Whether it's a single reel or a full brand — I'd love to hear what you're building."
+  };
+}
+
+function applySettings(){
+  document.getElementById('nav-logo').textContent = settings.name;
+  document.getElementById('hero-name').textContent = settings.name + '.';
+  document.getElementById('hero-title').innerHTML = settings.title.replace(/\s/g,'<br>') + '.';
+  document.getElementById('hero-bio').innerHTML = settings.heroBio;
+  document.getElementById('hero-badge-text').textContent = settings.badge;
+  document.getElementById('hero-photo').src = settings.heroPhoto;
+  document.getElementById('hero-photo-name').textContent = settings.name;
+  document.getElementById('hero-photo-role').textContent = settings.title;
+  document.getElementById('hero-photo-loc').textContent = settings.location;
+  document.getElementById('about-name').textContent = settings.name;
+  document.getElementById('about-role').textContent = settings.title;
+  document.getElementById('about-bio').innerHTML = settings.aboutBio;
+  document.getElementById('about-photo').src = settings.aboutPhoto;
+  document.getElementById('contact-sub').textContent = settings.contactSub;
+  document.getElementById('contact-email').href = 'mailto:' + settings.email;
+  document.getElementById('contact-email').innerHTML = '✉ ' + settings.email;
+  document.getElementById('contact-whatsapp').href = 'https://wa.me/' + settings.whatsapp;
+  document.getElementById('contact-behance').href = settings.behance;
+  document.getElementById('contact-instagram').href = settings.instagram;
+  document.getElementById('footer-logo').textContent = settings.name;
+  document.getElementById('footer-copyright').textContent = `© 2025 · ${settings.name} — ${settings.title} · ${settings.location}`;
+}
+
+function populateSettingsForm(){
+  document.getElementById('s-name').value = settings.name;
+  document.getElementById('s-title').value = settings.title;
+  document.getElementById('s-location').value = settings.location;
+  document.getElementById('s-badge').value = settings.badge;
+  document.getElementById('s-hero-bio').value = settings.heroBio.replace(/<[^>]+>/g,'');
+  document.getElementById('s-about-bio').value = settings.aboutBio.replace(/<br><br>/g,'\n\n').replace(/<[^>]+>/g,'');
+  document.getElementById('s-email').value = settings.email;
+  document.getElementById('s-whatsapp').value = settings.whatsapp;
+  document.getElementById('s-behance').value = settings.behance;
+  document.getElementById('s-instagram').value = settings.instagram;
+  document.getElementById('s-contact-sub').value = settings.contactSub;
+  document.getElementById('s-hero-photo-preview').src = settings.heroPhoto;
+  document.getElementById('s-about-photo-preview').src = settings.aboutPhoto;
+}
+
+async function saveSettings(){
+  const heroBioRaw = document.getElementById('s-hero-bio').value.trim();
+  const aboutBioRaw = document.getElementById('s-about-bio').value.trim();
+
+  settings.name = document.getElementById('s-name').value.trim() || 'Sandy';
+  settings.title = document.getElementById('s-title').value.trim() || 'Creative Digital Designer';
+  settings.location = document.getElementById('s-location').value.trim() || 'Dubai, UAE';
+  settings.badge = document.getElementById('s-badge').value.trim() || 'Open to new projects';
+  settings.heroBio = heroBioRaw.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');
+  settings.aboutBio = aboutBioRaw.replace(/\n\n/g,'<br><br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');
+  settings.email = document.getElementById('s-email').value.trim() || 'hello@sandy.ae';
+  settings.whatsapp = document.getElementById('s-whatsapp').value.trim() || '971500000000';
+  settings.behance = document.getElementById('s-behance').value.trim() || 'https://behance.net';
+  settings.instagram = document.getElementById('s-instagram').value.trim() || 'https://instagram.com';
+  settings.contactSub = document.getElementById('s-contact-sub').value.trim();
+
+  await saveSettingsToStorage();
+  applySettings();
+  toast('Settings saved','success');
+  showPage('home');
+}
+
+function setupSettingsImageUploaders(){
+  document.getElementById('s-hero-photo-input').addEventListener('change',async e=>{
+    const f = e.target.files[0];
+    if(!f) return;
+    if(f.size > 5*1024*1024){toast('Image too large (max 5MB)','error');return}
+    const url = await fileToDataURL(f);
+    settings.heroPhoto = url;
+    document.getElementById('s-hero-photo-preview').src = url;
+    document.getElementById('s-hero-photo-input').value = '';
+  });
+
+  document.getElementById('s-about-photo-input').addEventListener('change',async e=>{
+    const f = e.target.files[0];
+    if(!f) return;
+    if(f.size > 5*1024*1024){toast('Image too large (max 5MB)','error');return}
+    const url = await fileToDataURL(f);
+    settings.aboutPhoto = url;
+    document.getElementById('s-about-photo-preview').src = url;
+    document.getElementById('s-about-photo-input').value = '';
+  });
+}
+
+function seedProjects(){
+  return [
+    {
+      id:'p1', title:'Instagram Growth Campaign', category:'Social Media',
+      year:'2024', client:'Luxe Living UAE',
+      tagline:'Full content strategy & visual system for a UAE lifestyle brand',
+      desc:`Built a complete Instagram visual identity system from the ground up. From content pillars to post templates, story designs, and highlight covers, every touchpoint was considered to create a cohesive, premium look that grew the account from 12K to 80K followers in 6 months.\n\nThe system was modular and scalable — handed off to the in-house social team with full documentation so they could continue producing on-brand content daily without ever losing consistency.`,
+      tags:['Instagram','Content Strategy','Visual Design','Social Media','Branding'],
+      images:['https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=1200&q=85','https://images.unsplash.com/photo-1512486130939-2c4f79935e4f?w=1200&q=80','https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=900&q=80'],
+      videoUrl:'',
+    },
+    {
+      id:'p2', title:'Luxury Tower — Dubai', category:'Real Estate',
+      year:'2024', client:'Emaar Properties',
+      tagline:'Complete digital campaign and print collateral for a luxury off-plan tower',
+      desc:`Full real estate marketing package for a luxury off-plan tower launch in Dubai Marina. The project included a 32-page sales brochure, digital ad creatives for Instagram and Google, a 30-day social media launch campaign, and animated property walkthrough content.\n\nThe campaign drove 4,200+ qualified leads in the first week and helped sell 60% of inventory in the first month.`,
+      tags:['Real Estate','Dubai','Brochure Design','Social Ads','Motion'],
+      images:['https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1200&q=85','https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&q=80','https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=900&q=80'],
+      videoUrl:'',
+    },
+    {
+      id:'p3', title:'Real Estate Landing Page', category:'Web Design',
+      year:'2024', client:'Nakheel Developers',
+      tagline:'High-converting lead-generation page for a Dubai property launch',
+      desc:`A high-converting landing page built for a luxury off-plan property registration campaign. Achieved a 34% conversion rate by integrating social proof above the fold, a sticky CTA bar, WhatsApp integration, and a multi-step form that reduced friction by 62%.\n\nThe lead form connects directly to HubSpot, triggering automated WhatsApp confirmation messages, email sequences, and sales team notifications.`,
+      tags:['Web Design','Landing Page','Webflow','HubSpot','CRM','Real Estate'],
+      images:['https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=1200&q=85','https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&q=80','https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=900&q=80'],
+      videoUrl:'',
+    },
+    {
+      id:'p4', title:'Product Launch Reel', category:'Reels & Video',
+      year:'2024', client:'GLOW Skincare',
+      tagline:'Multi-platform video campaign for a luxury skincare brand launch',
+      desc:`Short-form video campaign for a luxury skincare brand launching across the UAE and KSA. The project included a 60-second hero brand film, 8 Instagram reels, 6 TikTok-native videos, and YouTube pre-roll ads.\n\nAll content was built from a unified motion language — consistent timing, transitions, and typography animation that made every piece instantly recognisable as the same brand.`,
+      tags:['Reels','Video','Motion Design','TikTok','Instagram','Advertising'],
+      images:['https://images.unsplash.com/photo-1492619375914-88005aa9e8fb?w=1200&q=85','https://images.unsplash.com/photo-1536240478700-b869ad10e2c0?w=1200&q=80'],
+      videoUrl:'',
+    },
+  ];
+}
+
+function setView(view){
+  currentView = view;
+  const grid = document.getElementById('grid');
+  const gridBtn = document.getElementById('view-grid-btn');
+  const listBtn = document.getElementById('view-list-btn');
   
-  if(data.projects.length === 0) {
-    list.innerHTML = '<p style="color:var(--muted);text-align:center;padding:40px">No projects yet. Click "Create New Project" to add one.</p>';
+  if(view === 'list'){
+    grid.classList.add('list-view');
+    if(gridBtn) gridBtn.classList.remove('on');
+    if(listBtn) listBtn.classList.add('on');
+  } else {
+    grid.classList.remove('list-view');
+    if(gridBtn) gridBtn.classList.add('on');
+    if(listBtn) listBtn.classList.remove('on');
+  }
+  renderGrid();
+}
+
+function renderGrid(){
+  const grid = document.getElementById('grid');
+  if(projects.length===0){
+    grid.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-ic">✦</div>
+        <div class="empty-h">No projects yet</div>
+        <div class="empty-sub">Click "Create New" to add your first project. You can upload images, add a video, write a description, and publish — all from this page.</div>
+        <button class="btn-blue" style="margin-top:14px" onclick="openAdmin()">+ Create your first project</button>
+      </div>`;
     return;
   }
-  
-  list.innerHTML = data.projects.map(p => `
-    <div class="project-card">
-      <h3>${escHtml(p.title)}</h3>
-      <p>${escHtml(p.category)} • ${escHtml(p.year)}</p>
-      <div class="project-actions">
-        <button class="btn btn-blue" onclick="editProject('${p.id}')">✏️ Edit</button>
-        <button class="btn btn-red" onclick="deleteProject('${p.id}')">🗑️ Delete</button>
-      </div>
+
+  if(currentView === 'list'){
+    // List view: one project per row
+    grid.innerHTML = projects.map(p=>{
+      const cover = p.images && p.images.length ? p.images[0] : '';
+      return `
+        <div class="bc" data-cat="${escapeAttr(p.category)}" onclick="openProject('${p.id}')">
+          ${cover ? `<img class="bc-img" src="${cover}" alt="${escapeAttr(p.title)}">` : `<div class="bc-img" style="display:flex;align-items:center;justify-content:center;background:var(--bg2);color:var(--dim);font-size:14px">${escapeHtml(p.category)}</div>`}
+          <div class="bc-content">
+            <div class="bc-ov">
+              <div class="bc-cat">${escapeHtml(p.category)}</div>
+              <div class="bc-title">${escapeHtml(p.title)}</div>
+              <div class="bc-meta">${escapeHtml(p.client||'')}${p.client?' · ':''}${escapeHtml(p.year)}</div>
+            </div>
+            <div class="bc-actions" onclick="event.stopPropagation()" style="position:static;opacity:1;margin-top:12px">
+              <button class="bc-act" title="Edit" onclick="event.stopPropagation();editProject('${p.id}')">✎</button>
+              <button class="bc-act del" title="Delete" onclick="event.stopPropagation();askDelete('${p.id}')">🗑</button>
+            </div>
+          </div>
+        </div>`;
+    }).join('');
+  } else {
+    // Grid view: 3 columns
+    grid.innerHTML = projects.map((p,i)=>{
+      const wide = (i===0 && projects.length>=2) ? 'w2' : '';
+      const cover = p.images && p.images.length ? p.images[0] : '';
+      return `
+        <div class="bc ${wide}" data-cat="${escapeAttr(p.category)}" onclick="openProject('${p.id}')">
+          ${cover ? `<img class="bc-img" src="${cover}" alt="${escapeAttr(p.title)}">` : `<div class="bc-ph"><div class="ic">${categoryIcon(p.category)}</div><span>${escapeHtml(p.category)}</span></div>`}
+          <div class="bc-pill">${escapeHtml(p.category)}</div>
+          <div class="bc-actions" onclick="event.stopPropagation()">
+            <button class="bc-act" title="Edit" onclick="event.stopPropagation();editProject('${p.id}')">✎</button>
+            <button class="bc-act del" title="Delete" onclick="event.stopPropagation();askDelete('${p.id}')">🗑</button>
+          </div>
+          <div class="bc-ov">
+            <div class="bc-cat">${escapeHtml(p.category)}</div>
+            <div class="bc-title">${escapeHtml(p.title)}</div>
+            <div class="bc-meta">${escapeHtml(p.client||'')}${p.client?' · ':''}${escapeHtml(p.year)}</div>
+          </div>
+        </div>`;
+    }).join('');
+  }
+}
+
+function categoryIcon(cat){
+  return {
+    'Social Media':'📱','Reels & Video':'🎬','Real Estate':'🏠',
+    'Web Design':'🌐','Branding':'✦'
+  }[cat] || '◆';
+}
+function escapeHtml(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function escapeAttr(s){return escapeHtml(s)}
+
+function filterWork(btn,cat){
+  document.querySelectorAll('.wfb').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('.bc').forEach(c=>{
+    const m = cat==='all' || c.dataset.cat===cat;
+    c.style.opacity = m ? '1' : '0.1';
+    c.style.pointerEvents = m ? 'auto' : 'none';
+    c.style.transition='opacity .3s';
+  });
+}
+
+function openProject(id){
+  const p = projects.find(x=>x.id===id);
+  if(!p) return;
+  currentProjId = id;
+
+  document.getElementById('proj-nav-title').textContent = p.title;
+
+  const header = document.getElementById('proj-header');
+  header.innerHTML = `
+    <div class="proj-header">
+      <div class="proj-cat-pill">${escapeHtml(p.category)}</div>
+      <h1 class="proj-header-title">${escapeHtml(p.title)}</h1>
+      <p class="proj-header-sub">${escapeHtml(p.tagline||'')}</p>
+    </div>`;
+
+  document.getElementById('pi-cat').textContent = p.category;
+  document.getElementById('pi-year').textContent = p.year;
+  document.getElementById('pi-client').textContent = p.client || '—';
+  document.getElementById('proj-desc').textContent = p.desc;
+
+  const media = document.getElementById('proj-media');
+  let html = '';
+  if(p.images && p.images.length){
+    p.images.forEach(src=>{
+      html += `<div class="proj-img-block"><img src="${src}" alt=""></div>`;
+    });
+  }
+  if(p.videoUrl){
+    if(p.videoUrl.startsWith('data:video') || /\.(mp4|webm|mov)$/i.test(p.videoUrl)){
+      html += `<div class="proj-video-block"><video src="${p.videoUrl}" controls></video></div>`;
+    } else {
+      let embed = p.videoUrl;
+      const yt = p.videoUrl.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([^&?]+)/);
+      const vm = p.videoUrl.match(/vimeo\.com\/(\d+)/);
+      if(yt) embed = `https://www.youtube.com/embed/${yt[1]}`;
+      else if(vm) embed = `https://player.vimeo.com/video/${vm[1]}`;
+      html += `<div class="proj-video-block"><iframe src="${embed}" style="width:100%;aspect-ratio:16/9;border:none" allowfullscreen></iframe></div>`;
+    }
+  }
+  media.innerHTML = html;
+
+  document.getElementById('proj-tags').innerHTML = (p.tags||[]).map(t=>`<span class="proj-tag">${escapeHtml(t)}</span>`).join('');
+
+  const idx = projects.findIndex(x=>x.id===id);
+  const next = projects[(idx+1) % projects.length];
+  document.getElementById('np-title').textContent = next.title;
+  document.getElementById('np-meta').textContent = next.category + ' · ' + next.year;
+  document.getElementById('next-project').setAttribute('data-next-id',next.id);
+
+  showPage('project');
+}
+
+function goToNextProject(){
+  const nextId = document.getElementById('next-project').getAttribute('data-next-id');
+  if(nextId) openProject(nextId);
+}
+
+function openAdmin(){
+  editingId = null;
+  imageFiles = [];
+  videoFile = null;
+  document.getElementById('admin-eyebrow').textContent = 'New project';
+  document.getElementById('admin-h').textContent = 'Create new project';
+  document.getElementById('publish-btn').textContent = 'Publish project';
+  document.getElementById('actions-left').innerHTML = '';
+  document.getElementById('f-title').value = '';
+  document.getElementById('f-cat').value = 'Social Media';
+  document.getElementById('f-year').value = new Date().getFullYear();
+  document.getElementById('f-client').value = '';
+  document.getElementById('f-tagline').value = '';
+  document.getElementById('f-desc').value = '';
+  document.getElementById('f-tags').value = '';
+  document.getElementById('f-video-url').value = '';
+  renderImagePreviews();
+  renderVideoPreview();
+  showPage('admin');
+}
+
+function editProject(id){
+  const p = projects.find(x=>x.id===id);
+  if(!p) return;
+  editingId = id;
+  imageFiles = (p.images||[]).map((src,i)=>({dataUrl:src,isCover:i===0}));
+  videoFile = (p.videoUrl && (p.videoUrl.startsWith('data:video')||/\.(mp4|webm|mov)$/i.test(p.videoUrl))) ? {dataUrl:p.videoUrl} : null;
+
+  document.getElementById('admin-eyebrow').textContent = 'Editing project';
+  document.getElementById('admin-h').textContent = 'Edit project';
+  document.getElementById('publish-btn').textContent = 'Save changes';
+  document.getElementById('actions-left').innerHTML = `<button class="action-btn danger" onclick="askDelete('${id}')">Delete project</button>`;
+
+  document.getElementById('f-title').value = p.title;
+  document.getElementById('f-cat').value = p.category;
+  document.getElementById('f-year').value = p.year;
+  document.getElementById('f-client').value = p.client || '';
+  document.getElementById('f-tagline').value = p.tagline || '';
+  document.getElementById('f-desc').value = p.desc || '';
+  document.getElementById('f-tags').value = (p.tags||[]).join(', ');
+  document.getElementById('f-video-url').value = (p.videoUrl && !p.videoUrl.startsWith('data:video') && !/\.(mp4|webm|mov)$/i.test(p.videoUrl)) ? p.videoUrl : '';
+
+  renderImagePreviews();
+  renderVideoPreview();
+  showPage('admin');
+}
+
+function setupUploaders(){
+  const imgInput = document.getElementById('img-input');
+  const vidInput = document.getElementById('vid-input');
+  imgInput.addEventListener('change', e=>handleImages(e.target.files));
+  vidInput.addEventListener('change', e=>handleVideo(e.target.files[0]));
+
+  setupDrop('img-up', e=>handleImages(e.dataTransfer.files));
+  setupDrop('vid-up', e=>handleVideo(e.dataTransfer.files[0]));
+}
+
+function setupDrop(id,cb){
+  const el = document.getElementById(id);
+  ['dragenter','dragover'].forEach(ev=>el.addEventListener(ev,e=>{e.preventDefault();el.classList.add('drag')}));
+  ['dragleave','drop'].forEach(ev=>el.addEventListener(ev,e=>{e.preventDefault();el.classList.remove('drag')}));
+  el.addEventListener('drop',e=>{e.preventDefault();cb(e)});
+}
+
+async function handleImages(files){
+  if(!files || !files.length) return;
+  const arr = Array.from(files).filter(f=>f.type.startsWith('image/'));
+  if(arr.length===0){toast('Please select image files','error');return}
+
+  for(const f of arr){
+    if(f.size > 5*1024*1024){toast(`"${f.name}" is too large (max 5MB)`,'error');continue}
+    const dataUrl = await fileToDataURL(f);
+    imageFiles.push({dataUrl,isCover:false});
+  }
+  if(imageFiles.length && !imageFiles.some(i=>i.isCover)) imageFiles[0].isCover = true;
+  renderImagePreviews();
+  document.getElementById('img-input').value = '';
+}
+
+async function handleVideo(f){
+  if(!f) return;
+  if(!f.type.startsWith('video/')){toast('Please select a video file','error');return}
+  if(f.size > 5*1024*1024){toast('Video is too large (max 5MB). Use a YouTube/Vimeo URL instead.','error');return}
+  const dataUrl = await fileToDataURL(f);
+  videoFile = {dataUrl};
+  renderVideoPreview();
+  document.getElementById('vid-input').value = '';
+}
+
+function fileToDataURL(f){
+  return new Promise((res,rej)=>{
+    const r = new FileReader();
+    r.onload = ()=>res(r.result);
+    r.onerror = rej;
+    r.readAsDataURL(f);
+  });
+}
+
+function renderImagePreviews(){
+  const wrap = document.getElementById('img-previews');
+  wrap.innerHTML = imageFiles.map((img,i)=>`
+    <div class="preview">
+      <img src="${img.dataUrl}" alt="">
+      ${img.isCover ? '<span class="preview-cover-badge">Cover</span>' : `<div class="preview-set-cover" onclick="setCover(${i})">Set as cover</div>`}
+      <button type="button" class="rm" onclick="removeImage(${i})">✕</button>
     </div>
   `).join('');
 }
-
-function loadSettings() {
-  document.getElementById('setting-name').value = data.settings.name || '';
-  document.getElementById('setting-title').value = data.settings.title || '';
-  document.getElementById('setting-location').value = data.settings.location || '';
-  document.getElementById('setting-badge').value = data.settings.badge || '';
-  document.getElementById('setting-hero-bio').value = data.settings.heroBio || '';
-  document.getElementById('setting-about-bio').value = data.settings.aboutBio || '';
-  document.getElementById('setting-hero-photo').value = data.settings.heroPhoto || '';
-  document.getElementById('setting-about-photo').value = data.settings.aboutPhoto || '';
-  document.getElementById('setting-email').value = data.settings.email || '';
-  document.getElementById('setting-whatsapp').value = data.settings.whatsapp || '';
-  document.getElementById('setting-behance').value = data.settings.behance || '';
-  document.getElementById('setting-instagram').value = data.settings.instagram || '';
-  document.getElementById('setting-contact-sub').value = data.settings.contactSub || '';
+function setCover(i){
+  imageFiles.forEach((x,j)=>x.isCover=(j===i));
+  const cover = imageFiles.splice(i,1)[0];
+  imageFiles.unshift(cover);
+  renderImagePreviews();
+}
+function removeImage(i){
+  const wasCover = imageFiles[i].isCover;
+  imageFiles.splice(i,1);
+  if(wasCover && imageFiles.length) imageFiles[0].isCover = true;
+  renderImagePreviews();
 }
 
-function updateSettings() {
-  data.settings = {
-    name: document.getElementById('setting-name').value,
-    title: document.getElementById('setting-title').value,
-    location: document.getElementById('setting-location').value,
-    badge: document.getElementById('setting-badge').value,
-    heroBio: document.getElementById('setting-hero-bio').value,
-    aboutBio: document.getElementById('setting-about-bio').value,
-    heroPhoto: document.getElementById('setting-hero-photo').value,
-    aboutPhoto: document.getElementById('setting-about-photo').value,
-    email: document.getElementById('setting-email').value,
-    whatsapp: document.getElementById('setting-whatsapp').value,
-    behance: document.getElementById('setting-behance').value,
-    instagram: document.getElementById('setting-instagram').value,
-    contactSub: document.getElementById('setting-contact-sub').value
-  };
-  markChanged();
-  toast('Settings updated! Remember to download JSON and upload to GitHub.');
+function renderVideoPreview(){
+  const wrap = document.getElementById('vid-previews');
+  if(!videoFile){wrap.innerHTML='';return}
+  wrap.innerHTML = `
+    <div class="preview" style="aspect-ratio:16/9">
+      <video src="${videoFile.dataUrl}" muted></video>
+      <span class="preview-vid-badge">Uploaded video</span>
+      <button type="button" class="rm" onclick="removeVideo()">✕</button>
+    </div>`;
 }
+function removeVideo(){videoFile=null;renderVideoPreview()}
 
-function openCreateModal() {
-  editingProjectId = null;
-  document.getElementById('modal-title').textContent = 'Create New Project';
-  clearForm();
-  document.getElementById('project-modal').classList.add('show');
-}
+async function publishProject(){
+  const title = document.getElementById('f-title').value.trim();
+  const desc = document.getElementById('f-desc').value.trim();
+  if(!title){toast('Please add a project title','error');return}
+  if(!desc){toast('Please add a description','error');return}
 
-function editProject(id) {
-  const project = data.projects.find(p => p.id === id);
-  if(!project) return;
-  
-  editingProjectId = id;
-  document.getElementById('modal-title').textContent = 'Edit Project';
-  
-  document.getElementById('proj-title').value = project.title;
-  document.getElementById('proj-category').value = project.category;
-  document.getElementById('proj-tagline').value = project.tagline || '';
-  document.getElementById('proj-description').value = project.description || '';
-  document.getElementById('proj-client').value = project.client || '';
-  document.getElementById('proj-year').value = project.year;
-  
-  // Remove images/ prefix for display
-  document.getElementById('proj-cover').value = (project.coverImage || '').replace('images/', '');
-  document.getElementById('proj-images').value = (project.images || []).map(img => img.replace('images/', '')).join(', ');
-  
-  document.getElementById('proj-video').value = project.videoUrl || '';
-  document.getElementById('proj-tags').value = (project.tags || []).join(', ');
-  
-  document.getElementById('project-modal').classList.add('show');
-}
+  const tagsRaw = document.getElementById('f-tags').value.trim();
+  const tags = tagsRaw ? tagsRaw.split(',').map(t=>t.trim()).filter(Boolean) : [];
+  const externalVid = document.getElementById('f-video-url').value.trim();
 
-function saveProject() {
-  const title = document.getElementById('proj-title').value.trim();
-  if(!title) {
-    toast('Please enter a project title');
-    return;
-  }
-  
-  const coverRaw = document.getElementById('proj-cover').value.trim();
-  const imagesRaw = document.getElementById('proj-images').value.trim();
-  
+  const ordered = [...imageFiles].sort((a,b)=>(b.isCover?1:0)-(a.isCover?1:0));
+  const images = ordered.map(i=>i.dataUrl);
+
   const project = {
-    id: editingProjectId || generateId(title),
-    title: title,
-    category: document.getElementById('proj-category').value,
-    tagline: document.getElementById('proj-tagline').value.trim(),
-    description: document.getElementById('proj-description').value.trim(),
-    client: document.getElementById('proj-client').value.trim(),
-    year: document.getElementById('proj-year').value.trim(),
-    coverImage: coverRaw ? 'images/' + coverRaw : '',
-    images: imagesRaw ? imagesRaw.split(',').map(img => 'images/' + img.trim()).filter(Boolean) : [],
-    videoUrl: document.getElementById('proj-video').value.trim(),
-    tags: document.getElementById('proj-tags').value.split(',').map(t => t.trim()).filter(Boolean)
+    id: editingId || 'p_' + Date.now(),
+    title,
+    category: document.getElementById('f-cat').value,
+    year: document.getElementById('f-year').value || String(new Date().getFullYear()),
+    client: document.getElementById('f-client').value.trim(),
+    tagline: document.getElementById('f-tagline').value.trim(),
+    desc,
+    tags,
+    images,
+    videoUrl: videoFile ? videoFile.dataUrl : externalVid,
   };
-  
-  if(editingProjectId) {
-    const index = data.projects.findIndex(p => p.id === editingProjectId);
-    data.projects[index] = project;
-    toast('Project updated!');
+
+  if(editingId){
+    const idx = projects.findIndex(p=>p.id===editingId);
+    projects[idx] = project;
+    toast('Project updated','success');
   } else {
-    data.projects.push(project);
-    toast('Project created!');
+    projects.unshift(project);
+    toast('Project published','success');
   }
-  
-  markChanged();
-  renderProjects();
-  closeModal();
+  await saveProjects();
+  renderGrid();
+  showPage('home');
+  setTimeout(()=>scrollToId('work'),100);
 }
 
-function deleteProject(id) {
-  if(!confirm('Delete this project? This cannot be undone.')) return;
-  
-  data.projects = data.projects.filter(p => p.id !== id);
-  markChanged();
-  renderProjects();
-  toast('Project deleted!');
+function askDelete(id){
+  pendingDelete = id;
+  const p = projects.find(x=>x.id===id);
+  if(!p) return;
+  document.getElementById('del-title').textContent = p.title;
+  document.getElementById('delete-modal').classList.add('open');
+}
+function closeDelete(){
+  pendingDelete = null;
+  document.getElementById('delete-modal').classList.remove('open');
+}
+async function confirmDelete(){
+  if(!pendingDelete) return;
+  projects = projects.filter(p=>p.id!==pendingDelete);
+  await saveProjects();
+  renderGrid();
+  closeDelete();
+  toast('Project deleted','success');
+  if(document.getElementById('page-project').classList.contains('active')){
+    showPage('home');
+    setTimeout(()=>scrollToId('work'),100);
+  }
 }
 
-function closeModal() {
-  document.getElementById('project-modal').classList.remove('show');
+function showPage(name){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  if(name==='settings') populateSettingsForm();
+  window.scrollTo(0,0);
+}
+function scrollToId(id){
+  setTimeout(()=>{
+    const el = document.getElementById(id);
+    if(el) el.scrollIntoView({behavior:'smooth'});
+  },50);
 }
 
-function clearForm() {
-  document.getElementById('proj-title').value = '';
-  document.getElementById('proj-category').value = 'Social Media';
-  document.getElementById('proj-tagline').value = '';
-  document.getElementById('proj-description').value = '';
-  document.getElementById('proj-client').value = '';
-  document.getElementById('proj-year').value = '2025';
-  document.getElementById('proj-cover').value = '';
-  document.getElementById('proj-images').value = '';
-  document.getElementById('proj-video').value = '';
-  document.getElementById('proj-tags').value = '';
+let dark = true;
+function toggleTheme(){
+  dark = !dark;
+  document.body.classList.toggle('light',!dark);
+  document.getElementById('tb').textContent = dark ? '☀' : '☾';
 }
 
-function markChanged() {
-  hasChanges = true;
-  document.getElementById('download-banner').style.display = 'flex';
-}
-
-function downloadJSON() {
-  const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'projects.json';
-  a.click();
-  URL.revokeObjectURL(url);
-  toast('✅ Downloaded! Now upload this file to GitHub to update your site.');
-}
-
-function generateId(title) {
-  return title.toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').substring(0, 50);
-}
-
-function escHtml(str) {
-  const div = document.createElement('div');
-  div.textContent = str;
-  return div.innerHTML;
-}
-
-function toast(msg) {
+let toastTimer;
+function toast(msg,type=''){
   const t = document.getElementById('toast');
+  t.className = 'toast ' + type;
   t.textContent = msg;
   t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 3000);
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>t.classList.remove('show'),type==='welcome'?3000:2400);
 }
 
-window.addEventListener('DOMContentLoaded', loadData);
+/* AUTHENTICATION */
+const AUTH_USERNAME = 'admin';
+const AUTH_PASSWORD = 'sandy2025';
+let isLoggedIn = false;
+
+async function checkAuth(){
+  try{
+    const session = localStorage.getItem('sandy:auth');
+    isLoggedIn = session === 'true';
+  }catch(e){
+    isLoggedIn = false;
+  }
+  return isLoggedIn;
+}
+
+async function saveAuth(status){
+  try{
+    localStorage.setItem('sandy:auth', String(status));
+  }catch(e){
+    console.warn('Could not save auth:', e);
+  }
+}
+
+function attemptLogin(e){
+  e.preventDefault();
+  const username = document.getElementById('login-username').value.trim();
+  const password = document.getElementById('login-password').value.trim();
+  
+  if(username === AUTH_USERNAME && password === AUTH_PASSWORD){
+    isLoggedIn = true;
+    saveAuth(true);
+    // Completely hide login page
+    const loginPage = document.getElementById('page-login');
+    loginPage.classList.remove('active');
+    loginPage.style.display = 'none';
+    // Show nav and admin controls
+    document.getElementById('nav').style.display = 'flex';
+    showAdminUI();
+    // Wait 2 seconds then show settings page
+    setTimeout(()=>{
+      showPage('settings');
+    }, 2000);
+  } else {
+    document.getElementById('login-error').classList.add('show');
+    setTimeout(()=>document.getElementById('login-error').classList.remove('show'),3000);
+  }
+}
+
+function logout(){
+  isLoggedIn = false;
+  saveAuth(false);
+  hideAdminUI();
+  // Return to login page
+  document.getElementById('page-home').classList.remove('active');
+  document.getElementById('page-admin').classList.remove('active');
+  document.getElementById('page-settings').classList.remove('active');
+  document.getElementById('page-project').classList.remove('active');
+  const loginPage = document.getElementById('page-login');
+  loginPage.classList.add('active');
+  loginPage.style.display = 'flex';
+  document.getElementById('nav').style.display = 'none';
+  document.getElementById('login-username').value = '';
+  document.getElementById('login-password').value = '';
+  toast('Logged out','success');
+}
+
+function showAdminUI(){
+  if(document.getElementById('settings-btn')) document.getElementById('settings-btn').style.display = 'inline-flex';
+  if(document.getElementById('create-btn')) document.getElementById('create-btn').style.display = 'inline-flex';
+  if(document.getElementById('create-btn-work')) document.getElementById('create-btn-work').style.display = 'inline-flex';
+  if(document.getElementById('logout-btn')) document.getElementById('logout-btn').style.display = 'inline-flex';
+  if(document.getElementById('edit-proj-btn')) document.getElementById('edit-proj-btn').style.display = 'inline-block';
+  document.querySelectorAll('.bc-actions').forEach(el=>el.style.display='flex');
+}
+
+function hideAdminUI(){
+  if(document.getElementById('settings-btn')) document.getElementById('settings-btn').style.display = 'none';
+  if(document.getElementById('create-btn')) document.getElementById('create-btn').style.display = 'none';
+  if(document.getElementById('create-btn-work')) document.getElementById('create-btn-work').style.display = 'none';
+  if(document.getElementById('logout-btn')) document.getElementById('logout-btn').style.display = 'none';
+  if(document.getElementById('edit-proj-btn')) document.getElementById('edit-proj-btn').style.display = 'none';
+  document.querySelectorAll('.bc-actions').forEach(el=>el.style.display='none');
+}
+
+window.addEventListener('DOMContentLoaded',async()=>{
+  const authed = await checkAuth();
+  if(authed){
+    isLoggedIn = true;
+    const loginPage = document.getElementById('page-login');
+    loginPage.classList.remove('active');
+    loginPage.style.display = 'none';
+    document.getElementById('page-settings').classList.add('active');
+    document.getElementById('nav').style.display = 'flex';
+    showAdminUI();
+  } else {
+    // Show login page (default)
+    hideAdminUI();
+  }
+  loadProjects();
+  loadSettings();
+  setupUploaders();
+  setupSettingsImageUploaders();
+});
+
+window.addEventListener('scroll',()=>{
+  document.getElementById('nav').style.background = dark
+    ? (window.scrollY>30 ? 'rgba(0,0,0,.92)' : 'rgba(0,0,0,.78)')
+    : (window.scrollY>30 ? 'rgba(255,255,255,.92)' : 'rgba(255,255,255,.78)');
+},{passive:true});
 </script>
 </body>
 </html>
