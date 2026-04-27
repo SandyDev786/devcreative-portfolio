@@ -273,6 +273,7 @@ function login(){
   const u=document.getElementById('login-user').value;
   const p=document.getElementById('login-pass').value;
   if(u==='admin'&&p==='sandy2025'){
+    document.getElementById('page-login').classList.remove('active');
     document.getElementById('main-nav').style.display='flex';
     showPage('projects');
   }else{
