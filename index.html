@@ -312,7 +312,7 @@ return;
 grid.innerHTML=projects.map(p=>{
 const cover=p.coverImage||(p.images&&p.images[0])||'';
 const randomGrad='linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
-return`<div class="project-card" onclick="alert('Project detail page - Coming soon!')">
+return`<div class="project-card" onclick="window.location.href='project.html?id=${p.id}'">
 ${cover?`<img class="project-card-bg" src="${cover}" alt="${escHtml(p.title)}">`:`<div class="project-card-bg" style="background:${randomGrad}"></div>`}
 <div class="project-card-overlay">
 <div class="project-card-cat">${escHtml(p.category)}</div>
