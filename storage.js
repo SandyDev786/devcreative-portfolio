@@ -1,14 +1,6 @@
 // Storage.js - localStorage functions for Sandy Portfolio CMS
 // Shared between index.html and admin.html
 
-const categoryIcons = {
-  'Social Media': '📱',
-  'Reels & Video': '🎬',
-  'Real Estate': '🏠',
-  'Web Design': '🌐',
-  'Branding': '✦'
-};
-
 // Load projects from localStorage
 function loadProjects() {
   const stored = localStorage.getItem('sandy:projects');
