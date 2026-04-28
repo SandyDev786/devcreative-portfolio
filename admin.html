@@ -351,12 +351,10 @@ function editProject(id){
 function uploadCover(e){
   const file=e.target.files[0];
   if(!file)return;
-  const reader=new FileReader();
-  reader.onload=function(ev){
-    coverImg=ev.target.result;
+  compressImage(file, 1200, 900, (compressed)=>{
+    coverImg=compressed;
     document.getElementById('cover-preview').innerHTML=`<div class="preview-item"><img src="${coverImg}"><button class="preview-remove" onclick="coverImg=null;document.getElementById('cover-preview').innerHTML=''">×</button></div>`;
-  };
-  reader.readAsDataURL(file);
+  });
 }
 
 function uploadGallery(e){
@@ -364,17 +362,42 @@ function uploadGallery(e){
   let loaded=0;
   const total=files.length;
   files.forEach(file=>{
-    const reader=new FileReader();
-    reader.onload=function(ev){
-      galleryImgs.push(ev.target.result);
+    compressImage(file, 1200, 900, (compressed)=>{
+      galleryImgs.push(compressed);
       loaded++;
       document.getElementById('gallery-preview').innerHTML=galleryImgs.map((img,i)=>`<div class="preview-item"><img src="${img}"><button class="preview-remove" onclick="removeGalleryImg(${i})">×</button></div>`).join('');
       if(loaded===total){
         toast(`${total} images uploaded!`);
       }
-    };
-    reader.readAsDataURL(file);
+    });
   });
+}
+
+function compressImage(file, maxWidth, maxHeight, callback){
+  const reader=new FileReader();
+  reader.onload=function(e){
+    const img=new Image();
+    img.onload=function(){
+      const canvas=document.createElement('canvas');
+      let width=img.width;
+      let height=img.height;
+      if(width>maxWidth){
+        height=height*(maxWidth/width);
+        width=maxWidth;
+      }
+      if(height>maxHeight){
+        width=width*(maxHeight/height);
+        height=maxHeight;
+      }
+      canvas.width=width;
+      canvas.height=height;
+      const ctx=canvas.getContext('2d');
+      ctx.drawImage(img,0,0,width,height);
+      callback(canvas.toDataURL('image/jpeg',0.8));
+    };
+    img.src=e.target.result;
+  };
+  reader.readAsDataURL(file);
 }
 
 function removeGalleryImg(idx){
