@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project - Sandy Portfolio</title>
+<style>
+:root{--bg:#000;--bg1:#0a0a0a;--bg2:#111;--bg3:#1c1c1c;--line:rgba(255,255,255,.07);--line2:rgba(255,255,255,.12);--line3:rgba(255,255,255,.2);--text:#f5f5f7;--muted:rgba(245,245,247,.52);--dim:rgba(245,245,247,.22);--blue:#2997ff;--ease:cubic-bezier(.4,0,.2,1);--r:20px;--r-sm:14px}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,'SF Pro Display','Helvetica Neue',sans-serif;-webkit-font-smoothing:antialiased;line-height:1.6}
+nav{position:fixed;inset:0 0 auto;z-index:300;height:54px;display:flex;align-items:center;justify-content:space-between;padding:0 32px;background:rgba(0,0,0,.92);backdrop-filter:saturate(180%) blur(24px);border-bottom:.5px solid var(--line)}
+.n-back{color:var(--text);text-decoration:none;font-size:14px;display:flex;align-items:center;gap:6px;transition:color .2s}
+.n-back:hover{color:var(--blue)}
+.n-logo{font-size:17px;font-weight:700;position:absolute;left:50%;transform:translateX(-50%)}
+.hero{padding:120px 32px 60px;max-width:1000px;margin:0 auto;text-align:center}
+.cat{display:inline-flex;align-items:center;gap:6px;background:rgba(41,151,255,.1);border:.5px solid rgba(41,151,255,.22);padding:6px 14px;border-radius:100px;font-size:12px;font-weight:500;color:var(--blue);margin-bottom:16px}
+h1{font-size:clamp(42px,5vw,64px);font-weight:700;letter-spacing:-.04em;line-height:1.1;margin-bottom:16px}
+.tagline{font-size:20px;color:var(--muted);margin-bottom:32px}
+.meta{display:flex;gap:32px;justify-content:center;padding-top:24px;border-top:.5px solid var(--line);margin-bottom:60px}
+.meta-item{text-align:center}
+.meta-label{font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+.meta-value{font-size:15px;font-weight:500}
+.cover{max-width:1200px;margin:0 auto 80px;padding:0 32px}
+.cover img{width:100%;border-radius:var(--r);border:.5px solid var(--line2)}
+.content{max-width:800px;margin:0 auto;padding:0 32px 80px}
+.content h2{font-size:32px;margin-bottom:16px;margin-top:48px}
+.content p{color:var(--muted);line-height:1.8;margin-bottom:20px}
+.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin:40px 0;transition:all .3s}
+.gallery.list-view{grid-template-columns:1fr}
+.gallery img{width:100%;border-radius:var(--r-sm);border:.5px solid var(--line2)}
+.video-wrap{margin:40px 0;border-radius:var(--r);overflow:hidden;border:.5px solid var(--line2);aspect-ratio:16/9;background:var(--bg2)}
+.video-wrap iframe{width:100%;height:100%}
+.view-toggle{display:flex;gap:8px;justify-content:center;margin-bottom:24px}
+.view-btn{width:44px;height:44px;border-radius:50%;background:var(--bg2);border:.5px solid var(--line2);color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;transition:all .3s}
+.view-btn:hover{background:var(--bg3);border-color:var(--line3)}
+.view-btn.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin:40px 0}
+.tag{background:var(--bg2);border:.5px solid var(--line2);color:var(--muted);font-size:13px;padding:8px 16px;border-radius:100px}
+.back-btn{display:inline-flex;align-items:center;gap:8px;background:var(--blue);color:#fff;text-decoration:none;padding:14px 26px;border-radius:100px;font-size:15px;font-weight:500;transition:filter .2s}
+.back-btn:hover{filter:brightness(1.12)}
+footer{border-top:.5px solid var(--line);padding:28px 32px;text-align:center;color:var(--dim);font-size:13px}
+@media(max-width:768px){.gallery{grid-template-columns:1fr}.meta{flex-wrap:wrap;gap:16px}}
+</style>
+</head>
+<body>
+
+<nav>
+<a href="index.html" class="n-back">← Back to Portfolio</a>
+<div class="n-logo" id="nav-logo">Sandy</div>
+</nav>
+
+<div class="hero">
+<div class="cat" id="project-cat">🎬 Category</div>
+<h1 id="project-title">Project Title</h1>
+<p class="tagline" id="project-tagline">Project tagline goes here</p>
+<div class="meta">
+<div class="meta-item">
+<div class="meta-label">Client</div>
+<div class="meta-value" id="project-client">Client Name</div>
+</div>
+<div class="meta-item">
+<div class="meta-label">Year</div>
+<div class="meta-value" id="project-year">2025</div>
+</div>
+<div class="meta-item">
+<div class="meta-label">Category</div>
+<div class="meta-value" id="project-category">Social Media</div>
+</div>
+</div>
+</div>
+
+<div class="cover" id="cover-wrap">
+<img id="project-cover" src="" alt="Project cover">
+</div>
+
+<div class="content">
+<h2>About this project</h2>
+<p id="project-description">Project description goes here...</p>
+
+<div id="video-container"></div>
+
+<div id="gallery-container"></div>
+
+<div id="tags-container"></div>
+
+<div style="text-align:center;margin-top:60px">
+<a href="index.html#work" class="back-btn">← Back to all projects</a>
+</div>
+</div>
+
+<footer id="footer">
+© 2025 Sandy — Creative Digital Designer
+</footer>
+
+<script src="storage.js"></script>
+<script>
+// Get project ID from URL
+const urlParams = new URLSearchParams(window.location.search);
+const projectId = urlParams.get('id');
+
+if (!projectId) {
+  window.location.href = 'index.html';
+}
+
+// Load project data
+const projects = loadProjects();
+const project = projects.find(p => p.id === projectId);
+
+if (!project) {
+  window.location.href = 'index.html';
+}
+
+// Apply settings
+const settings = loadSettings();
+document.getElementById('nav-logo').textContent = settings.name || 'Sandy';
+document.getElementById('footer').textContent = `© 2025 ${settings.name || 'Sandy'} — ${settings.title || 'Creative Digital Designer'}`;
+
+// Populate project data
+document.title = project.title + ' - ' + (settings.name || 'Sandy');
+document.getElementById('project-cat').innerHTML = project.category;
+document.getElementById('project-title').textContent = project.title;
+document.getElementById('project-tagline').textContent = project.tagline || '';
+document.getElementById('project-client').textContent = project.client || 'N/A';
+document.getElementById('project-year').textContent = project.year || '2025';
+document.getElementById('project-category').textContent = project.category || '';
+document.getElementById('project-description').textContent = project.description || '';
+
+// Cover image
+if (project.coverImage) {
+  document.getElementById('project-cover').src = project.coverImage;
+  document.getElementById('project-cover').alt = project.title;
+} else {
+  document.getElementById('cover-wrap').style.display = 'none';
+}
+
+// Video
+if (project.videoUrl) {
+  let embedUrl = project.videoUrl;
+  if (project.videoUrl.includes('youtube.com') || project.videoUrl.includes('youtu.be')) {
+    const videoId = project.videoUrl.split('v=')[1] || project.videoUrl.split('/').pop();
+    embedUrl = `https://www.youtube.com/embed/${videoId}`;
+  } else if (project.videoUrl.includes('vimeo.com')) {
+    const videoId = project.videoUrl.split('/').pop();
+    embedUrl = `https://player.vimeo.com/video/${videoId}`;
+  }
+  document.getElementById('video-container').innerHTML = `
+    <h2>Watch the project</h2>
+    <div class="video-wrap">
+      <iframe src="${embedUrl}" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+    </div>
+  `;
+}
+
+// Gallery
+if (project.images && project.images.length > 0) {
+  document.getElementById('gallery-container').innerHTML = `
+    <h2>Project gallery</h2>
+    <div class="view-toggle">
+      <button class="view-btn active" onclick="toggleView('grid')" id="grid-btn" title="Grid View">⊞</button>
+      <button class="view-btn" onclick="toggleView('list')" id="list-btn" title="List View">☰</button>
+    </div>
+    <div class="gallery" id="gallery">
+      ${project.images.map(img => `<img src="${img}" alt="${project.title}">`).join('')}
+    </div>
+  `;
+}
+
+// Tags
+if (project.tags && project.tags.length > 0) {
+  document.getElementById('tags-container').innerHTML = `
+    <div class="tags">
+      ${project.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+    </div>
+  `;
+}
+
+function toggleView(view) {
+  const gallery = document.getElementById('gallery');
+  const gridBtn = document.getElementById('grid-btn');
+  const listBtn = document.getElementById('list-btn');
+  
+  if (view === 'grid') {
+    gallery.classList.remove('list-view');
+    gridBtn.classList.add('active');
+    listBtn.classList.remove('active');
+  } else {
+    gallery.classList.add('list-view');
+    listBtn.classList.add('active');
+    gridBtn.classList.remove('active');
+  }
+}
+</script>
+</body>
+</html>
