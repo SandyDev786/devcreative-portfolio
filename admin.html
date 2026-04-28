@@ -361,11 +361,17 @@ function uploadCover(e){
 
 function uploadGallery(e){
   const files=Array.from(e.target.files);
+  let loaded=0;
+  const total=files.length;
   files.forEach(file=>{
     const reader=new FileReader();
     reader.onload=function(ev){
       galleryImgs.push(ev.target.result);
+      loaded++;
       document.getElementById('gallery-preview').innerHTML=galleryImgs.map((img,i)=>`<div class="preview-item"><img src="${img}"><button class="preview-remove" onclick="removeGalleryImg(${i})">×</button></div>`).join('');
+      if(loaded===total){
+        toast(`${total} images uploaded!`);
+      }
     };
     reader.readAsDataURL(file);
   });
