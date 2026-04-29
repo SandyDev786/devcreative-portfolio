@@ -1070,15 +1070,6 @@
                 }
             });
         });
-        // Initial render
-        renderProjects();
-
-        // Close modal when clicking outside
-        document.getElementById('projectModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeModal();
-            }
-        });
 
         // Load home page content from CMS
         function loadHomePageContent() {
