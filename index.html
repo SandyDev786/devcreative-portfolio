@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Portfolio - Creative Designer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #111111;
+            --bg-card: #1a1a1a;
+            --text-primary: #f5f5f7;
+            --text-secondary: #86868b;
+            --accent: #ffffff;
+            --border: rgba(255, 255, 255, 0.1);
+            --shadow: rgba(0, 0, 0, 0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Typography */
+        h1, h2, h3 {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 24px 48px;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            padding: 16px 48px;
+            background: rgba(10, 10, 10, 0.95);
+        }
+
+        .nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 48px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--text-primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 120px 24px 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Hero Background Media */
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .hero-background img,
+        .hero-background video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .hero-background::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(10, 10, 10, 0.4) 0%, rgba(10, 10, 10, 0.8) 100%);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.03) 0%, transparent 50%);
+            animation: pulse 8s ease-in-out infinite;
+            z-index: 1;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-title {
+            font-size: clamp(48px, 8vw, 96px);
+            line-height: 1.1;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #ffffff 0%, #a0a0a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(20px, 3vw, 32px);
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            font-weight: 600;
+        }
+
+        .hero-tagline {
+            font-size: clamp(16px, 2vw, 20px);
+            color: var(--text-secondary);
+            margin-bottom: 48px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.8;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 16px 40px;
+            border-radius: 100px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            border: none;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--bg-primary);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Section Styles */
+        section {
+            padding: 120px 24px;
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .section-label {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+
+        .section-title {
+            font-size: clamp(36px, 5vw, 64px);
+            margin-bottom: 16px;
+        }
+
+        .section-description {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Works Section - Horizontal Slider */
+        .works {
+            background: var(--bg-secondary);
+            padding: 120px 0;
+        }
+
+        .works-slider-container {
+            position: relative;
+            overflow: hidden;
+            margin-top: 60px;
+        }
+
+        .works-slider {
+            display: flex;
+            gap: 32px;
+            padding: 0 max(24px, calc((100vw - 1400px) / 2));
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .works-slider::-webkit-scrollbar {
+            display: none;
+        }
+
+        .work-card {
+            flex: 0 0 auto;
+            width: clamp(400px, 85vw, 700px);
+            height: clamp(600px, 80vh, 750px);
+            scroll-snap-align: start;
+            background: var(--bg-card);
+            border-radius: 28px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .work-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .work-image {
+            width: 100%;
+            flex: 1;
+            min-height: 400px;
+            background: var(--bg-secondary);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .work-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .work-card:hover .work-image img {
+            transform: scale(1.05);
+        }
+
+        .work-content {
+            padding: 40px;
+        }
+
+        .work-category {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .work-title {
+            font-size: 40px;
+            margin-bottom: 16px;
+            line-height: 1.1;
+        }
+
+        .work-description {
+            font-size: 18px;
+            color: var(--text-secondary);
+            margin-bottom: 28px;
+            line-height: 1.7;
+        }
+
+        .work-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            transition: gap 0.3s ease;
+        }
+
+        .work-link:hover {
+            gap: 12px;
+        }
+
+        .work-link::after {
+            content: '→';
+            font-size: 18px;
+        }
+
+        /* Slider Navigation */
+        .slider-nav {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 40px;
+        }
+
+        .slider-nav button {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slider-nav button:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .slider-nav button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        /* About Section */
+        .about {
+            background: var(--bg-primary);
+        }
+
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .about-text {
+            font-size: clamp(18px, 2.5vw, 24px);
+            line-height: 1.8;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+        }
+
+        .about-text strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        /* Services Section */
+        .services {
+            background: var(--bg-secondary);
+        }
+
+        .services-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .service-item {
+            background: var(--bg-card);
+            padding: 48px 32px;
+            border-radius: 24px;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .service-item:hover {
+            transform: translateY(-4px);
+            border-color: rgba(255, 255, 255, 0.2);
+            background: rgba(26, 26, 26, 0.8);
+        }
+
+        .service-icon {
+            font-size: 32px;
+            margin-bottom: 16px;
+        }
+
+        .service-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        /* Contact Section */
+        .contact {
+            background: var(--bg-primary);
+        }
+
+        .contact-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .contact-form {
+            background: var(--bg-card);
+            padding: 48px;
+            border-radius: 24px;
+            border: 1px solid var(--border);
+            margin-bottom: 48px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 16px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 16px;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(26, 26, 26, 0.8);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .contact-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 24px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+
+        .contact-link:hover {
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .contact-icon {
+            font-size: 24px;
+        }
+
+        .contact-info {
+            flex: 1;
+        }
+
+        .contact-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .contact-value {
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-secondary);
+            padding: 60px 24px 32px;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+            margin-bottom: 32px;
+        }
+
+        .social-link {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .footer-copyright {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        /* Scroll Animations */
+        .scroll-fade {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .scroll-fade.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                padding: 16px 24px;
+            }
+
+            .nav-content {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .nav-links {
+                gap: 24px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero {
+                padding: 100px 24px 60px;
+            }
+
+            section {
+                padding: 80px 24px;
+            }
+
+            .section-header {
+                margin-bottom: 48px;
+            }
+
+            .works {
+                padding: 80px 0;
+            }
+
+            .works-slider {
+                padding: 0 24px;
+            }
+
+            .work-card {
+                width: min(90vw, 500px);
+                height: auto;
+                min-height: 550px;
+            }
+
+            .work-image {
+                min-height: 350px;
+            }
+
+            .work-content {
+                padding: 24px;
+            }
+
+            .work-title {
+                font-size: 24px;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-form {
+                padding: 32px 24px;
+            }
+
+            .contact-links {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Placeholder images for work cards */
+        .placeholder-image {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-content">
+            <div class="logo">Portfolio</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#works">Work</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <!-- Background Image or Video -->
+        <div class="hero-background">
+            <!-- OPTION 1: For Background Image - Uncomment and replace src -->
+            <!-- <img src="your-hero-image.jpg" alt="Background"> -->
+            
+            <!-- OPTION 2: For Background Video - Uncomment and replace src -->
+            <!-- <video autoplay muted loop playsinline>
+                <source src="your-hero-video.mp4" type="video/mp4">
+            </video> -->
+        </div>
+
+        <div class="hero-content">
+            <h1 class="hero-title">Your Name</h1>
+            <p class="hero-subtitle">Creative Designer</p>
+            <p class="hero-tagline">Crafting exceptional digital experiences with precision, elegance, and attention to every detail</p>
+            <div class="hero-buttons">
+                <a href="#works" class="btn btn-primary">View Work</a>
+                <a href="#" class="btn btn-secondary" download>Download CV</a>
+                <a href="#contact" class="btn btn-secondary">Contact Me</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Works Section -->
+    <section class="works" id="works">
+        <div class="section-header">
+            <div class="section-label">Selected Projects</div>
+            <h2 class="section-title">Featured Work</h2>
+            <p class="section-description">A showcase of premium design projects that blend creativity with strategic thinking</p>
+        </div>
+
+        <div class="works-slider-container">
+            <div class="works-slider" id="worksSlider">
+                <!-- Work Card 1 -->
+                <div class="work-card scroll-fade">
+                    <div class="work-image">
+                        <div class="placeholder-image">Project Image</div>
+                    </div>
+                    <div class="work-content">
+                        <div class="work-category">Branding</div>
+                        <h3 class="work-title">Luxury Brand Identity</h3>
+                        <p class="work-description">Complete brand redesign for a premium lifestyle brand</p>
+                        <a href="project-detail.html" class="work-link">View Project</a>
+                    </div>
+                </div>
+
+                <!-- Work Card 2 -->
+                <div class="work-card scroll-fade">
+                    <div class="work-image">
+                        <div class="placeholder-image">Project Image</div>
+                    </div>
+                    <div class="work-content">
+                        <div class="work-category">UI Design</div>
+                        <h3 class="work-title">Premium E-Commerce</h3>
+                        <p class="work-description">Elegant shopping experience for modern consumers</p>
+                        <a href="project-detail.html" class="work-link">View Project</a>
+                    </div>
+                </div>
+
+                <!-- Work Card 3 -->
+                <div class="work-card scroll-fade">
+                    <div class="work-image">
+                        <div class="placeholder-image">Project Image</div>
+                    </div>
+                    <div class="work-content">
+                        <div class="work-category">Packaging</div>
+                        <h3 class="work-title">Artisan Coffee Brand</h3>
+                        <p class="work-description">Sustainable packaging design with premium appeal</p>
+                        <a href="project-detail.html" class="work-link">View Project</a>
+                    </div>
+                </div>
+
+                <!-- Work Card 4 -->
+                <div class="work-card scroll-fade">
+                    <div class="work-image">
+                        <div class="placeholder-image">Project Image</div>
+                    </div>
+                    <div class="work-content">
+                        <div class="work-category">Social Media</div>
+                        <h3 class="work-title">Fashion Campaign</h3>
+                        <p class="work-description">Cohesive visual identity across all platforms</p>
+                        <a href="project-detail.html" class="work-link">View Project</a>
+                    </div>
+                </div>
+
+                <!-- Work Card 5 -->
+                <div class="work-card scroll-fade">
+                    <div class="work-image">
+                        <div class="placeholder-image">Project Image</div>
+                    </div>
+                    <div class="work-content">
+                        <div class="work-category">Menu Design</div>
+                        <h3 class="work-title">Fine Dining Restaurant</h3>
+                        <p class="work-description">Sophisticated menu design that enhances dining experience</p>
+                        <a href="project-detail.html" class="work-link">View Project</a>
+                    </div>
+                </div>
+
+                <!-- Work Card 6 -->
+                <div class="work-card scroll-fade">
+                    <div class="work-image">
+                        <div class="placeholder-image">Project Image</div>
+                    </div>
+                    <div class="work-content">
+                        <div class="work-category">Print Design</div>
+                        <h3 class="work-title">Editorial Magazine</h3>
+                        <p class="work-description">Modern layout design for contemporary publication</p>
+                        <a href="project-detail.html" class="work-link">View Project</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slider-nav">
+                <button id="prevBtn">←</button>
+                <button id="nextBtn">→</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about scroll-fade" id="about">
+        <div class="section-header">
+            <div class="section-label">About Me</div>
+            <h2 class="section-title">Design Philosophy</h2>
+        </div>
+        <div class="about-content">
+            <p class="about-text">
+                I'm a <strong>creative designer</strong> with over 8 years of experience crafting premium visual identities for brands that demand excellence. My approach combines strategic thinking with meticulous attention to detail, ensuring every project tells a compelling story.
+            </p>
+            <p class="about-text">
+                I believe great design is invisible — it seamlessly guides the user while elevating the brand. Whether it's a complete brand identity, digital interface, or print collateral, I approach each project with the same commitment to <strong>quality, innovation, and timeless aesthetics</strong>.
+            </p>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services scroll-fade" id="services">
+        <div class="section-header">
+            <div class="section-label">What I Do</div>
+            <h2 class="section-title">Services</h2>
+        </div>
+        <div class="services-grid">
+            <div class="service-item">
+                <div class="service-icon">✦</div>
+                <h3 class="service-title">Branding</h3>
+            </div>
+            <div class="service-item">
+                <div class="service-icon">✦</div>
+                <h3 class="service-title">Social Media Design</h3>
+            </div>
+            <div class="service-item">
+                <div class="service-icon">✦</div>
+                <h3 class="service-title">Packaging Design</h3>
+            </div>
+            <div class="service-item">
+                <div class="service-icon">✦</div>
+                <h3 class="service-title">Menu Design</h3>
+            </div>
+            <div class="service-item">
+                <div class="service-icon">✦</div>
+                <h3 class="service-title">Website UI Design</h3>
+            </div>
+            <div class="service-item">
+                <div class="service-icon">✦</div>
+                <h3 class="service-title">Print Design</h3>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact scroll-fade" id="contact">
+        <div class="section-header">
+            <div class="section-label">Get In Touch</div>
+            <h2 class="section-title">Let's Work Together</h2>
+            <p class="section-description">Ready to elevate your brand? Let's create something extraordinary</p>
+        </div>
+        <div class="contact-container">
+            <form class="contact-form">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" placeholder="Your name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="your@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" placeholder="Tell me about your project..." required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
+            </form>
+
+            <div class="contact-links">
+                <a href="mailto:your@email.com" class="contact-link">
+                    <div class="contact-icon">✉</div>
+                    <div class="contact-info">
+                        <div class="contact-label">Email</div>
+                        <div class="contact-value">your@email.com</div>
+                    </div>
+                </a>
+                <a href="https://wa.me/1234567890" class="contact-link" target="_blank">
+                    <div class="contact-icon">📱</div>
+                    <div class="contact-info">
+                        <div class="contact-label">WhatsApp</div>
+                        <div class="contact-value">+123 456 7890</div>
+                    </div>
+                </a>
+                <a href="https://instagram.com/yourusername" class="contact-link" target="_blank">
+                    <div class="contact-icon">📷</div>
+                    <div class="contact-info">
+                        <div class="contact-label">Instagram</div>
+                        <div class="contact-value">@yourusername</div>
+                    </div>
+                </a>
+                <a href="https://linkedin.com/in/yourusername" class="contact-link" target="_blank">
+                    <div class="contact-icon">💼</div>
+                    <div class="contact-info">
+                        <div class="contact-label">LinkedIn</div>
+                        <div class="contact-value">Your Name</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-social">
+                <a href="https://instagram.com/yourusername" class="social-link" target="_blank">📷</a>
+                <a href="https://linkedin.com/in/yourusername" class="social-link" target="_blank">💼</a>
+                <a href="mailto:your@email.com" class="social-link">✉</a>
+                <a href="https://wa.me/1234567890" class="social-link" target="_blank">📱</a>
+            </div>
+            <p class="footer-copyright">© 2024 Your Name. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.scroll-fade').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Works slider navigation
+        const slider = document.getElementById('worksSlider');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+
+        prevBtn.addEventListener('click', () => {
+            const scrollAmount = slider.offsetWidth * 0.8;
+            slider.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+        });
+
+        nextBtn.addEventListener('click', () => {
+            const scrollAmount = slider.offsetWidth * 0.8;
+            slider.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        });
+
+        // Update button states
+        slider.addEventListener('scroll', () => {
+            prevBtn.disabled = slider.scrollLeft <= 0;
+            nextBtn.disabled = slider.scrollLeft >= slider.scrollWidth - slider.offsetWidth - 10;
+        });
+
+        // Form submission
+        document.querySelector('.contact-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Thank you for your message! I will get back to you soon.');
+            e.target.reset();
+        });
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+        // Initial render
+        renderProjects();
+
+        // Close modal when clicking outside
+        document.getElementById('projectModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Load home page content from CMS
+        function loadHomePageContent() {
+            const homeData = JSON.parse(localStorage.getItem('portfolioHomeData')) || {};
+
+            // Update Hero Section
+            if (homeData.heroName) {
+                document.querySelector('.hero-title').textContent = homeData.heroName;
+            }
+            if (homeData.heroTitle) {
+                document.querySelector('.hero-subtitle').textContent = homeData.heroTitle;
+            }
+            if (homeData.heroTagline) {
+                document.querySelector('.hero-tagline').textContent = homeData.heroTagline;
+            }
+            if (homeData.heroBackground) {
+                const heroBackground = document.querySelector('.hero-background');
+                const isVideo = homeData.heroBackground.includes('data:video');
+                
+                if (isVideo) {
+                    heroBackground.innerHTML = `
+                        <video autoplay muted loop playsinline>
+                            <source src="${homeData.heroBackground}" type="video/mp4">
+                        </video>
+                    `;
+                } else {
+                    heroBackground.innerHTML = `
+                        <img src="${homeData.heroBackground}" alt="Background">
+                    `;
+                }
+            }
+
+            // Update About Section
+            const aboutTexts = document.querySelectorAll('.about-text');
+            if (homeData.aboutParagraph1 && aboutTexts[0]) {
+                aboutTexts[0].innerHTML = homeData.aboutParagraph1.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            }
+            if (homeData.aboutParagraph2 && aboutTexts[1]) {
+                aboutTexts[1].innerHTML = homeData.aboutParagraph2.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            }
+
+            // Update Contact Information
+            if (homeData.contactEmail) {
+                document.querySelectorAll('a[href^="mailto"]').forEach(link => {
+                    link.href = `mailto:${homeData.contactEmail}`;
+                    const valueEl = link.querySelector('.contact-value');
+                    if (valueEl) valueEl.textContent = homeData.contactEmail;
+                });
+            }
+
+            if (homeData.contactPhone) {
+                const whatsappNumber = homeData.contactPhone.replace(/\D/g, '');
+                document.querySelectorAll('a[href^="https://wa.me"]').forEach(link => {
+                    link.href = `https://wa.me/${whatsappNumber}`;
+                    const valueEl = link.querySelector('.contact-value');
+                    if (valueEl) valueEl.textContent = homeData.contactPhone;
+                });
+            }
+
+            if (homeData.contactInstagram) {
+                document.querySelectorAll('a[href*="instagram.com"]').forEach(link => {
+                    link.href = `https://instagram.com/${homeData.contactInstagram}`;
+                    const valueEl = link.querySelector('.contact-value');
+                    if (valueEl) valueEl.textContent = `@${homeData.contactInstagram}`;
+                });
+            }
+
+            if (homeData.contactLinkedIn) {
+                document.querySelectorAll('a[href*="linkedin.com"]').forEach(link => {
+                    link.href = `https://linkedin.com/in/${homeData.contactLinkedIn}`;
+                    const valueEl = link.querySelector('.contact-value');
+                    if (valueEl && homeData.heroName) valueEl.textContent = homeData.heroName;
+                });
+            }
+
+            // Update Footer
+            if (homeData.footerCopyright) {
+                document.querySelector('.footer-copyright').textContent = homeData.footerCopyright;
+            }
+        }
+
+        // Load projects dynamically from CMS
+        function loadProjects() {
+            const projects = JSON.parse(localStorage.getItem('portfolioProjects')) || [];
+            const publishedProjects = projects.filter(p => p.status === 'published');
+            const worksSlider = document.getElementById('worksSlider');
+
+            if (publishedProjects.length > 0) {
+                worksSlider.innerHTML = publishedProjects.map(project => `
+                    <div class="work-card scroll-fade">
+                        <div class="work-image">
+                            ${project.coverImage || project.thumbnail ? 
+                                `<img src="${project.coverImage || project.thumbnail}" alt="${project.title}">` : 
+                                '<div class="placeholder-image">Project Image</div>'
+                            }
+                        </div>
+                        <div class="work-content">
+                            <div class="work-category">${project.category}</div>
+                            <h3 class="work-title">${project.title}</h3>
+                            <p class="work-description">${project.description}</p>
+                            <a href="project-detail.html?id=${project.id}" class="work-link">View Project</a>
+                        </div>
+                    </div>
+                `).join('');
+
+                // Re-apply scroll fade observer
+                document.querySelectorAll('.work-card').forEach(el => {
+                    observer.observe(el);
+                });
+            }
+        }
+
+        // Load all content on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            loadHomePageContent();
+            loadProjects();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Name - Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #111111;
+            --bg-card: #1a1a1a;
+            --text-primary: #f5f5f7;
+            --text-secondary: #86868b;
+            --accent: #ffffff;
+            --border: rgba(255, 255, 255, 0.1);
+            --shadow: rgba(0, 0, 0, 0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 20px 48px;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            color: var(--text-primary);
+            gap: 12px;
+        }
+
+        .back-btn::before {
+            content: '←';
+            font-size: 18px;
+        }
+
+        /* Project Hero */
+        .project-hero {
+            padding: 140px 24px 80px;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .project-category {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .project-title {
+            font-size: clamp(40px, 6vw, 72px);
+            line-height: 1.1;
+            margin-bottom: 24px;
+        }
+
+        .project-description {
+            font-size: clamp(18px, 2.5vw, 22px);
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 32px;
+        }
+
+        .project-meta {
+            display: flex;
+            gap: 48px;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 32px 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .meta-item {
+            text-align: center;
+        }
+
+        .meta-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .meta-value {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* Gallery Grid */
+        .gallery-section {
+            padding: 80px 24px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .gallery-item {
+            position: relative;
+            aspect-ratio: 1;
+            background: var(--bg-card);
+            border-radius: 20px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid var(--border);
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.02);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Full-width featured image */
+        .gallery-item.featured {
+            grid-column: span 3;
+            aspect-ratio: 16/9;
+        }
+
+        /* Two-column wide */
+        .gallery-item.wide {
+            grid-column: span 2;
+            aspect-ratio: 16/9;
+        }
+
+        /* Placeholder for images */
+        .placeholder-image {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 10, 10, 0.98);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90vh;
+            position: relative;
+            animation: fadeInScale 0.3s ease-out;
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .lightbox img {
+            max-width: 100%;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 12px;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(26, 26, 26, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 2001;
+        }
+
+        .lightbox-close:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(90deg);
+        }
+
+        /* Project Details Section */
+        .project-details {
+            padding: 80px 24px;
+            background: var(--bg-secondary);
+        }
+
+        .details-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .detail-section {
+            margin-bottom: 60px;
+        }
+
+        .detail-heading {
+            font-size: 32px;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .detail-text {
+            font-size: 18px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 16px;
+        }
+
+        .detail-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .detail-list li {
+            font-size: 18px;
+            color: var(--text-secondary);
+            line-height: 2;
+            padding-left: 28px;
+            position: relative;
+        }
+
+        .detail-list li::before {
+            content: '✦';
+            position: absolute;
+            left: 0;
+            color: var(--text-primary);
+        }
+
+        /* Next Project */
+        .next-project {
+            padding: 120px 24px;
+            text-align: center;
+        }
+
+        .next-project-label {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .next-project-title {
+            font-size: clamp(36px, 5vw, 56px);
+            margin-bottom: 32px;
+        }
+
+        .btn {
+            padding: 16px 40px;
+            border-radius: 100px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            border: none;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--bg-primary);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-secondary);
+            padding: 60px 24px 32px;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+            margin-bottom: 32px;
+        }
+
+        .social-link {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .footer-copyright {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .gallery-item.featured,
+            .gallery-item.wide {
+                grid-column: span 2;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 16px 24px;
+            }
+
+            .project-hero {
+                padding: 120px 24px 60px;
+            }
+
+            .project-meta {
+                gap: 32px;
+            }
+
+            .gallery-section {
+                padding: 60px 24px;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .gallery-item.featured,
+            .gallery-item.wide {
+                grid-column: span 1;
+            }
+
+            .gallery-item {
+                border-radius: 16px;
+            }
+
+            .project-details {
+                padding: 60px 24px;
+            }
+
+            .detail-heading {
+                font-size: 28px;
+            }
+
+            .detail-text,
+            .detail-list li {
+                font-size: 16px;
+            }
+
+            .next-project {
+                padding: 80px 24px;
+            }
+
+            .lightbox {
+                padding: 20px;
+            }
+
+            .lightbox-close {
+                top: 10px;
+                right: 10px;
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-content">
+            <a href="index.html" class="logo">Portfolio</a>
+            <a href="index.html#works" class="back-btn">Back to Work</a>
+        </div>
+    </nav>
+
+    <!-- Project Hero -->
+    <section class="project-hero">
+        <div class="project-category">Branding</div>
+        <h1 class="project-title">Luxury Brand Identity</h1>
+        <p class="project-description">A comprehensive brand identity redesign for a premium lifestyle brand, encompassing visual identity, packaging, and digital presence across all touchpoints.</p>
+        
+        <div class="project-meta">
+            <div class="meta-item">
+                <div class="meta-label">Client</div>
+                <div class="meta-value">Luxury Brand Co.</div>
+            </div>
+            <div class="meta-item">
+                <div class="meta-label">Year</div>
+                <div class="meta-value">2024</div>
+            </div>
+            <div class="meta-item">
+                <div class="meta-label">Services</div>
+                <div class="meta-value">Branding, Packaging</div>
+            </div>
+            <div class="meta-item">
+                <div class="meta-label">Duration</div>
+                <div class="meta-value">3 Months</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Grid -->
+    <section class="gallery-section">
+        <div class="gallery-grid">
+            <!-- Featured Image - Full Width -->
+            <div class="gallery-item featured" onclick="openLightbox(this)">
+                <div class="placeholder-image">Featured Image 1920x1080</div>
+                <!-- Replace with: <img src="project-1.jpg" alt="Project image"> -->
+            </div>
+
+            <!-- Standard 3-column images -->
+            <div class="gallery-item" onclick="openLightbox(this)">
+                <div class="placeholder-image">Image 800x800</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox(this)">
+                <div class="placeholder-image">Image 800x800</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox(this)">
+                <div class="placeholder-image">Image 800x800</div>
+            </div>
+
+            <!-- Wide Image - 2 columns -->
+            <div class="gallery-item wide" onclick="openLightbox(this)">
+                <div class="placeholder-image">Wide Image 1600x900</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox(this)">
+                <div class="placeholder-image">Image 800x800</div>
+            </div>
+
+            <!-- More standard images -->
+            <div class="gallery-item" onclick="openLightbox(this)">
+                <div class="placeholder-image">Image 800x800</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox(this)">
+                <div class="placeholder-image">Image 800x800</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox(this)">
+                <div class="placeholder-image">Image 800x800</div>
+            </div>
+
+            <!-- Another featured image -->
+            <div class="gallery-item featured" onclick="openLightbox(this)">
+                <div class="placeholder-image">Featured Image 1920x1080</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Details -->
+    <section class="project-details">
+        <div class="details-content">
+            <div class="detail-section">
+                <h2 class="detail-heading">The Challenge</h2>
+                <p class="detail-text">
+                    The client approached us with a vision to reposition their brand in the luxury market. Their existing identity felt dated and didn't resonate with their evolving customer base. They needed a complete transformation that would honor their heritage while propelling them into the future.
+                </p>
+                <p class="detail-text">
+                    Our challenge was to create a visual language that spoke to both tradition and innovation, crafting something timeless yet contemporary, exclusive yet approachable.
+                </p>
+            </div>
+
+            <div class="detail-section">
+                <h2 class="detail-heading">The Solution</h2>
+                <p class="detail-text">
+                    We developed a sophisticated visual identity system built on the principles of minimalism and elegance. The new brand architecture includes:
+                </p>
+                <ul class="detail-list">
+                    <li>Custom wordmark and monogram system</li>
+                    <li>Refined color palette inspired by natural materials</li>
+                    <li>Bespoke typography pairing for versatility</li>
+                    <li>Premium packaging design with sustainable materials</li>
+                    <li>Comprehensive brand guidelines and applications</li>
+                </ul>
+            </div>
+
+            <div class="detail-section">
+                <h2 class="detail-heading">The Result</h2>
+                <p class="detail-text">
+                    The rebrand successfully elevated the client's market position, resulting in increased brand recognition and customer engagement. The new identity system has been consistently applied across all touchpoints, from packaging to digital experiences, creating a cohesive and memorable brand presence.
+                </p>
+                <p class="detail-text">
+                    The project received industry recognition and helped establish the brand as a leader in the premium lifestyle category.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Next Project -->
+    <section class="next-project">
+        <div class="next-project-label">Next Project</div>
+        <h2 class="next-project-title">Premium E-Commerce</h2>
+        <a href="project-detail.html" class="btn btn-primary">View Project</a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-social">
+                <a href="https://instagram.com/yourusername" class="social-link" target="_blank">📷</a>
+                <a href="https://linkedin.com/in/yourusername" class="social-link" target="_blank">💼</a>
+                <a href="mailto:your@email.com" class="social-link">✉</a>
+                <a href="https://wa.me/1234567890" class="social-link" target="_blank">📱</a>
+            </div>
+            <p class="footer-copyright">© 2024 Your Name. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+        <button class="lightbox-close" onclick="closeLightbox()">×</button>
+        <div class="lightbox-content" onclick="event.stopPropagation()">
+            <img id="lightbox-img" src="" alt="Full size image">
+        </div>
+    </div>
+
+    <script>
+        // Lightbox functionality
+        function openLightbox(element) {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const img = element.querySelector('img');
+            
+            if (img) {
+                lightboxImg.src = img.src;
+                lightboxImg.alt = img.alt;
+                lightbox.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Close lightbox with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeLightbox();
+            }
+        });
+
+        // Load project details dynamically
+        function loadProjectDetails() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const projectId = urlParams.get('id');
+
+            if (!projectId) {
+                window.location.href = 'index.html';
+                return;
+            }
+
+            const projects = JSON.parse(localStorage.getItem('portfolioProjects')) || [];
+            const project = projects.find(p => p.id === projectId);
+
+            if (!project) {
+                window.location.href = 'index.html';
+                return;
+            }
+
+            // Update page content
+            document.querySelector('.project-category').textContent = project.category;
+            document.querySelector('.project-title').textContent = project.title;
+            document.querySelector('.project-description').textContent = project.fullDescription || project.description;
+
+            // Update meta information
+            if (project.client) {
+                document.querySelector('.meta-item:nth-child(1) .meta-value').textContent = project.client;
+            }
+            if (project.year) {
+                document.querySelector('.meta-item:nth-child(2) .meta-value').textContent = project.year;
+            }
+            if (project.services) {
+                document.querySelector('.meta-item:nth-child(3) .meta-value').textContent = project.services;
+            }
+            if (project.duration) {
+                document.querySelector('.meta-item:nth-child(4) .meta-value').textContent = project.duration;
+            }
+
+            // Update detail sections
+            if (project.challenge) {
+                const challengeSection = document.querySelector('.detail-section:nth-child(1) .detail-text');
+                challengeSection.textContent = project.challenge;
+            }
+
+            if (project.solution) {
+                const solutionSection = document.querySelector('.detail-section:nth-child(2) .detail-text');
+                solutionSection.textContent = project.solution;
+            }
+
+            if (project.result) {
+                const resultSection = document.querySelector('.detail-section:nth-child(3) .detail-text:nth-child(2)');
+                resultSection.textContent = project.result;
+            }
+
+            // Load gallery images
+            if (project.images && project.images.length > 0) {
+                const galleryGrid = document.querySelector('.gallery-grid');
+                galleryGrid.innerHTML = project.images.map((img, index) => {
+                    let classes = 'gallery-item';
+                    if (index === 0) classes += ' featured'; // First image is featured
+                    else if (index === 4) classes += ' wide'; // Fifth image is wide
+                    else if (index === 9) classes += ' featured'; // Tenth image is featured
+
+                    return `
+                        <div class="${classes}" onclick="openLightbox(this)">
+                            <img src="${img}" alt="${project.title} - Image ${index + 1}">
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            // Update page title
+            document.title = `${project.title} - Portfolio`;
+        }
+
+        // Load project on page load
+        window.addEventListener('DOMContentLoaded', loadProjectDetails);
+    </script>
+</body>
+</html>

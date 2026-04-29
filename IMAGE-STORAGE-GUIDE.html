@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Storage Guide - Portfolio CMS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-card: #1a1a1a;
+            --text-primary: #f5f5f7;
+            --text-secondary: #86868b;
+            --border: rgba(255, 255, 255, 0.1);
+            --success: #34c759;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            padding: 40px 24px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 16px;
+            letter-spacing: -0.03em;
+        }
+
+        h2 {
+            font-size: 32px;
+            font-weight: 800;
+            margin: 48px 0 24px;
+            letter-spacing: -0.02em;
+        }
+
+        h3 {
+            font-size: 24px;
+            font-weight: 700;
+            margin: 32px 0 16px;
+        }
+
+        p {
+            margin-bottom: 16px;
+            color: var(--text-secondary);
+            font-size: 18px;
+        }
+
+        .info-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
+            margin: 24px 0;
+        }
+
+        .success {
+            border-left: 4px solid var(--success);
+        }
+
+        code {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 15px;
+        }
+
+        pre {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin: 16px 0;
+        }
+
+        pre code {
+            background: none;
+            padding: 0;
+        }
+
+        ol, ul {
+            margin-left: 24px;
+            margin-bottom: 16px;
+        }
+
+        li {
+            margin-bottom: 12px;
+            color: var(--text-secondary);
+        }
+
+        .folder-structure {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 24px;
+            border-radius: 12px;
+            font-family: monospace;
+            margin: 16px 0;
+        }
+
+        strong {
+            color: var(--text-primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📁 Image Storage Guide</h1>
+        <p style="font-size: 20px; margin-bottom: 32px;">How to properly organize images and videos for your portfolio</p>
+
+        <div class="info-box success">
+            <h3>✅ Recommended Method: Image Folder</h3>
+            <p><strong>For GitHub hosting, use a dedicated images folder!</strong></p>
+            <p>This is cleaner, faster, and works better for professional portfolios.</p>
+        </div>
+
+        <h2>📂 Folder Structure</h2>
+        <p>Create this folder structure in your portfolio:</p>
+
+        <div class="folder-structure">
+portfolio/<br>
+├── images/<br>
+│   ├── hero/<br>
+│   │   ├── hero-background.jpg<br>
+│   │   └── hero-video.mp4<br>
+│   ├── about/<br>
+│   │   └── my-photo.jpg<br>
+│   └── projects/<br>
+│       ├── project-1/<br>
+│       │   ├── cover.jpg<br>
+│       │   ├── gallery-1.jpg<br>
+│       │   ├── gallery-2.jpg<br>
+│       │   └── gallery-3.jpg<br>
+│       ├── project-2/<br>
+│       │   ├── cover.jpg<br>
+│       │   └── gallery-1.jpg<br>
+│       └── project-3/<br>
+│           └── cover.jpg<br>
+├── admin-login.html<br>
+├── admin-dashboard.html<br>
+├── index.html<br>
+└── project-detail.html
+        </div>
+
+        <h2>🎯 How to Use Images from Folder</h2>
+
+        <h3>Option 1: During Upload (Recommended)</h3>
+        <ol>
+            <li>First, create the <code>images</code> folder structure</li>
+            <li>Upload your images to the appropriate folders</li>
+            <li>In the CMS, instead of clicking "Upload", enter the image path manually</li>
+        </ol>
+
+        <div class="info-box">
+            <h3>Example Paths:</h3>
+            <pre><code>Cover Image: images/projects/project-1/cover.jpg
+Gallery Image 1: images/projects/project-1/gallery-1.jpg
+Gallery Image 2: images/projects/project-1/gallery-2.jpg
+Hero Background: images/hero/hero-background.jpg
+Your Photo: images/about/my-photo.jpg</code></pre>
+        </div>
+
+        <h3>Option 2: Use the Current System (Base64)</h3>
+        <ol>
+            <li>Upload images directly in the CMS (current method)</li>
+            <li>Images are stored as base64 in browser localStorage</li>
+            <li><strong>Pros:</strong> Easy, no folder setup needed</li>
+            <li><strong>Cons:</strong> Large file sizes, localStorage limits (~5-10MB)</li>
+        </ol>
+
+        <h2>⚙️ Setting Up for GitHub</h2>
+
+        <h3>Step 1: Organize Your Files Locally</h3>
+        <ol>
+            <li>Create <code>images</code> folder in your portfolio folder</li>
+            <li>Create subfolders: <code>hero</code>, <code>about</code>, <code>projects</code></li>
+            <li>Place your images in the correct folders</li>
+            <li>Name them clearly: <code>project-1-cover.jpg</code>, <code>project-1-gallery-1.jpg</code></li>
+        </ol>
+
+        <h3>Step 2: Update Image Paths in CMS</h3>
+        <p>In the admin dashboard, I'll add an option to use image URLs instead of uploading.</p>
+
+        <h3>Step 3: Upload Everything to GitHub</h3>
+        <ol>
+            <li>Upload all HTML files</li>
+            <li>Upload the entire <code>images</code> folder with all subfolders</li>
+            <li>Enable GitHub Pages</li>
+            <li>Your images will load from the folder!</li>
+        </ol>
+
+        <h2>📸 Image Optimization Tips</h2>
+
+        <div class="info-box">
+            <h3>Before Uploading to GitHub:</h3>
+            <ul>
+                <li><strong>Compress images:</strong> Use tinypng.com (free)</li>
+                <li><strong>Cover images:</strong> 1200x800px, under 500KB</li>
+                <li><strong>Gallery images:</strong> 1920x1080px, under 1MB each</li>
+                <li><strong>Hero background:</strong> 1920x1080px, under 1MB</li>
+                <li><strong>Videos:</strong> Under 10MB, MP4 format</li>
+                <li><strong>File names:</strong> Use lowercase, hyphens, no spaces</li>
+            </ul>
+        </div>
+
+        <h2>🔄 Two Workflows</h2>
+
+        <h3>Workflow A: Image Folder (Recommended for GitHub)</h3>
+        <pre><code>1. Create images folder structure
+2. Add your images to folders
+3. In CMS, enter image paths like: images/projects/project-1/cover.jpg
+4. Upload everything to GitHub including images folder
+5. ✅ Professional, fast loading, unlimited size</code></pre>
+
+        <h3>Workflow B: Base64 Upload (Current)</h3>
+        <pre><code>1. Use CMS upload buttons
+2. Images stored in browser localStorage as base64
+3. Upload only HTML files to GitHub
+4. ⚠️ Limited to ~5-10MB total, slower loading</code></pre>
+
+        <h2>✅ My Recommendation</h2>
+
+        <div class="info-box success">
+            <p><strong>Use the Image Folder method!</strong></p>
+            <ol>
+                <li>Create the folder structure now</li>
+                <li>Add all your images to the folders</li>
+                <li>I'll update the CMS to let you enter image paths easily</li>
+                <li>Upload everything to GitHub when ready</li>
+            </ol>
+            <p style="margin-top: 16px;">This is how professional portfolios are built, and it will work much better on GitHub!</p>
+        </div>
+
+        <h2>🚀 What I'll Update Next</h2>
+        <p>I'll modify the admin dashboard to:</p>
+        <ul>
+            <li>✅ Keep the upload option (for local testing with base64)</li>
+            <li>✅ Add an "Image URL" input field option</li>
+            <li>✅ Let you paste paths like <code>images/projects/project-1/cover.jpg</code></li>
+            <li>✅ Preview images from URLs</li>
+            <li>✅ Works perfectly when uploaded to GitHub!</li>
+        </ul>
+
+        <p style="margin-top: 48px; text-align: center; color: var(--text-secondary);">
+            <strong>Ready for me to update the CMS with the Image URL option?</strong>
+        </p>
+    </div>
+</body>
+</html>
