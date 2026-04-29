@@ -6,7 +6,7 @@ const GITHUB_CONFIG = {
     username: 'SandyDev786',              // Your GitHub username
     repo: 'devcreative-portfolio',        // Your repository name
     branch: 'main',                       // Usually 'main' or 'master'
-    token: 'YOUR_GITHUB_TOKEN',           // Generate at: https://github.com/settings/tokens
+    token: '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',           // Generate at: https://github.com/settings/tokens
     
     // Image base URL (for loading images on website)
     // GitHub raw content URL
