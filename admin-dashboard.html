@@ -115,6 +115,24 @@
             border-color: rgba(255, 255, 255, 0.3);
         }
 
+        .btn-cleanup {
+            padding: 10px 24px;
+            background: rgba(255, 149, 0, 0.1);
+            color: #ff9500;
+            border: 1px solid rgba(255, 149, 0, 0.3);
+            border-radius: 100px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-right: 12px;
+        }
+
+        .btn-cleanup:hover {
+            background: rgba(255, 149, 0, 0.2);
+            border-color: rgba(255, 149, 0, 0.5);
+        }
+
         /* Tab Content */
         .tab-content {
             display: none;
@@ -610,7 +628,10 @@
                 <button class="nav-tab" onclick="switchTab('projects')">📁 Projects</button>
             </div>
         </div>
-        <button class="btn-logout" onclick="logout()">Logout</button>
+        <div>
+            <button class="btn-cleanup" onclick="cleanupStorage()">🧹 Clean Storage</button>
+            <button class="btn-logout" onclick="logout()">Logout</button>
+        </div>
     </header>
 
     <!-- Main Container -->
@@ -1504,11 +1525,53 @@
             }
 
             // Save to localStorage
-            localStorage.setItem('portfolioProjects', JSON.stringify(projects));
-
-            // Close modal and refresh
-            closeModal();
-            renderProjects();
+            try {
+                localStorage.setItem('portfolioProjects', JSON.stringify(projects));
+                
+                // Close modal and refresh
+                closeModal();
+                renderProjects();
+            } catch (e) {
+                if (e.name === 'QuotaExceededError') {
+                    alert('⚠️ Storage full! Your images are saved to GitHub, but we need to clear old base64 data.\n\nClick OK to clean up and save again.');
+                    
+                    // Clean up old base64 images from all projects
+                    projects = projects.map(p => {
+                        // Keep GitHub URLs (small), remove base64 (huge)
+                        const cleanProject = {...p};
+                        
+                        // Clean cover image - keep if it's a URL, remove if base64
+                        if (cleanProject.coverImage && cleanProject.coverImage.startsWith('data:')) {
+                            console.log('Removing base64 cover image from project:', cleanProject.title);
+                            delete cleanProject.coverImage;
+                        }
+                        if (cleanProject.thumbnail && cleanProject.thumbnail.startsWith('data:')) {
+                            delete cleanProject.thumbnail;
+                        }
+                        
+                        // Clean gallery images - keep URLs, remove base64
+                        if (cleanProject.images && Array.isArray(cleanProject.images)) {
+                            cleanProject.images = cleanProject.images.filter(img => !img.startsWith('data:'));
+                        }
+                        
+                        return cleanProject;
+                    });
+                    
+                    // Try saving again
+                    try {
+                        localStorage.setItem('portfolioProjects', JSON.stringify(projects));
+                        alert('✅ Cleaned up successfully! Your project is saved with GitHub URLs.');
+                        closeModal();
+                        renderProjects();
+                    } catch (e2) {
+                        alert('❌ Still too much data. Please:\n1. Delete some old projects\n2. Make sure images uploaded to GitHub\n3. Try again');
+                        console.error('Save error after cleanup:', e2);
+                    }
+                } else {
+                    alert('❌ Error saving: ' + e.message);
+                    console.error('Save error:', e);
+                }
+            }
         });
 
         // Edit project
@@ -1557,6 +1620,72 @@
         function logout() {
             sessionStorage.removeItem('isAdminLoggedIn');
             window.location.href = 'admin-login.html';
+        }
+
+        // Cleanup Storage - Remove all base64 images, keep GitHub URLs only
+        function cleanupStorage() {
+            if (!confirm('🧹 Clean up storage?\n\nThis will:\n✅ Keep all projects and data\n✅ Keep GitHub image URLs\n❌ Remove old base64 images\n\nThis frees up space. Continue?')) {
+                return;
+            }
+
+            try {
+                // Clean projects
+                let cleanedProjects = projects.map(p => {
+                    const cleaned = {...p};
+                    
+                    // Remove base64 cover images
+                    if (cleaned.coverImage && cleaned.coverImage.startsWith('data:')) {
+                        console.log('Removing base64 cover from:', cleaned.title);
+                        delete cleaned.coverImage;
+                    }
+                    if (cleaned.thumbnail && cleaned.thumbnail.startsWith('data:')) {
+                        delete cleaned.thumbnail;
+                    }
+                    
+                    // Remove base64 gallery images
+                    if (cleaned.images && Array.isArray(cleaned.images)) {
+                        const before = cleaned.images.length;
+                        cleaned.images = cleaned.images.filter(img => !img.startsWith('data:'));
+                        const after = cleaned.images.length;
+                        if (before > after) {
+                            console.log(`Removed ${before - after} base64 images from:`, cleaned.title);
+                        }
+                    }
+                    
+                    return cleaned;
+                });
+
+                // Clean home data
+                const homeData = JSON.parse(localStorage.getItem('portfolioHomeData')) || {};
+                if (homeData.heroBackground && homeData.heroBackground.startsWith('data:')) {
+                    console.log('Removing base64 hero background');
+                    delete homeData.heroBackground;
+                }
+                if (homeData.aboutPhoto && homeData.aboutPhoto.startsWith('data:')) {
+                    console.log('Removing base64 about photo');
+                    delete homeData.aboutPhoto;
+                }
+
+                // Save cleaned data
+                localStorage.setItem('portfolioProjects', JSON.stringify(cleanedProjects));
+                localStorage.setItem('portfolioHomeData', JSON.stringify(homeData));
+
+                projects = cleanedProjects;
+                renderProjects();
+
+                // Calculate savings
+                let total = 0;
+                for (let key in localStorage) {
+                    if (localStorage.hasOwnProperty(key)) {
+                        total += localStorage[key].length;
+                    }
+                }
+
+                alert(`✅ Storage cleaned!\n\n📊 Current usage: ${(total / 1024).toFixed(0)} KB\n\n💡 Upload new images - they'll go to GitHub automatically!`);
+            } catch (error) {
+                alert('❌ Cleanup error: ' + error.message);
+                console.error('Cleanup error:', error);
+            }
         }
 
         // Initial render
