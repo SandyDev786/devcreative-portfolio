@@ -1090,8 +1090,8 @@
                 container.innerHTML = `
                     <div class="uploaded-image" style="grid-column: span 2;">
                         ${isVideo ? 
-                            `<video src="${heroBackground}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.parentElement.innerHTML='<div style=\'padding: 20px; text-align: center; color: var(--text-secondary);\'>⚠️ Video not found. Check the path.</div>'"></video>` :
-                            `<img src="${heroBackground}" alt="Hero Background" onerror="this.parentElement.innerHTML='<div style=\'padding: 20px; text-align: center; color: var(--text-secondary);\'>⚠️ Image not found. Check the path.</div>'">`
+                            `<video src="${heroBackground}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.parentElement.innerHTML='<div style=&quot;padding: 20px; text-align: center; color: #86868b;&quot;>⚠️ Video not found. Check the path.</div>'"></video>` :
+                            `<img src="${heroBackground}" alt="Hero Background" onerror="this.parentElement.innerHTML='<div style=&quot;padding: 20px; text-align: center; color: #86868b;&quot;>⚠️ Image not found. Check the path.</div>'">`
                         }
                         <button type="button" class="remove-image" onclick="removeHeroBackground()">×</button>
                     </div>
@@ -1176,7 +1176,7 @@
                 const isBase64 = aboutPhoto.startsWith('data:');
                 container.innerHTML = `
                     <div class="uploaded-image">
-                        <img src="${aboutPhoto}" alt="Your Photo" onerror="this.parentElement.innerHTML='<div style=\'padding: 20px; text-align: center; color: var(--text-secondary);\'>⚠️ Image not found. Check the path.</div>'">
+                        <img src="${aboutPhoto}" alt="Your Photo" onerror="this.parentElement.innerHTML='<div style=&quot;padding: 20px; text-align: center; color: #86868b;&quot;>⚠️ Image not found. Check the path.</div>'">
                         <button type="button" class="remove-image" onclick="removeAboutPhoto()">×</button>
                     </div>
                 `;
@@ -1365,7 +1365,7 @@
             if (coverImage) {
                 container.innerHTML = `
                     <div class="uploaded-image">
-                        <img src="${coverImage}" alt="Cover Image" onerror="this.parentElement.innerHTML='<div style=\'padding: 20px; text-align: center; color: var(--text-secondary);\'>⚠️ Image not found. Check the path.</div>'">
+                        <img src="${coverImage}" alt="Cover Image" onerror="this.parentElement.innerHTML='<div style=&quot;padding: 20px; text-align: center; color: #86868b;&quot;>⚠️ Image not found. Check the path.</div>'">
                         <button type="button" class="remove-image" onclick="removeCoverImage()">×</button>
                     </div>
                 `;
@@ -1444,7 +1444,7 @@
             const container = document.getElementById('uploadedImages');
             container.innerHTML = uploadedImages.map((img, index) => `
                 <div class="uploaded-image">
-                    <img src="${img}" alt="Uploaded ${index + 1}" onerror="this.parentElement.innerHTML='<div style=\'padding: 20px; text-align: center; color: var(--text-secondary); font-size: 12px;\'>⚠️ Not found</div>'">
+                    <img src="${img}" alt="Uploaded ${index + 1}" onerror="this.parentElement.innerHTML='<div style=&quot;padding: 20px; text-align: center; color: #86868b; font-size: 12px;&quot;>⚠️ Not found</div>'">
                     <button type="button" class="remove-image" onclick="removeImage(${index})">×</button>
                 </div>
             `).join('');
