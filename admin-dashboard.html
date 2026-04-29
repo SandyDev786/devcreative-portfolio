@@ -1022,16 +1022,43 @@
         }
 
         // Handle hero background upload
-        function handleHeroBackgroundUpload(event) {
+        async function handleHeroBackgroundUpload(event) {
             const file = event.target.files[0];
             if (!file) return;
 
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                heroBackground = e.target.result;
-                renderHeroBackground();
-            };
-            reader.readAsDataURL(file);
+            // Check if GitHub upload is available
+            if (typeof uploadHeroBackgroundToGitHub === 'function' && GITHUB_CONFIG.token !== 'YOUR_GITHUB_TOKEN') {
+                try {
+                    const container = document.getElementById('heroBackgroundPreview');
+                    container.innerHTML = '<div style="padding: 40px; text-align: center; color: var(--text-secondary);">📤 Uploading to GitHub...</div>';
+                    
+                    const githubURL = await uploadHeroBackgroundToGitHub(file);
+                    heroBackground = githubURL;
+                    renderHeroBackground();
+                    document.getElementById('heroBackgroundURL').value = '';
+                    
+                    alert('✅ Hero background uploaded to GitHub successfully!');
+                } catch (error) {
+                    console.error('GitHub upload failed:', error);
+                    // Fallback to base64
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        heroBackground = e.target.result;
+                        renderHeroBackground();
+                        document.getElementById('heroBackgroundURL').value = '';
+                    };
+                    reader.readAsDataURL(file);
+                }
+            } else {
+                // Use base64 (fallback)
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    heroBackground = e.target.result;
+                    renderHeroBackground();
+                    document.getElementById('heroBackgroundURL').value = '';
+                };
+                reader.readAsDataURL(file);
+            }
         }
 
         // Render hero background preview
@@ -1082,17 +1109,43 @@
         }
 
         // Handle about photo upload
-        function handleAboutPhotoUpload(event) {
+        async function handleAboutPhotoUpload(event) {
             const file = event.target.files[0];
             if (!file) return;
 
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                aboutPhoto = e.target.result;
-                renderAboutPhoto();
-                document.getElementById('aboutPhotoURL').value = '';
-            };
-            reader.readAsDataURL(file);
+            // Check if GitHub upload is available
+            if (typeof uploadAboutPhotoToGitHub === 'function' && GITHUB_CONFIG.token !== 'YOUR_GITHUB_TOKEN') {
+                try {
+                    const container = document.getElementById('aboutPhotoPreview');
+                    container.innerHTML = '<div style="padding: 40px; text-align: center; color: var(--text-secondary);">📤 Uploading to GitHub...</div>';
+                    
+                    const githubURL = await uploadAboutPhotoToGitHub(file);
+                    aboutPhoto = githubURL;
+                    renderAboutPhoto();
+                    document.getElementById('aboutPhotoURL').value = '';
+                    
+                    alert('✅ Photo uploaded to GitHub successfully!');
+                } catch (error) {
+                    console.error('GitHub upload failed:', error);
+                    // Fallback to base64
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        aboutPhoto = e.target.result;
+                        renderAboutPhoto();
+                        document.getElementById('aboutPhotoURL').value = '';
+                    };
+                    reader.readAsDataURL(file);
+                }
+            } else {
+                // Use base64 (fallback)
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    aboutPhoto = e.target.result;
+                    renderAboutPhoto();
+                    document.getElementById('aboutPhotoURL').value = '';
+                };
+                reader.readAsDataURL(file);
+            }
         }
 
         // Render about photo preview
@@ -1242,17 +1295,47 @@
         }
 
         // Handle cover image upload
-        function handleCoverImageUpload(event) {
+        async function handleCoverImageUpload(event) {
             const file = event.target.files[0];
             if (!file) return;
 
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                coverImage = e.target.result;
-                renderCoverImage();
-                document.getElementById('coverImageURL').value = '';
-            };
-            reader.readAsDataURL(file);
+            // Check if GitHub upload is available
+            if (typeof uploadCoverImageToGitHub === 'function' && GITHUB_CONFIG.token !== 'YOUR_GITHUB_TOKEN') {
+                try {
+                    // Show uploading message
+                    const container = document.getElementById('coverImagePreview');
+                    container.innerHTML = '<div style="padding: 40px; text-align: center; color: var(--text-secondary);">📤 Uploading to GitHub...</div>';
+                    
+                    // Upload to GitHub
+                    const projectId = editingProjectId || 'new-project-' + Date.now();
+                    const githubURL = await uploadCoverImageToGitHub(file, projectId);
+                    
+                    coverImage = githubURL;
+                    renderCoverImage();
+                    document.getElementById('coverImageURL').value = '';
+                    
+                    alert('✅ Image uploaded to GitHub successfully!');
+                } catch (error) {
+                    console.error('GitHub upload failed:', error);
+                    // Fallback to base64
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        coverImage = e.target.result;
+                        renderCoverImage();
+                        document.getElementById('coverImageURL').value = '';
+                    };
+                    reader.readAsDataURL(file);
+                }
+            } else {
+                // Use base64 (fallback)
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    coverImage = e.target.result;
+                    renderCoverImage();
+                    document.getElementById('coverImageURL').value = '';
+                };
+                reader.readAsDataURL(file);
+            }
         }
 
         // Render cover image preview
@@ -1291,16 +1374,47 @@
         }
 
         // Handle image upload
-        function handleImageUpload(event) {
+        async function handleImageUpload(event) {
             const files = event.target.files;
             
-            for (let file of files) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    uploadedImages.push(e.target.result);
+            // Check if GitHub upload is available
+            if (typeof uploadGalleryImageToGitHub === 'function' && GITHUB_CONFIG.token !== 'YOUR_GITHUB_TOKEN') {
+                const container = document.getElementById('uploadedImages');
+                container.innerHTML += '<div style="padding: 20px; text-align: center; color: var(--text-secondary);">📤 Uploading to GitHub...</div>';
+                
+                try {
+                    const projectId = editingProjectId || 'new-project-' + Date.now();
+                    
+                    for (let i = 0; i < files.length; i++) {
+                        const file = files[i];
+                        const githubURL = await uploadGalleryImageToGitHub(file, projectId, uploadedImages.length + i);
+                        uploadedImages.push(githubURL);
+                    }
+                    
                     renderUploadedImages();
-                };
-                reader.readAsDataURL(file);
+                    alert(`✅ ${files.length} image(s) uploaded to GitHub successfully!`);
+                } catch (error) {
+                    console.error('GitHub upload failed:', error);
+                    // Fallback to base64
+                    for (let file of files) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            uploadedImages.push(e.target.result);
+                            renderUploadedImages();
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                }
+            } else {
+                // Use base64 (fallback)
+                for (let file of files) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        uploadedImages.push(e.target.result);
+                        renderUploadedImages();
+                    };
+                    reader.readAsDataURL(file);
+                }
             }
         }
 
@@ -1457,8 +1571,7 @@
         });
     </script>
     
-    <!-- GitHub Upload Integration (Optional - enables saving to GitHub) -->
-    <!-- Uncomment this line after setting up github-upload-config.js -->
-    <!-- <script src="github-upload-config.js"></script> -->
+    <!-- GitHub Upload Integration -->
+    <script src="github-upload-config.js"></script>
 </body>
 </html>
