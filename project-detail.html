@@ -753,6 +753,8 @@
 
             // Load gallery images
             if (project.images && project.images.length > 0) {
+                console.log(`📸 Loading ${project.images.length} gallery images:`, project.images);
+                
                 const galleryGrid = document.querySelector('.gallery-grid');
                 galleryGrid.innerHTML = project.images.map((img, index) => {
                     let classes = 'gallery-item';
@@ -760,12 +762,19 @@
                     else if (index === 4) classes += ' wide'; // Fifth image is wide
                     else if (index === 9) classes += ' featured'; // Tenth image is featured
 
+                    console.log(`📷 Image ${index + 1}: ${img}`);
+
                     return `
                         <div class="${classes}" onclick="openLightbox(this)">
-                            <img src="${img}" alt="${project.title} - Image ${index + 1}">
+                            <img src="${img}" alt="${project.title} - Image ${index + 1}" onerror="console.error('❌ Failed to load image:', this.src); this.parentElement.innerHTML='<div style=&quot;padding: 40px; text-align: center; color: #86868b;&quot;>⚠️ Image not found<br><small>${img.substring(0, 50)}...</small></div>'">
                         </div>
                     `;
                 }).join('');
+                
+                console.log('✅ Gallery loaded');
+            } else {
+                console.log('⚠️ No gallery images found for this project');
+                console.log('Project data:', project);
             }
 
             // Update page title
