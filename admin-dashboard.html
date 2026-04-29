@@ -1122,24 +1122,43 @@
         // Save home page data
         document.getElementById('homePageForm').addEventListener('submit', function(e) {
             e.preventDefault();
+            
+            console.log('Form submitted!'); // Debug log
 
-            const homeData = {
-                heroName: document.getElementById('heroName').value,
-                heroTitle: document.getElementById('heroTitle').value,
-                heroTagline: document.getElementById('heroTagline').value,
-                heroBackground: heroBackground,
-                aboutParagraph1: document.getElementById('aboutParagraph1').value,
-                aboutParagraph2: document.getElementById('aboutParagraph2').value,
-                aboutPhoto: aboutPhoto,
-                contactEmail: document.getElementById('contactEmail').value,
-                contactPhone: document.getElementById('contactPhone').value,
-                contactInstagram: document.getElementById('contactInstagram').value,
-                contactLinkedIn: document.getElementById('contactLinkedIn').value,
-                footerCopyright: document.getElementById('footerCopyright').value,
-            };
+            try {
+                const homeData = {
+                    heroName: document.getElementById('heroName').value,
+                    heroTitle: document.getElementById('heroTitle').value,
+                    heroTagline: document.getElementById('heroTagline').value,
+                    heroBackground: heroBackground,
+                    aboutParagraph1: document.getElementById('aboutParagraph1').value,
+                    aboutParagraph2: document.getElementById('aboutParagraph2').value,
+                    aboutPhoto: aboutPhoto,
+                    contactEmail: document.getElementById('contactEmail').value,
+                    contactPhone: document.getElementById('contactPhone').value,
+                    contactInstagram: document.getElementById('contactInstagram').value,
+                    contactLinkedIn: document.getElementById('contactLinkedIn').value,
+                    footerCopyright: document.getElementById('footerCopyright').value,
+                };
 
-            localStorage.setItem('portfolioHomeData', JSON.stringify(homeData));
-            alert('✅ Home page content saved successfully!');
+                localStorage.setItem('portfolioHomeData', JSON.stringify(homeData));
+                
+                // Show success message with styling
+                const saveBtn = document.querySelector('button[type="submit"]');
+                const originalText = saveBtn.innerHTML;
+                saveBtn.innerHTML = '✅ Saved Successfully!';
+                saveBtn.style.background = '#34c759';
+                
+                setTimeout(() => {
+                    saveBtn.innerHTML = originalText;
+                    saveBtn.style.background = '';
+                }, 3000);
+                
+                console.log('Data saved:', homeData); // Debug log
+            } catch (error) {
+                console.error('Save error:', error);
+                alert('❌ Error saving data: ' + error.message);
+            }
         });
 
         // Initialize projects from localStorage
