@@ -191,7 +191,7 @@ async function testGitHubConnection() {
 }
 
 // Initialize and test on load
-if (typeof GITHUB_CONFIG.token !== 'undefined' && GITHUB_CONFIG.token !== 'YOUR_GITHUB_TOKEN') {
+if (typeof GITHUB_CONFIG.token !== 'undefined' && GITHUB_CONFIG.token !== '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') {
     console.log('🔧 GitHub upload enabled');
     testGitHubConnection();
 } else {
