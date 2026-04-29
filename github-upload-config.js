@@ -6,7 +6,7 @@ const GITHUB_CONFIG = {
     username: 'SandyDev786',              // Your GitHub username
     repo: 'devcreative-portfolio',        // Your repository name
     branch: 'main',                       // Usually 'main' or 'master'
-    token: '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',           // Generate at: https://github.com/settings/tokens
+    token: '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',           // Your actual token
     
     // Image base URL (for loading images on website)
     // GitHub raw content URL
@@ -191,10 +191,9 @@ async function testGitHubConnection() {
 }
 
 // Initialize and test on load
-if (typeof GITHUB_CONFIG.token !== 'undefined' && GITHUB_CONFIG.token !== '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') {
+if (typeof GITHUB_CONFIG.token !== 'undefined' && GITHUB_CONFIG.token !== 'YOUR_GITHUB_TOKEN') {
     console.log('🔧 GitHub upload enabled');
     testGitHubConnection();
 } else {
     console.warn('⚠️ GitHub token not configured. Set your token in github-upload-config.js');
 }
-
