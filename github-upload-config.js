@@ -3,15 +3,22 @@
 
 const GITHUB_CONFIG = {
     // YOUR GITHUB SETTINGS - UPDATE THESE!
-    username: 'YOUR_GITHUB_USERNAME',  // e.g., 'johnsmith'
-    repo: 'YOUR_REPO_NAME',            // e.g., 'portfolio'
-    branch: 'main',                     // Usually 'main' or 'master'
-    token: 'YOUR_GITHUB_TOKEN',        // Generate at: https://github.com/settings/tokens
+    username: 'SandyDev786',              // Your GitHub username
+    repo: 'devcreative-portfolio',        // Your repository name
+    branch: 'main',                       // Usually 'main' or 'master'
+    token: 'YOUR_GITHUB_TOKEN',           // Generate at: https://github.com/settings/tokens
+    
+    // Image base URL (for loading images on website)
+    // GitHub raw content URL
+    imageBaseURL: 'https://raw.githubusercontent.com/SandyDev786/devcreative-portfolio/main/'
 };
 
 // GitHub API Upload Function
 async function uploadToGitHub(file, path) {
     try {
+        // Show upload progress
+        console.log(`Uploading ${file.name} to GitHub...`);
+        
         // Convert file to base64
         const base64Content = await fileToBase64(file);
         const content = base64Content.split(',')[1]; // Remove data:image/... prefix
@@ -31,9 +38,10 @@ async function uploadToGitHub(file, path) {
             if (checkResponse.ok) {
                 const existingFile = await checkResponse.json();
                 sha = existingFile.sha;
+                console.log('File exists, will update...');
             }
         } catch (e) {
-            // File doesn't exist, that's fine
+            console.log('New file, will create...');
         }
 
         // Upload or update file
@@ -45,7 +53,7 @@ async function uploadToGitHub(file, path) {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                message: `Upload ${path}`,
+                message: `Upload ${path} via CMS`,
                 content: content,
                 branch: GITHUB_CONFIG.branch,
                 ...(sha && { sha }) // Include SHA if updating existing file
@@ -53,15 +61,20 @@ async function uploadToGitHub(file, path) {
         });
 
         if (!response.ok) {
-            throw new Error(`GitHub API error: ${response.status}`);
+            const errorData = await response.json();
+            throw new Error(`GitHub API error: ${response.status} - ${errorData.message}`);
         }
 
         const result = await response.json();
         
-        // Return the public URL
-        return `https://raw.githubusercontent.com/${GITHUB_CONFIG.username}/${GITHUB_CONFIG.repo}/${GITHUB_CONFIG.branch}/${path}`;
+        // Return the public URL that will work on Vercel and GitHub Pages
+        const publicURL = GITHUB_CONFIG.imageBaseURL + path;
+        console.log(`✅ Uploaded successfully: ${publicURL}`);
+        
+        return publicURL;
     } catch (error) {
         console.error('Error uploading to GitHub:', error);
+        alert('⚠️ Upload failed: ' + error.message + '\n\nCheck:\n1. GitHub token is correct\n2. Token has "repo" permission\n3. Repository name is correct');
         throw error;
     }
 }
@@ -77,42 +90,44 @@ function fileToBase64(file) {
 }
 
 // Generate unique filename
-function generateFileName(originalName, projectId) {
+function generateFileName(originalName) {
     const timestamp = Date.now();
-    const extension = originalName.split('.').pop();
+    const random = Math.random().toString(36).substring(2, 8);
+    const extension = originalName.split('.').pop().toLowerCase();
     const cleanName = originalName.replace(/[^a-zA-Z0-9.]/g, '-').toLowerCase();
-    return `${timestamp}-${cleanName}`;
+    const baseName = cleanName.replace(`.${extension}`, '');
+    return `${baseName}-${timestamp}-${random}.${extension}`;
 }
 
-// Upload Cover Image
-async function uploadCoverImage(file, projectId) {
-    const fileName = generateFileName(file.name, projectId);
-    const path = `images/projects/${projectId}/cover-${fileName}`;
+// Upload Cover Image to GitHub
+async function uploadCoverImageToGitHub(file, projectId) {
+    const fileName = generateFileName(file.name);
+    const path = `images/projects/${projectId}/${fileName}`;
     return await uploadToGitHub(file, path);
 }
 
-// Upload Gallery Image
-async function uploadGalleryImage(file, projectId, index) {
-    const fileName = generateFileName(file.name, projectId);
+// Upload Gallery Image to GitHub
+async function uploadGalleryImageToGitHub(file, projectId, index) {
+    const fileName = generateFileName(file.name);
     const path = `images/projects/${projectId}/gallery-${index}-${fileName}`;
     return await uploadToGitHub(file, path);
 }
 
-// Upload Hero Background
-async function uploadHeroBackground(file) {
-    const fileName = generateFileName(file.name, 'hero');
+// Upload Hero Background to GitHub
+async function uploadHeroBackgroundToGitHub(file) {
+    const fileName = generateFileName(file.name);
     const path = `images/hero/${fileName}`;
     return await uploadToGitHub(file, path);
 }
 
-// Upload About Photo
-async function uploadAboutPhoto(file) {
-    const fileName = generateFileName(file.name, 'about');
+// Upload About Photo to GitHub
+async function uploadAboutPhotoToGitHub(file) {
+    const fileName = generateFileName(file.name);
     const path = `images/about/${fileName}`;
     return await uploadToGitHub(file, path);
 }
 
-// Delete file from GitHub
+// Delete file from GitHub (optional - for cleanup)
 async function deleteFromGitHub(path) {
     try {
         const url = `https://api.github.com/repos/${GITHUB_CONFIG.username}/${GITHUB_CONFIG.repo}/contents/${path}`;
@@ -140,12 +155,46 @@ async function deleteFromGitHub(path) {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                message: `Delete ${path}`,
+                message: `Delete ${path} via CMS`,
                 sha: fileData.sha,
                 branch: GITHUB_CONFIG.branch
             })
         });
+        
+        console.log(`🗑️ Deleted: ${path}`);
     } catch (error) {
         console.error('Error deleting from GitHub:', error);
     }
 }
+
+// Test GitHub connection
+async function testGitHubConnection() {
+    try {
+        const response = await fetch(`https://api.github.com/repos/${GITHUB_CONFIG.username}/${GITHUB_CONFIG.repo}`, {
+            headers: {
+                'Authorization': `token ${GITHUB_CONFIG.token}`,
+                'Accept': 'application/vnd.github.v3+json'
+            }
+        });
+        
+        if (response.ok) {
+            console.log('✅ GitHub connection successful!');
+            return true;
+        } else {
+            console.error('❌ GitHub connection failed:', response.status);
+            return false;
+        }
+    } catch (error) {
+        console.error('❌ GitHub connection error:', error);
+        return false;
+    }
+}
+
+// Initialize and test on load
+if (typeof GITHUB_CONFIG.token !== 'undefined' && GITHUB_CONFIG.token !== 'YOUR_GITHUB_TOKEN') {
+    console.log('🔧 GitHub upload enabled');
+    testGitHubConnection();
+} else {
+    console.warn('⚠️ GitHub token not configured. Set your token in github-upload-config.js');
+}
+
