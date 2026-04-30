@@ -180,30 +180,26 @@
         </form>
 
         <div class="login-footer">
-            Default: admin / admin123
+            Admin access
         </div>
     </div>
 
+    <script src="cms-client.js"></script>
     <script>
-        // Simple authentication (In production, use proper backend authentication)
-        const credentials = {
-            username: 'admin',
-            password: 'admin123'
-        };
-
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
             const errorMessage = document.getElementById('errorMessage');
 
-            if (username === credentials.username && password === credentials.password) {
-                // Store login session
+            try {
+                await CMSStore.login(username, password);
                 sessionStorage.setItem('isAdminLoggedIn', 'true');
-                // Redirect to admin dashboard
                 window.location.href = 'admin-dashboard.html';
-            } else {
+                return;
+            } catch (error) {
+                errorMessage.textContent = error.message || 'Invalid username or password';
                 errorMessage.classList.add('show');
                 setTimeout(() => {
                     errorMessage.classList.remove('show');

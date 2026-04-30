@@ -670,6 +670,7 @@
         </div>
     </div>
 
+    <script src="cms-client.js"></script>
     <script>
         // Lightbox functionality
         function openLightbox(element) {
@@ -704,12 +705,11 @@
             try {
                 if (url.startsWith('http') || url.startsWith('data:')) return url;
             } catch (e) {}
-            const base = (typeof GITHUB_CONFIG !== 'undefined' && GITHUB_CONFIG.imageBaseURL) ? GITHUB_CONFIG.imageBaseURL : 'https://raw.githubusercontent.com/SandyDev786/devcreative-portfolio/main/';
-            return base + url.replace(/^\/+/, '');
+            return url.replace(/^\/+/, '');
         }
 
         // Load project details dynamically
-        function loadProjectDetails() {
+        async function loadProjectDetails() {
             const urlParams = new URLSearchParams(window.location.search);
             const projectId = urlParams.get('id');
 
@@ -718,7 +718,7 @@
                 return;
             }
 
-            const projects = JSON.parse(localStorage.getItem('portfolioProjects')) || [];
+            const projects = await CMSStore.getProjects();
             const project = projects.find(p => p.id === projectId);
 
             if (!project) {

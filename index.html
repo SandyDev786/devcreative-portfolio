@@ -1003,6 +1003,7 @@
         </div>
     </footer>
 
+    <script src="cms-client.js"></script>
     <script>
         // Navbar scroll effect
         const navbar = document.getElementById('navbar');
@@ -1072,8 +1073,8 @@
         });
 
         // Load home page content from CMS
-        function loadHomePageContent() {
-            const homeData = JSON.parse(localStorage.getItem('portfolioHomeData')) || {};
+        async function loadHomePageContent() {
+            const homeData = await CMSStore.getHomeData();
 
             // Update Hero Section
             if (homeData.heroName) {
@@ -1152,8 +1153,8 @@
         }
 
         // Load projects dynamically from CMS
-        function loadProjects() {
-            const projects = JSON.parse(localStorage.getItem('portfolioProjects')) || [];
+        async function loadProjects() {
+            const projects = await CMSStore.getProjects();
             const publishedProjects = projects.filter(p => p.status === 'published');
             // Debug: print project image URLs
             console.log('🔍 Project images for debugging:', publishedProjects.map(p => ({ id: p.id, coverImage: p.coverImage, images: p.images })));
@@ -1185,9 +1186,9 @@
         }
 
         // Load all content on page load
-        window.addEventListener('DOMContentLoaded', function() {
-            loadHomePageContent();
-            loadProjects();
+        window.addEventListener('DOMContentLoaded', async function() {
+            await loadHomePageContent();
+            await loadProjects();
         });
 
         // Resolve image URLs: accept full URLs, data URIs, or repo-relative paths
@@ -1196,8 +1197,7 @@
             try {
                 if (url.startsWith('http') || url.startsWith('data:')) return url;
             } catch (e) {}
-            const base = (typeof GITHUB_CONFIG !== 'undefined' && GITHUB_CONFIG.imageBaseURL) ? GITHUB_CONFIG.imageBaseURL : 'https://raw.githubusercontent.com/SandyDev786/devcreative-portfolio/main/';
-            return base + url.replace(/^\/+/, '');
+            return url.replace(/^\/+/, '');
         }
     </script>
 </body>
