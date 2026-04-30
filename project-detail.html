@@ -698,6 +698,16 @@
             }
         });
 
+        // Resolve image URLs: full URLs, data URIs, or repo-relative paths
+        function resolveImageURL(url) {
+            if (!url) return url;
+            try {
+                if (url.startsWith('http') || url.startsWith('data:')) return url;
+            } catch (e) {}
+            const base = (typeof GITHUB_CONFIG !== 'undefined' && GITHUB_CONFIG.imageBaseURL) ? GITHUB_CONFIG.imageBaseURL : 'https://raw.githubusercontent.com/SandyDev786/devcreative-portfolio/main/';
+            return base + url.replace(/^\/+/, '');
+        }
+
         // Load project details dynamically
         function loadProjectDetails() {
             const urlParams = new URLSearchParams(window.location.search);
@@ -752,9 +762,10 @@
             }
 
             // Load gallery images
+            console.log('🔍 Project image values:', { coverImage: project.coverImage, images: project.images });
             if (project.images && project.images.length > 0) {
-                console.log(`📸 Loading ${project.images.length} gallery images:`, project.images);
-                
+                console.log(`📸 Loading ${project.images.length} gallery images:`);
+
                 const galleryGrid = document.querySelector('.gallery-grid');
                 galleryGrid.innerHTML = project.images.map((img, index) => {
                     let classes = 'gallery-item';
@@ -766,7 +777,7 @@
 
                     return `
                         <div class="${classes}" onclick="openLightbox(this)">
-                            <img src="${img}" alt="${project.title} - Image ${index + 1}" onerror="console.error('❌ Failed to load image:', this.src); this.parentElement.innerHTML='<div style=&quot;padding: 40px; text-align: center; color: #86868b;&quot;>⚠️ Image not found<br><small>${img.substring(0, 50)}...</small></div>'">
+                            <img src="${resolveImageURL(img)}" alt="${project.title} - Image ${index + 1}" onerror="console.error('❌ Failed to load image:', this.src); this.parentElement.innerHTML='<div style=&quot;padding: 40px; text-align: center; color: #86868b;&quot;>⚠️ Image not found<br><small>${img.substring(0, 50)}...</small></div>'">
                         </div>
                     `;
                 }).join('');

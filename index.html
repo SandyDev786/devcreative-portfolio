@@ -1155,6 +1155,8 @@
         function loadProjects() {
             const projects = JSON.parse(localStorage.getItem('portfolioProjects')) || [];
             const publishedProjects = projects.filter(p => p.status === 'published');
+            // Debug: print project image URLs
+            console.log('🔍 Project images for debugging:', publishedProjects.map(p => ({ id: p.id, coverImage: p.coverImage, images: p.images })));
             const worksSlider = document.getElementById('worksSlider');
 
             if (publishedProjects.length > 0) {
@@ -1162,7 +1164,7 @@
                     <div class="work-card scroll-fade">
                         <div class="work-image">
                             ${project.coverImage || project.thumbnail ? 
-                                `<img src="${project.coverImage || project.thumbnail}" alt="${project.title}">` : 
+                                `<img src="${resolveImageURL(project.coverImage || project.thumbnail)}" alt="${project.title}">` : 
                                 '<div class="placeholder-image">Project Image</div>'
                             }
                         </div>
@@ -1187,6 +1189,16 @@
             loadHomePageContent();
             loadProjects();
         });
+
+        // Resolve image URLs: accept full URLs, data URIs, or repo-relative paths
+        function resolveImageURL(url) {
+            if (!url) return url;
+            try {
+                if (url.startsWith('http') || url.startsWith('data:')) return url;
+            } catch (e) {}
+            const base = (typeof GITHUB_CONFIG !== 'undefined' && GITHUB_CONFIG.imageBaseURL) ? GITHUB_CONFIG.imageBaseURL : 'https://raw.githubusercontent.com/SandyDev786/devcreative-portfolio/main/';
+            return base + url.replace(/^\/+/, '');
+        }
     </script>
 </body>
 </html>
