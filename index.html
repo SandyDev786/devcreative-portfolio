@@ -1088,17 +1088,18 @@
             }
             if (homeData.heroBackground) {
                 const heroBackground = document.querySelector('.hero-background');
-                const isVideo = homeData.heroBackground.includes('data:video');
+                const heroBackgroundURL = resolveImageURL(homeData.heroBackground);
+                const isVideo = homeData.heroBackground.includes('data:video') || /\.(mp4|webm|mov)(\?.*)?$/i.test(homeData.heroBackground);
                 
                 if (isVideo) {
                     heroBackground.innerHTML = `
                         <video autoplay muted loop playsinline>
-                            <source src="${homeData.heroBackground}" type="video/mp4">
+                            <source src="${heroBackgroundURL}" type="video/mp4">
                         </video>
                     `;
                 } else {
                     heroBackground.innerHTML = `
-                        <img src="${homeData.heroBackground}" alt="Background">
+                        <img src="${heroBackgroundURL}" alt="Background">
                     `;
                 }
             }
@@ -1195,7 +1196,8 @@
         function resolveImageURL(url) {
             if (!url) return url;
             try {
-                if (url.startsWith('http') || url.startsWith('data:')) return url;
+                if (url === 'undefined' || url === 'null') return '';
+                if (url.startsWith('http') || url.startsWith('data:') || url.startsWith('blob:')) return url;
             } catch (e) {}
             return url.replace(/^\/+/, '');
         }

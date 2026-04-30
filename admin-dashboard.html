@@ -921,7 +921,7 @@
                             id="coverImageURL" 
                             placeholder="images/projects/project-1/cover.jpg"
                             style="margin-bottom: 12px;"
-                            onchange="handleCoverImageURL(event)">
+                            oninput="handleCoverImageURL(event)">
                         
                         <!-- OR Upload -->
                         <div style="text-align: center; color: var(--text-secondary); margin: 12px 0; font-size: 13px;">
@@ -1094,11 +1094,12 @@
             const container = document.getElementById('heroBackgroundPreview');
             if (heroBackground) {
                 const isVideo = heroBackground.includes('data:video') || heroBackground.endsWith('.mp4') || heroBackground.endsWith('.webm') || heroBackground.endsWith('.mov');
+                const previewURL = resolveImageURL(heroBackground);
                 container.innerHTML = `
                     <div class="uploaded-image" style="grid-column: span 2;">
                         ${isVideo ? 
-                            `<video src="${heroBackground}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.parentElement.innerHTML='<div style=&quot;padding: 20px; text-align: center; color: #86868b;&quot;>⚠️ Video not found. Check the path.</div>'"></video>` :
-                            `<img src="${heroBackground}" alt="Hero Background" onerror="this.parentElement.innerHTML='<div style=&quot;padding: 20px; text-align: center; color: #86868b;&quot;>⚠️ Image not found. Check the path.</div>'">`
+                            `<video src="${previewURL}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.parentElement.innerHTML='<div style=&quot;padding: 20px; text-align: center; color: #86868b;&quot;>⚠️ Video not found. Check the path.</div>'"></video>` :
+                            `<img src="${previewURL}" alt="Hero Background" onerror="this.parentElement.innerHTML='<div style=&quot;padding: 20px; text-align: center; color: #86868b;&quot;>⚠️ Image not found. Check the path.</div>'">`
                         }
                         <button type="button" class="remove-image" onclick="removeHeroBackground()">×</button>
                     </div>
@@ -1185,10 +1186,9 @@
         function renderAboutPhoto() {
             const container = document.getElementById('aboutPhotoPreview');
             if (aboutPhoto) {
-                const isBase64 = aboutPhoto.startsWith('data:');
                 container.innerHTML = `
                     <div class="uploaded-image">
-                        <img src="${aboutPhoto}" alt="Your Photo" onerror="this.parentElement.innerHTML='<div style=&quot;padding: 20px; text-align: center; color: #86868b;&quot;>⚠️ Image not found. Check the path.</div>'">
+                        <img src="${resolveImageURL(aboutPhoto)}" alt="Your Photo" onerror="this.parentElement.innerHTML='<div style=&quot;padding: 20px; text-align: center; color: #86868b;&quot;>⚠️ Image not found. Check the path.</div>'">
                         <button type="button" class="remove-image" onclick="removeAboutPhoto()">×</button>
                     </div>
                 `;
@@ -1250,8 +1250,27 @@
         // Initialize projects from localStorage
         let projects = [];
         let editingProjectId = null;
+        let pendingProjectId = null;
         let uploadedImages = [];
         let coverImage = '';
+
+        function getCurrentProjectId() {
+            if (editingProjectId) return editingProjectId;
+            if (!pendingProjectId) pendingProjectId = Date.now().toString();
+            return pendingProjectId;
+        }
+
+        // Keep stored image values portable, but resolve them for the current admin page.
+        function resolveImageURL(url) {
+            if (!url) return url;
+            try {
+                if (url === 'undefined' || url === 'null') return '';
+                if (url.startsWith('http') || url.startsWith('data:') || url.startsWith('blob:')) return url;
+                return new URL(url.replace(/^\/+/, ''), window.location.href).href;
+            } catch (e) {
+                return url;
+            }
+        }
 
         // Render projects
         function renderProjects() {
@@ -1272,7 +1291,7 @@
 
             projectsList.innerHTML = projects.map(project => `
                 <div class="project-row">
-                    <img src="${project.coverImage || project.thumbnail || 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'60\' height=\'60\'%3E%3Crect fill=\'%231a1a1a\' width=\'60\' height=\'60\'/%3E%3C/svg%3E'}" alt="${project.title}" class="project-thumbnail">
+                    <img src="${resolveImageURL(project.coverImage || project.thumbnail) || 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'60\' height=\'60\'%3E%3Crect fill=\'%231a1a1a\' width=\'60\' height=\'60\'/%3E%3C/svg%3E'}" alt="${project.title}" class="project-thumbnail">
                     <div class="project-info">
                         <h3>${project.title}</h3>
                         <div class="project-category">${project.category}</div>
@@ -1302,6 +1321,7 @@
         // Open add modal
         function openAddModal() {
             editingProjectId = null;
+            pendingProjectId = Date.now().toString();
             document.getElementById('modalTitle').textContent = 'Add New Project';
             document.getElementById('projectForm').reset();
             uploadedImages = [];
@@ -1315,14 +1335,15 @@
         function closeModal() {
             document.getElementById('projectModal').classList.remove('active');
             editingProjectId = null;
+            pendingProjectId = null;
         }
 
         // Handle cover image URL
         function handleCoverImageURL(event) {
             const url = event.target.value.trim();
+            coverImage = url;
+            renderCoverImage();
             if (url) {
-                coverImage = url;
-                renderCoverImage();
                 document.getElementById('coverImage').value = '';
             }
         }
@@ -1340,7 +1361,7 @@
                     container.innerHTML = '<div style="padding: 40px; text-align: center; color: var(--text-secondary);">📤 Uploading to server...</div>';
                     
                     // Upload to the hosting account
-                    const projectId = editingProjectId || 'new-project-' + Date.now();
+                    const projectId = getCurrentProjectId();
                     const uploadedURL = await uploadCoverImageToGitHub(file, projectId);
                     
                     coverImage = uploadedURL;
@@ -1382,7 +1403,7 @@
             if (coverImage) {
                 container.innerHTML = `
                     <div class="uploaded-image">
-                        <img src="${coverImage}" alt="Cover Image" onerror="this.parentElement.innerHTML='<div style=&quot;padding: 20px; text-align: center; color: #86868b;&quot;>⚠️ Image not found. Check the path.</div>'">
+                        <img src="${resolveImageURL(coverImage)}" alt="Cover Image" onerror="this.parentElement.innerHTML='<div style=&quot;padding: 20px; text-align: center; color: #86868b;&quot;>⚠️ Image not found. Check the path.</div>'">
                         <button type="button" class="remove-image" onclick="removeCoverImage()">×</button>
                     </div>
                 `;
@@ -1421,7 +1442,7 @@
                 container.innerHTML += '<div style="padding: 20px; text-align: center; color: var(--text-secondary);">📤 Uploading to server...</div>';
                 
                 try {
-                    const projectId = editingProjectId || 'new-project-' + Date.now();
+                    const projectId = getCurrentProjectId();
                     
                     for (let i = 0; i < files.length; i++) {
                         const file = files[i];
@@ -1466,7 +1487,7 @@
             const container = document.getElementById('uploadedImages');
             container.innerHTML = uploadedImages.map((img, index) => `
                 <div class="uploaded-image">
-                    <img src="${img}" alt="Uploaded ${index + 1}" onerror="this.parentElement.innerHTML='<div style=&quot;padding: 20px; text-align: center; color: #86868b; font-size: 12px;&quot;>⚠️ Not found</div>'">
+                    <img src="${resolveImageURL(img)}" alt="Uploaded ${index + 1}" onerror="this.parentElement.innerHTML='<div style=&quot;padding: 20px; text-align: center; color: #86868b; font-size: 12px;&quot;>⚠️ Not found</div>'">
                     <button type="button" class="remove-image" onclick="removeImage(${index})">×</button>
                 </div>
             `).join('');
@@ -1488,7 +1509,7 @@
             }
 
             const project = {
-                id: editingProjectId || Date.now().toString(),
+                id: editingProjectId || getCurrentProjectId(),
                 title: document.getElementById('projectTitle').value,
                 category: document.getElementById('projectCategory').value,
                 status: document.getElementById('projectStatus').value,
@@ -1572,6 +1593,7 @@
             if (!project) return;
 
             editingProjectId = id;
+            pendingProjectId = null;
             document.getElementById('modalTitle').textContent = 'Edit Project';
 
             // Fill form

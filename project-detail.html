@@ -703,7 +703,8 @@
         function resolveImageURL(url) {
             if (!url) return url;
             try {
-                if (url.startsWith('http') || url.startsWith('data:')) return url;
+                if (url === 'undefined' || url === 'null') return '';
+                if (url.startsWith('http') || url.startsWith('data:') || url.startsWith('blob:')) return url;
             } catch (e) {}
             return url.replace(/^\/+/, '');
         }

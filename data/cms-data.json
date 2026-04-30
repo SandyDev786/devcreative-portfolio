@@ -1,4 +1,7 @@
 {
-    "homeData": {},
+    "homeData": {
+        "heroBackground": "",
+        "aboutPhoto": ""
+    },
     "projects": []
 }

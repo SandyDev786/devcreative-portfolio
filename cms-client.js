@@ -2,6 +2,35 @@ const CMS_CONFIG = {
     apiUrl: 'cms-api.php'
 };
 
+function cleanCMSAssetValue(value) {
+    if (typeof value !== 'string') return '';
+    const trimmed = value.trim();
+    if (!trimmed || trimmed === 'undefined' || trimmed === 'null') return '';
+    return trimmed;
+}
+
+function cleanCMSData(data) {
+    const homeData = data && typeof data.homeData === 'object' && !Array.isArray(data.homeData) ? data.homeData : {};
+    const projects = Array.isArray(data && data.projects) ? data.projects : [];
+
+    return {
+        homeData: {
+            ...homeData,
+            heroBackground: cleanCMSAssetValue(homeData.heroBackground),
+            aboutPhoto: cleanCMSAssetValue(homeData.aboutPhoto)
+        },
+        projects: projects.map(project => {
+            const cleanProject = { ...project };
+            cleanProject.coverImage = cleanCMSAssetValue(cleanProject.coverImage);
+            cleanProject.thumbnail = cleanCMSAssetValue(cleanProject.thumbnail);
+            cleanProject.images = Array.isArray(cleanProject.images)
+                ? cleanProject.images.map(cleanCMSAssetValue).filter(Boolean)
+                : [];
+            return cleanProject;
+        })
+    };
+}
+
 const CMSStore = {
     serverAvailable: null,
 
@@ -27,18 +56,19 @@ const CMSStore = {
     async loadAll() {
         try {
             const data = await this.request('get');
-            localStorage.setItem('portfolioHomeData', JSON.stringify(data.homeData || {}));
-            localStorage.setItem('portfolioProjects', JSON.stringify(data.projects || []));
-            return {
-                homeData: data.homeData || {},
-                projects: data.projects || []
-            };
+            const cleanData = cleanCMSData(data);
+            localStorage.setItem('portfolioHomeData', JSON.stringify(cleanData.homeData));
+            localStorage.setItem('portfolioProjects', JSON.stringify(cleanData.projects));
+            return cleanData;
         } catch (error) {
             this.serverAvailable = false;
-            return {
+            const cleanData = cleanCMSData({
                 homeData: JSON.parse(localStorage.getItem('portfolioHomeData') || '{}'),
                 projects: JSON.parse(localStorage.getItem('portfolioProjects') || '[]')
-            };
+            });
+            localStorage.setItem('portfolioHomeData', JSON.stringify(cleanData.homeData));
+            localStorage.setItem('portfolioProjects', JSON.stringify(cleanData.projects));
+            return cleanData;
         }
     },
 
@@ -53,29 +83,38 @@ const CMSStore = {
     },
 
     async saveHomeData(homeData) {
-        localStorage.setItem('portfolioHomeData', JSON.stringify(homeData));
-        return this.saveAll({
+        const cleanData = cleanCMSData({
             homeData,
             projects: JSON.parse(localStorage.getItem('portfolioProjects') || '[]')
+        });
+        localStorage.setItem('portfolioHomeData', JSON.stringify(cleanData.homeData));
+        return this.saveAll({
+            homeData: cleanData.homeData,
+            projects: cleanData.projects
         });
     },
 
     async saveProjects(projects) {
-        localStorage.setItem('portfolioProjects', JSON.stringify(projects));
-        return this.saveAll({
+        const cleanData = cleanCMSData({
             homeData: JSON.parse(localStorage.getItem('portfolioHomeData') || '{}'),
             projects
+        });
+        localStorage.setItem('portfolioProjects', JSON.stringify(cleanData.projects));
+        return this.saveAll({
+            homeData: cleanData.homeData,
+            projects: cleanData.projects
         });
     },
 
     async saveAll(payload) {
         try {
+            const cleanPayload = cleanCMSData(payload);
             await this.request('save', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(payload)
+                body: JSON.stringify(cleanPayload)
             });
         } catch (error) {
             if (error.status) {
